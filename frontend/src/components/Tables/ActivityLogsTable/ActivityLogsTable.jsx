@@ -13,7 +13,7 @@ import { users } from "./data";
 
 export default function ActivityLogsTable() {
   const [page, setPage] = useState(1);
-  const rowsPerPage = 15;
+  const rowsPerPage = 10;
 
   const pages = Math.ceil(users.length / rowsPerPage);
 
