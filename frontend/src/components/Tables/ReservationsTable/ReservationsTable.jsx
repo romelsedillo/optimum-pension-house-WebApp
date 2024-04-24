@@ -20,12 +20,32 @@ import {
 import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { SearchIcon } from "./SearchIcon";
-import {ChevronDownIcon} from "./ChevronDownIcon";
-import {capitalize} from "./utils";
-import { columns, statusOptions } from "./data";
+import { ChevronDownIcon } from "./ChevronDownIcon";
+import { capitalize } from "./utils";
+// import { columns, statusOptions } from "./data";
 import AddReservationModal from "../../Modal/AddReservationModal/AddReservationModal";
 import UpdateReservationModal from "../../Modal/UpdateReservationModal/UpdateReservationModal";
 import { fetchDataFromAppwrite } from "./datafetch";
+import { toast } from "react-hot-toast";
+
+const columns = [
+  { name: "ID", uid: "id", sortable: true },
+  { name: "Guest", uid: "guest", sortable: true },
+  { name: "Check-in Date", uid: "checkInDate", sortable: true },
+  { name: "Check-out Date", uid: "checkOutDate", sortable: true },
+  { name: "Total Amount", uid: "totalAmount", sortable: true },
+  { name: "Room Details", uid: "room", sortable: true },
+  { name: "Reference #", uid: "referenceNumber", sortable: true },
+  { name: "Status", uid: "status", sortable: true },
+  { name: "ACTIONS", uid: "actions" },
+];
+
+const statusOptions = [
+  { name: "Check-in", uid: "check-in" },
+  { name: "Check-out", uid: "check-out" },
+  { name: "Pending", uid: "pending" },
+  { name: "Confirmed", uid: "confirmed" },
+];
 
 const statusColorMap = {
   "check-in": "success",
@@ -74,22 +94,33 @@ export default function ReservationsTable() {
     onOpenChange: onUpdateModalOpenChange,
   } = useDisclosure();
   const [reservationId, setReservationId] = useState("");
+  const [roomId, setRoomId] = useState("");
+
+  const fetchData = async () => {
+    try {
+      const appWriteData = await fetchDataFromAppwrite();
+      setData(appWriteData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Call the fetchDataFromAppwrite function to fetch data from Appwrite
-        const appwriteData = await fetchDataFromAppwrite();
-        setData(appwriteData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData(); // Call the fetchData function when the component mounts
+    fetchData();
   }, []);
-  const getReservationId = (reservationId) => {
+
+  const handleUpdateSuccess = async () => {
+    try {
+      await fetchData(); // Fetch updated data
+    } catch (error) {
+      console.error("Error updating reservation:", error);
+      toast.error(`Error updating reservation: ${error.message}`);
+    }
+  };
+
+  const getReservationId = (reservationId, roomId) => {
     setReservationId(reservationId);
+    setRoomId(roomId);
   };
 
   const headerColumns = React.useMemo(() => {
@@ -204,10 +235,12 @@ export default function ReservationsTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem onClick={() => alert(user.id)}>View</DropdownItem>
+                <DropdownItem onClick={() => alert(user.roomId)}>
+                  View
+                </DropdownItem>
                 <DropdownItem
                   onPress={onUpdateModalOpen}
-                  onClick={() => getReservationId(user.id)}
+                  onClick={() => getReservationId(user.id, user.roomId)}
                 >
                   Edit
                 </DropdownItem>
@@ -256,7 +289,7 @@ export default function ReservationsTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-          <Dropdown>
+            <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
@@ -423,7 +456,11 @@ export default function ReservationsTable() {
         size="sm"
         className="p-4"
       >
-        <UpdateReservationModal reservationId={reservationId} />
+        <UpdateReservationModal
+          onUpdateSuccess={handleUpdateSuccess}
+          reservationId={reservationId}
+          roomId={roomId}
+        />
       </Modal>
     </>
   );

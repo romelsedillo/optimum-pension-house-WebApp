@@ -16,6 +16,7 @@ import { useAuth } from "../utils/AuthContext";
 import gcashqrcode from "../assets/images/gcash-qrcode.jpg";
 import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
+import RoomUnavailable from "../utils/UpdateFunctions/RoomUnavailable";
 
 const DoubleRoomPage = () => {
   const { user } = useAuth();
@@ -79,10 +80,11 @@ const DoubleRoomPage = () => {
       roomId,
       referenceNumber
     );
+    // RoomUnavailable(roomId);
     navigate("/");
     Swal.fire({
-      title: "Reservation Successful!",
-      text: "Thank you for choosing our hotel. Your room has been successfully reserved.",
+      title: "Reservation in process!",
+      text: "Please wait for your booking confirmation.",
       icon: "success",
       timer: 5000,
       customClass: {
@@ -112,7 +114,7 @@ const DoubleRoomPage = () => {
                 className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
               />
               <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
-                <p className="text-white text-md capitalize my-2">
+                <p className="text-white text-lg capitalize my-2">
                   Room: <span className="">{roomData?.roomNumber}</span>
                 </p>
               </CardFooter>
@@ -120,7 +122,7 @@ const DoubleRoomPage = () => {
             <div className="w-2/3 flex flex-col gap-4">
               <div className="flex items-baseline gap-8">
                 <h1 className="font-semibold text-5xl text-orange-500">
-                  Single Room
+                  Double Room
                 </h1>
               </div>
 
@@ -163,10 +165,12 @@ const DoubleRoomPage = () => {
                 </div>
                 <div className="flex gap-8">
                   <p className="font-medium text-lg">
-                    Room Rate: <span className="text-orange-500">₱980</span>{" "}
+                    Room Rate: <span className="text-orange-500">₱1120</span>{" "}
                     /night
                   </p>
-                  <p className="font-medium text-lg">Good for 1 person</p>
+                  <p className="font-medium text-lg">
+                    Good for 2 to 3 persons.
+                  </p>
                 </div>
               </div>
             </div>
@@ -232,45 +236,64 @@ const DoubleRoomPage = () => {
           onRequestClose={handleCloseModal}
           className="bg-white rounded-lg p-8 max-w-lg mx-auto mt-28 shadow-lg"
         >
-          <h2 className="text-2xl font-semibold mb-4">Booking Summary</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-blue-500 text-center">
+            Booking Summary
+          </h2>
           <p className="font-medium mb-4">
-            <p>Room Type: Double Room</p>
             <p>
-              Check-in:
-              {checkIn
-                ? checkIn.toLocaleDateString(undefined, {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                : ""}
+              Room Type: <span className="text-blue-500">Double Room</span>
+            </p>
+            <p>
+              Check-in:{" "}
+              <span className="text-blue-500">
+                {checkIn
+                  ? checkIn.toLocaleDateString(undefined, {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : ""}
+              </span>
             </p>
             <p>
               Check-out:
-              {checkOut
-                ? checkOut.toLocaleDateString(undefined, {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                : ""}
+              <span className="text-blue-500">
+                {checkOut
+                  ? checkOut.toLocaleDateString(undefined, {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : ""}
+              </span>
             </p>
-            <p>Number of Days: {chosenDaysCount}</p>
-            <p>Reference #: {referenceNumber}</p>
-            <p>Total Cost: ₱{totalAmount}</p>
+            <p>
+              Number of Days:{" "}
+              <span className="text-blue-500">{chosenDaysCount}</span>
+            </p>
+            <p>
+              Reference #:{" "}
+              <span className="text-blue-500">{referenceNumber}</span>{" "}
+            </p>
+            <p>
+              Total Cost:{" "}
+              <span className="text-orange-500">₱{totalAmount}</span>
+            </p>
           </p>
           <div className="flex justify-around">
             <Button
-            color="danger"
-              className=" text-white px-6 py-2 rounded-lg mr-4 hover:bg-red-600"
+              color="danger"
+              size="sm"
+              className="px-6 py-2 rounded-lg"
               onClick={handleCloseModal}
             >
               Cancel
             </Button>
             <Button
-            color="primary"
-            size="sm"
+              color="primary"
+              size="sm"
               onClick={successHandle}
+              className=" text-white px-6 py-2 rounded-lg"
             >
               Confirm
             </Button>

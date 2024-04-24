@@ -80,11 +80,11 @@ const SingleRoomPage = () => {
       roomId,
       referenceNumber
     );
-    RoomUnavailable(roomId);
+    // RoomUnavailable(roomId);
     navigate("/");
     Swal.fire({
-      title: "Reservation Successful!",
-      text: "Thank you for choosing our hotel. Your room has been successfully reserved.",
+      title: "Reservation in process!",
+      text: "Please wait for your booking confirmation.",
       icon: "success",
       timer: 5000,
       customClass: {

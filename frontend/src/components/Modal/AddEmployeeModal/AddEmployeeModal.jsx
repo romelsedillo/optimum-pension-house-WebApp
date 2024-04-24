@@ -9,13 +9,13 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { useState, useMemo } from "react";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { PlusIcon } from "./PlusIcon";
-import { addEmployee } from "../../../utils/AddFunctions/AddEmployee";
+
 import AddAuthEmployee from "../../../utils/AddFunctions/AddAuthEmployee";
-const AddEmployeeModal = () => {
+const AddEmployeeModal = ({ onAddSuccess }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState("romel");
   const [position, setPosition] = useState("manager");
@@ -58,16 +58,31 @@ const AddEmployeeModal = () => {
     setStatus(event.target.value);
   };
 
-  const onSave = () => {
-    Swal.fire({
-      icon: "success",
-      title: "A new employee added.",
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-    });
-    AddAuthEmployee(name, position, email, status, phone, address, password);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await toast.promise(
+        AddAuthEmployee(
+          name,
+          position,
+          email,
+          status,
+          phone,
+          address,
+          password
+        ),
+        {
+          loading: "Adding......",
+          success: <b>New employee added!</b>,
+          error: <b>Could not add.</b>,
+        }
+      );
+      onAddSuccess();
+    } catch (error) {
+      console.error("Error adding employee:", error);
+      toast.error(`Error adding employee: ${error.message}`);
+    }
   };
 
   const isAnyFieldEmpty =
@@ -80,7 +95,7 @@ const AddEmployeeModal = () => {
   return (
     <ModalContent className="p-4">
       {(onClose) => (
-        <>
+        <form onSubmit={handleSubmit}>
           <ModalHeader className="flex flex-col gap-1">
             Add New Employee
           </ModalHeader>
@@ -210,21 +225,21 @@ const AddEmployeeModal = () => {
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" size="md" onPress={onClose}>
+            <Button color="danger" variant="flat" size="sm" onPress={onClose}>
               Close
             </Button>
             <Button
+              type="submit"
               color="primary"
-              size="md"
+              size="sm"
               onPress={onClose}
               endContent={<PlusIcon />}
-              onClick={() => onSave()}
               isDisabled={isAnyFieldEmpty}
             >
               Add Guest
             </Button>
           </ModalFooter>
-        </>
+        </form>
       )}
     </ModalContent>
   );

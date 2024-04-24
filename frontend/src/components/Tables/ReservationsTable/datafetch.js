@@ -12,7 +12,6 @@ export const fetchDataFromAppwrite = async () => {
       .setProject(PROJECT_ID);
     const databases = new Databases(client);
 
-
     const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
 
     const data = response.documents.map((doc) => ({
@@ -22,10 +21,11 @@ export const fetchDataFromAppwrite = async () => {
       status: doc.status,
       totalAmount: doc.totalAmount,
       guest: doc.guests.name,
+      roomId: doc.rooms.$id,
       room: `room ${doc.rooms.roomNumber} : ${doc.rooms.roomType.typeName}`,
       referenceNumber: doc.referenceNumber,
-
     }));
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

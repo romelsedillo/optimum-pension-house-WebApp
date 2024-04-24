@@ -26,7 +26,8 @@ import { capitalize } from "./utils";
 import AddEmployeeModal from "../../Modal/AddEmployeeModal/AddEmployeeModal";
 import deleteEmployee from "../../../utils/DeleteEmployee";
 import { fetchDataFromAppwrite } from "./datafetch";
-import Swal from 'sweetalert2';
+import { toast } from "react-hot-toast";
+
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
@@ -93,20 +94,29 @@ export default function EmployeesTable() {
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
 
-  const handleDeleteEmployee = (userId) => {
-    Swal.fire({
-      icon: "success",
-      title: "Employee's data has been deleted.",
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-    });
 
-    deleteEmployee(userId);
-    setTimeout(() => {
-      window.location.reload(); // Reload the current page
-    }, 1300);
+  const handleAddSuccess = async () => {
+    try {
+      await fetchData(); // Fetch updated data
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
+  };
+  const handleDeleteEmployee = async (userId) => {
+ try {
+  await toast.promise(deleteEmployee(userId), {
+    loading: "Deleting...",
+    success: <b>Employee successfully deleted!</b>,
+    error: <b>Failed to delete employee.</b>,
+  });
+  await fetchData();
+ } catch (error) {
+  console.error("Error deleting employee:", error);
+  toast.error(`Error deleting employee: ${error.message}`);
+ }
+
+    
+    
   };
 
   const headerColumns = React.useMemo(() => {
@@ -387,7 +397,7 @@ export default function EmployeesTable() {
         onOpenChange={onOpenChange}
         placement="top-center"
       >
-        <AddEmployeeModal />
+        <AddEmployeeModal onAddSuccess={handleAddSuccess}/>
       </Modal>
     </>
   );

@@ -16,6 +16,8 @@ import { useAuth } from "../utils/AuthContext";
 import gcashqrcode from "../assets/images/gcash-qrcode.jpg";
 import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
+import RoomUnavailable from "../utils/UpdateFunctions/RoomUnavailable";
+
 
 const DoubleRoomPage = () => {
   const { user } = useAuth();
@@ -79,10 +81,11 @@ const DoubleRoomPage = () => {
       roomId,
       referenceNumber
     );
+    // RoomUnavailable(roomId);
     navigate("/");
     Swal.fire({
-      title: "Reservation Successful!",
-      text: "Thank you for choosing our hotel. Your room has been successfully reserved.",
+      title: "Reservation in process!",
+      text: "Please wait for your booking confirmation.",
       icon: "success",
       timer: 5000,
       customClass: {

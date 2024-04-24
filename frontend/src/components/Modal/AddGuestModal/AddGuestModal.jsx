@@ -22,10 +22,16 @@ const AddGuestModal = ({ onAddSuccess }) => {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      await addAuthGuest(name, email, phone, address, password);
-      toast.success("New guest successfully added!");
+      await toast.promise(addAuthGuest(name, email, phone, address, password), {
+        loading: "Saving...",
+        success: <b>New guest added!</b>,
+        error: <b>Could not save.</b>,
+      });
+      
       onAddSuccess(); // Call the onAddSuccess callback
     } catch (error) {
       console.error("Error adding guest:", error);
@@ -122,7 +128,7 @@ const AddGuestModal = ({ onAddSuccess }) => {
               Close
             </Button>
             <Button
-            type="submit"
+              type="submit"
               color="primary"
               size="sm"
               onPress={onClose}

@@ -6,11 +6,12 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useState } from "react";
-import Swal from "sweetalert2";
 import { Select, SelectItem } from "@nextui-org/react";
 import { updateReservation } from "../../../utils/UpdateReservation";
+import { toast } from "react-hot-toast";
+import RoomUnavailable from "../../../utils/UpdateFunctions/RoomUnavailable";
 
-const UpdateReservationModal = ({ reservationId }) => {
+const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const [status, setStatus] = useState("");
 
   const handleStatusChange = (event) => {
@@ -18,17 +19,26 @@ const UpdateReservationModal = ({ reservationId }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateReservation(reservationId, status);
-    console.log("Status:", status);
+
+    try {
+      toast.promise(updateReservation(reservationId, status), {
+        loading: "Updating...",
+        success: <b>Reservation updated.</b>,
+        error: <b>Update failed.</b>,
+      });
+      RoomUnavailable(roomId)
+      onUpdateSuccess()
+    } catch (error) {
+      console.log("Status:", status);
+      toast.error(`Error updating reservation: ${error.message}`);
+    }
   };
 
   return (
     <ModalContent>
       {(onClose) => (
         <form onSubmit={handleSubmit}>
-          <ModalHeader className="flex flex-col gap-1">
-            Edit Status
-          </ModalHeader>
+          <ModalHeader className="flex flex-col gap-1">Edit Status</ModalHeader>
           <ModalBody>
             <Select
               label="Edit Status"
