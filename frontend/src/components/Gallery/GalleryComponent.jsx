@@ -20,7 +20,6 @@ import twinBed1 from "./Images/twin bed 1.jpg";
 const GalleryComponent = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // Replace these image URLs with your actual image URLs
   const imageUrls = [
     bedroom3,
     bedroom4,
