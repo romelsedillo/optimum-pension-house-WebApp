@@ -28,7 +28,6 @@ import deleteEmployee from "../../../utils/DeleteEmployee";
 import { fetchDataFromAppwrite } from "./datafetch";
 import { toast } from "react-hot-toast";
 
-
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "NAME", uid: "name", sortable: true },
@@ -47,7 +46,7 @@ const statusOptions = [
 
 const statusColorMap = {
   online: "success",
-  offline: "danger",
+  offline: "default",
 };
 
 const INITIAL_VISIBLE_COLUMNS = [
@@ -94,7 +93,6 @@ export default function EmployeesTable() {
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
 
-
   const handleAddSuccess = async () => {
     try {
       await fetchData(); // Fetch updated data
@@ -103,20 +101,17 @@ export default function EmployeesTable() {
     }
   };
   const handleDeleteEmployee = async (userId) => {
- try {
-  await toast.promise(deleteEmployee(userId), {
-    loading: "Deleting...",
-    success: <b>Employee successfully deleted!</b>,
-    error: <b>Failed to delete employee.</b>,
-  });
-  await fetchData();
- } catch (error) {
-  console.error("Error deleting employee:", error);
-  toast.error(`Error deleting employee: ${error.message}`);
- }
-
-    
-    
+    try {
+      await toast.promise(deleteEmployee(userId), {
+        loading: "Deleting...",
+        success: <b>Employee successfully deleted!</b>,
+        error: <b>Failed to delete employee.</b>,
+      });
+      await fetchData();
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+      toast.error(`Error deleting employee: ${error.message}`);
+    }
   };
 
   const headerColumns = React.useMemo(() => {
@@ -397,7 +392,7 @@ export default function EmployeesTable() {
         onOpenChange={onOpenChange}
         placement="top-center"
       >
-        <AddEmployeeModal onAddSuccess={handleAddSuccess}/>
+        <AddEmployeeModal onAddSuccess={handleAddSuccess} />
       </Modal>
     </>
   );

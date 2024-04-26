@@ -8,7 +8,7 @@ const DoubleRooms = () => {
   return (
     <>
       <NavBar />
-      <div className="w-full px-36 py-10">
+      <div className="w-full px-36 py-10 h-[2200px]">
         <div className="mb-4 flex flex-col gap-4">
           <div className="flex flex-col">
             <h1 className=" font-Poppins text-4xl">Double Rooms</h1>

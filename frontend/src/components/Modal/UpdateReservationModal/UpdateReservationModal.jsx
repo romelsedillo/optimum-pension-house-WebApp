@@ -26,8 +26,8 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
         success: <b>Reservation updated.</b>,
         error: <b>Update failed.</b>,
       });
-      RoomUnavailable(roomId)
-      onUpdateSuccess()
+      RoomUnavailable(roomId);
+      onUpdateSuccess();
     } catch (error) {
       console.log("Status:", status);
       toast.error(`Error updating reservation: ${error.message}`);
@@ -38,7 +38,9 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
     <ModalContent>
       {(onClose) => (
         <form onSubmit={handleSubmit}>
-          <ModalHeader className="flex flex-col gap-1">Update Status</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1">
+            Update Status
+          </ModalHeader>
           <ModalBody>
             <Select
               label="Edit Status"
