@@ -17,6 +17,7 @@ import gcashqrcode from "../assets/images/gcash-qrcode.jpg";
 import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
 import RoomUnavailable from "../utils/UpdateFunctions/RoomUnavailable";
+import { getCurrentDateTime } from "../utils/CurrentDayTime";
 
 const DoubleRoomPage = () => {
   const { user } = useAuth();
@@ -24,7 +25,6 @@ const DoubleRoomPage = () => {
   const [referenceNumber, setReferenceNumber] = useState("");
   const [checkIn, setCheckIn] = useState(new Date());
   const [checkOut, setCheckOut] = useState(addDays(new Date(), 1));
-  const [status, setStatus] = useState("pending");
   const chosenDaysCount = differenceInDays(checkOut, checkIn);
   const totalAmount = chosenDaysCount * 1120; // Calculating the difference in days
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,6 +71,10 @@ const DoubleRoomPage = () => {
 
   const isEmpty = referenceNumber === "";
   const successHandle = () => {
+    const currentDateTime = getCurrentDateTime();
+    const type = "online";
+    const status = "pending";
+
     AddReservation(
       checkIn,
       checkOut,
@@ -78,7 +82,9 @@ const DoubleRoomPage = () => {
       totalAmount,
       user.$id,
       roomId,
-      referenceNumber
+      referenceNumber,
+      currentDateTime,
+      type
     );
     // RoomUnavailable(roomId);
     navigate("/");
