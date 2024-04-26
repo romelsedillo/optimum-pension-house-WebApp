@@ -7,7 +7,7 @@ const Gallery = () => {
     <>
       <NavBar />
       <div className="w-full px-36 py-10">
-        <GalleryComponent></GalleryComponent>
+        <GalleryComponent />
       </div>
       <Footer />
     </>

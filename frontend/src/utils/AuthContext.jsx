@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }) => {
       // Set role state
       const role = getUserRole(accountDetails.labels);
       setRole(role);
-      // navigate(getRedirectPath(role));
 
       // Redirect to appropriate page based on role
       if (role === "admin") {
@@ -64,7 +63,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
-      // Show error message if login fails
+
       toast.error(
         "Login failed. Please check your credentials and try again.",
         {
