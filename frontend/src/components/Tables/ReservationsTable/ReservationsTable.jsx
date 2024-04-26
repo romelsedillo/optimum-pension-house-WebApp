@@ -30,6 +30,8 @@ import { toast } from "react-hot-toast";
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
+  { name: "Date Created", uid: "dateCreated", sortable: true },
+  { name: "Type", uid: "type", sortable: true },
   { name: "Guest", uid: "guest", sortable: true },
   { name: "Check-in Date", uid: "checkInDate", sortable: true },
   { name: "Check-out Date", uid: "checkOutDate", sortable: true },
@@ -55,6 +57,8 @@ const statusColorMap = {
 };
 
 const INITIAL_VISIBLE_COLUMNS = [
+  "dateCreated",
+  "type",
   "guest",
   "checkInDate",
   "checkOutDate",
@@ -73,9 +77,9 @@ export default function ReservationsTable() {
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "Check-in Date",
+    column: "dateCreated",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -108,6 +112,13 @@ export default function ReservationsTable() {
   useEffect(() => {
     fetchData();
   }, []);
+  const handleAddSuccess = async () => {
+    try {
+      await fetchData(); // Fetch updated data
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleUpdateSuccess = async () => {
     try {
@@ -242,7 +253,7 @@ export default function ReservationsTable() {
                   onPress={onUpdateModalOpen}
                   onClick={() => getReservationId(user.id, user.roomId)}
                 >
-                  Edit
+                  Update
                 </DropdownItem>
                 <DropdownItem onClick={() => alert("delete clicked")}>
                   Delete
@@ -335,7 +346,6 @@ export default function ReservationsTable() {
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
             </select>
@@ -447,7 +457,7 @@ export default function ReservationsTable() {
         size="lg"
         className=""
       >
-        <AddReservationModal />
+        <AddReservationModal onAddSuccess={handleAddSuccess} />
       </Modal>
       <Modal
         isOpen={isUpdateModalOpen}

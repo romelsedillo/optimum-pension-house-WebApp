@@ -17,8 +17,10 @@ import format from "date-fns/format";
 import { addReservation } from "../../../utils/AddFunctions/AddReservation";
 import { roomCollectionType } from "../../../utils/Collections/RoomCollectionType";
 import RoomUnavailable from "../../../utils/UpdateFunctions/RoomUnavailable";
+import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
+import { toast } from "react-hot-toast";
 
-const AddReservationModal = () => {
+const AddReservationModal = ({ onAddSuccess }) => {
   const [guestData, setGuestData] = useState([]);
   const [roomTypeData, setRoomTypeData] = useState([]);
   const [roomData, setRoomData] = useState([]);
@@ -69,12 +71,11 @@ const AddReservationModal = () => {
         console.error("Error fetching data:", error);
       }
     };
+
     guestFetchData();
     roomTypeFetchData();
     roomFetchData();
     roomCollectionTypeData();
-
-    console.log(roomTypeBase);
   }, [roomType, roomTypeBase]);
 
   const totalAmount = roomPrice * chosenDaysCount;
@@ -118,34 +119,34 @@ const AddReservationModal = () => {
   const handleRoomNumberChange = (event) => {
     setRooms(event.target.value);
   };
-  const handleRoomRateChange = (event) => {
-    setRoomRate(event.target.value);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const currentDateTime = getCurrentDateTime();
+    const type = "walk-in";
     const status = "pending";
-    addReservation(
-      checkInDate,
-      checkOutDate,
-      status,
-      totalAmount,
-      guests,
-      rooms,
-      referenceNumber
-    );
-    RoomUnavailable(rooms);
 
-    console.log(
-      checkInDate,
-      checkOutDate,
-      status,
-      totalAmount,
-      guests,
-      rooms,
-      referenceNumber
+    toast.promise(
+      addReservation(
+        checkInDate,
+        checkOutDate,
+        status,
+        totalAmount,
+        guests,
+        rooms,
+        referenceNumber,
+        currentDateTime,
+        type
+      ),
+      {
+        loading: "Saving...",
+        success: <b>Reservation saved!</b>,
+        error: <b>Could not save.</b>,
+      }
     );
+
+    RoomUnavailable(rooms);
+    onAddSuccess();
   };
   const isAnyFieldEmpty =
     guests === "" ||
@@ -154,6 +155,7 @@ const AddReservationModal = () => {
     checkOutDate === "" ||
     roomType === "" ||
     rooms === "";
+
   return (
     <ModalContent>
       {(onClose) => (

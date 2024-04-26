@@ -21,9 +21,9 @@ export const roomUnavailable = async (roomId) => {
       }
     );
 
-    console.log("New room added with ID:", response.$id);
+    console.log("Room updated with ID:", response.$id);
   } catch (error) {
-    console.error("Error adding room:", error);
+    console.error("Error updating room:", error);
   }
 };
 export default roomUnavailable;

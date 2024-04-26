@@ -40,7 +40,7 @@ const Home = () => {
           <NavLink color="foreground" to="/rooms">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-orange-500 to-purple-500 text-[#fff] rounded-md font-semibold"
+              className="bg-gradient-to-r from-orange-500 to-purple-500 text-[#fff] rounded-md"
             >
               Book Your Stay Now
             </Button>

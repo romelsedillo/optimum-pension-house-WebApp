@@ -15,10 +15,13 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { useAuth } from "../../utils/AuthContext";
 import { reservationCollection } from "../../utils/Collections/ReservationCollection";
 import { useState, useEffect } from "react";
+import { getCurrentDateTime } from "../../utils/CurrentDayTime";
 
 export default function EmployeesNavBar() {
   const { role, user, logout } = useAuth();
   const [count, setCount] = useState([]);
+
+  const [currentDateTime, setCurrentDateTime] = useState(getCurrentDateTime());
 
   const guestFetchData = async () => {
     try {
@@ -29,16 +32,28 @@ export default function EmployeesNavBar() {
     }
   };
 
-  const total = count.length
+  const totalPending = count.filter((item) => item.status === "pending").length;
+
   useEffect(() => {
     guestFetchData();
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(getCurrentDateTime());
+    }, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <Navbar isBordered className="px-8 py-1 flex items-start justify-end">
-      <NavbarContent className="flex gap-16" justify="end">
+    <Navbar isBordered maxWidth="full" className="py-1 px-6 flex justify-center">
+      <NavbarContent className="w-full">
         <NavbarItem className="">
-          <Badge color="danger" content={total} size="lg" shape="circle">
+          <h1 className="text-blue-500 text-lg">{currentDateTime}</h1>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent className="flex gap-16 w-full" justify="end">
+        <NavbarItem className="">
+          <Badge color="danger" content={totalPending} size="lg" shape="circle">
             <Tooltip
               key="left"
               placement="left"

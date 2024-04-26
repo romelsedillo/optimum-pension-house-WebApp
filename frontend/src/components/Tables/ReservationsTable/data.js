@@ -1,5 +1,7 @@
 const columns = [
   { name: "ID", uid: "id", sortable: true },
+  { name: "Date Created", uid: "dateCreated", sortable: true },
+  { name: "Type", uid: "type", sortable: true },
   { name: "Guest", uid: "guest", sortable: true },
   { name: "Check-in Date", uid: "checkInDate", sortable: true },
   { name: "Check-out Date", uid: "checkOutDate", sortable: true },

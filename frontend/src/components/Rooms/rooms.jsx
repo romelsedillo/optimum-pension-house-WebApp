@@ -39,7 +39,7 @@ const rooms = () => {
           {/* ------------ SINGLE ROOM ---------- */}
           <div className="w-full flex justify-center px-12">
             <div className="w-[50%] ">
-              <img src={SingleBedroom} alt="" className="w-[450px]" />
+              <img src={SingleBedroom} alt="" className="w-[450px] rounded-md" />
             </div>
             <div className="flex flex-col items-center justify-center w-[50%] px-16 gap-3">
               <div className="flex flex-col gap-2">
@@ -104,7 +104,7 @@ const rooms = () => {
                 <Button
                   size="md"
                   radius="sm"
-                  className=" bg-[#DD7210] text-white font-bold"
+                  className=" bg-[#DD7210] text-white"
                   onClick={() => (user ? navigate("/single-rooms") : navigate("/login"))}
                 >
                   BOOK NOW
@@ -115,7 +115,7 @@ const rooms = () => {
           {/* -------------- DOUBLE ROOM -------------------------------- */}
           <div className="w-full flex flex-row-reverse justify-center px-12">
             <div className="w-[50%] ">
-              <img src={SingleBedroom} alt="" className="w-[450px]" />
+              <img src={SingleBedroom} alt="" className="w-[450px] rounded-md" />
             </div>
             <div className="flex flex-col items-center justify-center w-[50%] px-16  gap-2">
               <div className="flex flex-col gap-2">
@@ -183,7 +183,7 @@ const rooms = () => {
                 <Button
                   size="md"
                   radius="sm"
-                  className=" bg-[#DD7210] text-white font-bold"
+                  className=" bg-[#DD7210] text-white"
                   onClick={() => (user ? navigate("/double-rooms") : navigate("/login"))}
                 >
                   BOOK NOW
@@ -195,7 +195,7 @@ const rooms = () => {
           {/* --------------- TWIN DOUBLE ------------------------------ */}
           <div className="w-full flex justify-center px-12">
             <div className="w-[50%] ">
-              <img src={SingleBedroom} alt="" className="w-[450px]" />
+              <img src={SingleBedroom} alt="" className="w-[450px] rounded-md" />
             </div>
             <div className="flex flex-col items-center justify-center w-[50%] px-16  gap-2">
               <div className="flex flex-col ga2-1 w-full">
@@ -263,7 +263,7 @@ const rooms = () => {
                 <Button
                   size="md"
                   radius="sm"
-                  className=" bg-[#DD7210] text-white font-bold"
+                  className=" bg-[#DD7210] text-white"
                   onClick={() => (user ? navigate("/twin-standard-rooms") : navigate("/login"))}
                 >
                   BOOK NOW

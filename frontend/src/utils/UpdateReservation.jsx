@@ -8,7 +8,7 @@ import { Databases } from "appwrite";
 const databases = new Databases(client);
 
 // Function to add a new guest to the database
-export const updateReservation = async (reservationId,status) => {
+export const updateReservation = async (reservationId, status) => {
   try {
     // Create a new document in the guests collection
     const response = await databases.updateDocument(
@@ -16,7 +16,7 @@ export const updateReservation = async (reservationId,status) => {
       RESERVATIONS_COLLECTION_ID,
       reservationId,
       {
-        status: status
+        status: status,
       }
     );
 

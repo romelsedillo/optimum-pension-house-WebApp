@@ -38,7 +38,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
     <ModalContent>
       {(onClose) => (
         <form onSubmit={handleSubmit}>
-          <ModalHeader className="flex flex-col gap-1">Edit Status</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1">Update Status</ModalHeader>
           <ModalBody>
             <Select
               label="Edit Status"
@@ -69,7 +69,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
               Close
             </Button>
             <Button type="submit" color="primary" size="md" onPress={onClose}>
-              Change Status
+              Update Status
             </Button>
           </ModalFooter>
         </form>

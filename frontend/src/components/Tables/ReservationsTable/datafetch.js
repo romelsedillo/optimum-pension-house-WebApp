@@ -24,8 +24,9 @@ export const fetchDataFromAppwrite = async () => {
       roomId: doc.rooms.$id,
       room: `room ${doc.rooms.roomNumber} : ${doc.rooms.roomType.typeName}`,
       referenceNumber: doc.referenceNumber,
+      dateCreated: doc.dateCreated,
+      type: doc.type,
     }));
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

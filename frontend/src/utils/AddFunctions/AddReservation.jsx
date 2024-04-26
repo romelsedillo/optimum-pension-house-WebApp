@@ -15,7 +15,9 @@ export const addReservation = async (
   totalAmount,
   guests,
   rooms,
-  referenceNumber
+  referenceNumber,
+  currentDateTime,
+  type
 ) => {
   try {
     // Create a new document in the guests collection
@@ -31,6 +33,8 @@ export const addReservation = async (
         guests: guests,
         rooms: rooms,
         referenceNumber: referenceNumber,
+        type: type,
+        dateCreated: currentDateTime,
       }
     );
 

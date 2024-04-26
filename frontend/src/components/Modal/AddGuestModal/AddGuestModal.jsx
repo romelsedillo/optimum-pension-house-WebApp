@@ -32,7 +32,7 @@ const AddGuestModal = ({ onAddSuccess }) => {
         error: <b>Could not save.</b>,
       });
       
-      onAddSuccess(); // Call the onAddSuccess callback
+      onAddSuccess();
     } catch (error) {
       console.error("Error adding guest:", error);
       toast.error(`Error adding guest: ${error.message}`);

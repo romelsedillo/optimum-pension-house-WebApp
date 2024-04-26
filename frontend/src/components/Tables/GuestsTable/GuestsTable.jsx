@@ -208,7 +208,7 @@ export default function GuestsTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            {role === "" || role === "manager" || role === "receptionist" ? (
+            {role === "admin" || role === "manager" || role === "receptionist" ? (
               ""
             ) : (
               <Button
