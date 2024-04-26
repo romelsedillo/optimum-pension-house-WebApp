@@ -27,6 +27,7 @@ import AddEmployeeModal from "../../Modal/AddEmployeeModal/AddEmployeeModal";
 import deleteEmployee from "../../../utils/DeleteEmployee";
 import { fetchDataFromAppwrite } from "./datafetch";
 import { toast } from "react-hot-toast";
+import { Spinner } from "@nextui-org/react";
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
@@ -376,7 +377,16 @@ export default function EmployeesTable() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No users found"} items={sortedItems}>
+        <TableBody
+          emptyContent={
+            <Spinner
+              label="Loading. Please wait."
+              color="primary"
+              labelColor="primary"
+            />
+          }
+          items={sortedItems}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

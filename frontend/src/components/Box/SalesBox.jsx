@@ -7,7 +7,7 @@ const SalesBox = () => {
       <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
         <FontAwesomeIcon icon={faCoins} className=" w-4 h-4 text-blue-500" />
       </div>
-      <p className=" text-3xl text-green-500">$3.456K</p>
+      <p className=" text-3xl text-green-500">&#x20B1; 3.456K</p>
       <h1 className="text-sm">Sales Today</h1>
     </div>
   );

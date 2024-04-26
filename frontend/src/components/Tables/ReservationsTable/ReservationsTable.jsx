@@ -27,6 +27,7 @@ import AddReservationModal from "../../Modal/AddReservationModal/AddReservationM
 import UpdateReservationModal from "../../Modal/UpdateReservationModal/UpdateReservationModal";
 import { fetchDataFromAppwrite } from "./datafetch";
 import { toast } from "react-hot-toast";
+import { Spinner } from "@nextui-org/react";
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
@@ -440,7 +441,16 @@ export default function ReservationsTable() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No data found"} items={sortedItems}>
+        <TableBody
+          emptyContent={
+            <Spinner
+              label="Loading. Please wait."
+              color="primary"
+              labelColor="primary"
+            />
+          }
+          items={sortedItems}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

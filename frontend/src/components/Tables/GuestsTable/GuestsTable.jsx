@@ -24,6 +24,8 @@ import { fetchDataFromDatabase } from "./datafetch";
 import { toast } from "react-hot-toast";
 import { deleteGuest } from "../../../utils/DeleteFunctions/DeleteGuest.jsx";
 import { useAuth } from "../../../utils/AuthContext";
+import { Spinner } from "@nextui-org/react";
+
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "NAME", uid: "name", sortable: true },
@@ -208,7 +210,9 @@ export default function GuestsTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            {role === "admin" || role === "manager" || role === "receptionist" ? (
+            {role === "admin" ||
+            role === "manager" ||
+            role === "receptionist" ? (
               ""
             ) : (
               <Button
@@ -329,7 +333,16 @@ export default function GuestsTable() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No data found"} items={sortedItems}>
+        <TableBody
+          emptyContent={
+            <Spinner
+              label="Loading. Please wait."
+              color="primary"
+              labelColor="primary"
+            />
+          }
+          items={sortedItems}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

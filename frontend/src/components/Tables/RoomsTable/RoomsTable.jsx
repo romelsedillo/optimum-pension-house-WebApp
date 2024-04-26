@@ -28,6 +28,7 @@ import AddRoomModal from "../../Modal/AddRoomModal/AddRoomModal";
 import UpdateRoomModal from "../../Modal/UpdateRoomModal/UpdateRoomModal";
 import { fetchDataFromAppwrite } from "./datafetch";
 import { deleteRoom } from "../../../utils/DeleteFunctions/DeleteRoom";
+import { Spinner } from "@nextui-org/react";
 
 const statusColorMap = {
   available: "success",
@@ -419,7 +420,16 @@ export default function RoomsTable() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No users found"} items={sortedItems}>
+        <TableBody
+          emptyContent={
+            <Spinner
+              label="Loading. Please wait."
+              color="primary"
+              labelColor="primary"
+            />
+          }
+          items={sortedItems}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -445,7 +455,11 @@ export default function RoomsTable() {
         size="md"
         className="p-2"
       >
-        <UpdateRoomModal roomId={roomId} selectedRoomData={selectedRoomData} onUpdateSuccess={handleUpdateSuccess}/>
+        <UpdateRoomModal
+          roomId={roomId}
+          selectedRoomData={selectedRoomData}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
       </Modal>
     </>
   );
