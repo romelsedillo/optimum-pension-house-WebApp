@@ -26,13 +26,32 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { NotificationIcon } from "./NotificationIcon";
 import { useEffect, useState } from "react";
+import NotificationCollection from "../../utils/Collections/NotificationCollection";
 
 export default function NavbarComponent() {
   const { user, role, logout } = useAuth();
+  const [data, setData] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const notification = 0;
+
+  const fetchData = async () => {
+    try {
+      const appWriteData = await NotificationCollection();
+      setData(appWriteData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const notificationData = data.filter((item) => item.guests === user?.$id);
+  const notification = notificationData.length;
+  const message = notificationData[0]?.message;
+  const type = notificationData[0]?.type;
 
   const handleOpen = () => {
     onOpen();
@@ -157,7 +176,9 @@ export default function NavbarComponent() {
                       </DropdownItem>
                     )}
                     <DropdownItem key="profile">
-                      <p className=" capitalize">{user?.name}</p>
+                      <p className=" capitalize text-blue-500 text-lg">
+                        {user?.name}
+                      </p>
                     </DropdownItem>
                     {role === "guest" && (
                       <DropdownItem key="settings" color="primary">
@@ -173,9 +194,12 @@ export default function NavbarComponent() {
                             className="flex flex-col"
                             onClick={() => handleOpen()}
                           >
-                            <h1>Notification <span className="text-green-500">*</span> </h1>
+                            <h1>
+                              Notification{" "}
+                              <span className="text-green-500">*</span>{" "}
+                            </h1>
                             <span className=" text-tiny text-green-400">
-                              You successfully booked a room!
+                              {message}
                             </span>
                           </div>
                         ) : (
@@ -234,20 +258,39 @@ export default function NavbarComponent() {
                 Hello, <span className=" capitalize">{user.name}</span>
               </ModalHeader>
               <ModalBody>
-                <p>
-                  We are delighted to inform you that your booking with us has
-                  been successfully confirmed. Your reservation details are as
-                  follows:
-                </p>
-                <div>
-                  <p>Room Type: </p>
-                  <p>Check-in Date:</p>
-                  <p>Check-out Date:</p>
-                </div>
-                <p>
-                  Thank you for choosing to stay with us! We look forward to
-                  welcoming you soon.
-                </p>
+                {type === "success" ? (
+                  <>
+                    <p>
+                      We are delighted to inform you that your booking with us
+                      has been successfully confirmed. Your reservation details
+                      are as follows:
+                    </p>
+                    <div>
+                      <p>Room Type: </p>
+                      <p>Check-in Date:</p>
+                      <p>Check-out Date:</p>
+                    </div>
+                    <p>
+                      Thank you for choosing to stay with us! We look forward to
+                      welcoming you soon.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      We regret to inform you that your booking with us has been
+                      canceled. We apologize for any inconvenience this may have
+                      caused.{" "}
+                    </p>
+                    <p>
+                      If you require any further assistance or have any
+                      questions regarding the cancellation, please do not
+                      hesitate to contact us. We appreciate your understanding
+                      and hope to have the opportunity to welcome you in the
+                      future.
+                    </p>
+                  </>
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

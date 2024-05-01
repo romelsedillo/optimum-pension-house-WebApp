@@ -5,40 +5,64 @@ import {
   ModalFooter,
   Button,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import { updateReservation } from "../../../utils/UpdateReservation";
 import { toast } from "react-hot-toast";
 import RoomUnavailable from "../../../utils/UpdateFunctions/RoomUnavailable";
+import CreateNotification from "../../../utils/Notifications/CreateNotification";
+import ReservationCollection from "../../../utils/Collections/ReservationCollection";
 
 const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const [status, setStatus] = useState("");
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const appWriteData = await ReservationCollection();
+      setData(appWriteData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const reservationData = data.filter((item) => item.id === reservationId);
+
+  const guestId = reservationData[0]?.guestId;
 
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // try {
-    //   toast.promise(updateReservation(reservationId, status), {
-    //     loading: "Updating...",
-    //     success: <b>Reservation updated.</b>,
-    //     error: <b>Update failed.</b>,
-    //   });
-    //   RoomUnavailable(roomId);
-    //   onUpdateSuccess();
-    // } catch (error) {
-    //   console.log("Status:", status);
-    //   toast.error(`Error updating reservation: ${error.message}`);
-    // }
+    try {
+      toast.promise(updateReservation(reservationId, status), {
+        loading: "Updating...",
+        success: <b>Reservation updated.</b>,
+        error: <b>Update failed.</b>,
+      });
+      RoomUnavailable(roomId);
+      onUpdateSuccess();
+    } catch (error) {
+      console.log("Status:", status);
+      toast.error(`Error updating reservation: ${error.message}`);
+    }
 
     if (status === "cancel") {
-      console.log("booking cancel");
+      const message = "Booking canceled.";
+      const type = "failed";
+      CreateNotification(guestId, message, type);
     }
     if (status === "confirmed") {
-      console.log("booking confirmed");
+      const message = "Booking confirmed.";
+      const type = "success";
+
+      CreateNotification(guestId, message, type);
     }
-  
   };
 
   return (
@@ -59,16 +83,28 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
               value={status}
               onChange={handleStatusChange}
             >
-              <SelectItem key="confirmed" value="confirmed" className="text-blue-500 hover:text-blue-500">
+              <SelectItem
+                key="confirmed"
+                value="confirmed"
+                className="text-blue-500 hover:text-blue-500"
+              >
                 Confirmed
               </SelectItem>
               <SelectItem key="cancel" value="cancel" className="text-red-500">
                 Cancel
               </SelectItem>
-              <SelectItem key="check-in" value="check-in" className="text-green-400">
+              <SelectItem
+                key="check-in"
+                value="check-in"
+                className="text-green-400"
+              >
                 CHeck-in
               </SelectItem>
-              <SelectItem key="check-out" value="check-out" className="text-green-400">
+              <SelectItem
+                key="check-out"
+                value="check-out"
+                className="text-green-400"
+              >
                 Check-out
               </SelectItem>
             </Select>
