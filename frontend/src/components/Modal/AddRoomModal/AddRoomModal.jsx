@@ -22,9 +22,8 @@ const AddGuestModal = ({ onAddSuccess }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Call the fetchDataFromAppwrite function to fetch data from Appwrite
-        const appwriteData = await roomTypeFetch();
-        setData(appwriteData);
+        const appWriteData = await roomTypeFetch();
+        setData(appWriteData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

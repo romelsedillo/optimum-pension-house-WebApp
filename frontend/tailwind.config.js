@@ -14,6 +14,8 @@ export default {
       Montserrat: ["Montserrat", "sans-serif"],
       CormorantGaramond: ["Cormorant Garamond", "serif"],
       Raleway: ["Raleway", "serif"],
+      Manrope: ["Manrope", "serif"],
+      DMSerifDisplay: ["DMSerifDisplay", "serif"],
     },
   },
   darkMode: "class",

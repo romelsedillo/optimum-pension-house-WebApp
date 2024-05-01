@@ -7,8 +7,6 @@ import {
 import { AuthProvider } from "./utils/AuthContext";
 import { NextUIProvider } from "@nextui-org/react";
 
-
-
 import Home from "./pages/Home";
 import RoomsAndSuits from "./pages/RoomsAndSuits";
 import Gallery from "./pages/Gallery";
@@ -58,6 +56,7 @@ import ReceptionistReports from "./pages/ReceptionistReports";
 import ReceptionistLogs from "./pages/ReceptionistLogs";
 
 import { Toaster } from "react-hot-toast";
+import Bookings from "./pages/Bookings";
 
 function App() {
   // const location = useLocation();
@@ -85,13 +84,17 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/single-rooms" element={<SingleRooms />} />
               <Route path="/double-rooms" element={<DoubleRooms />} />
+              <Route path="/bookings" element={<Bookings />} />
               <Route
                 path="/twin-standard-rooms"
                 element={<TwinStandardRooms />}
               />
               <Route path="/single/:roomId" element={<SingleRoomPage />} />
               <Route path="/double/:roomId" element={<DoubleRoomPageCopy />} />
-              <Route path="/twin-standard/:roomId" element={<TwinStandardRoomPage />} />
+              <Route
+                path="/twin-standard/:roomId"
+                element={<TwinStandardRoomPage />}
+              />
             </Route>
 
             {/* Private routes for Admin */}

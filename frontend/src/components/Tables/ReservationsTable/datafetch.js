@@ -27,6 +27,7 @@ export const fetchDataFromAppwrite = async () => {
       dateCreated: doc.dateCreated,
       type: doc.type,
     }));
+    data.sort((a, b) => b.dateCreated - a.dateCreated);
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

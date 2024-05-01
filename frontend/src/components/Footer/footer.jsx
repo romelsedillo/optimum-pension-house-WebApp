@@ -6,14 +6,20 @@ import {
   faGoogle,
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
+import Logo from "../Logo/Logo";
 
 const footer = () => {
   return (
-    <footer className=" bg-[#DD7210] w-[100%] py-[10px] flex justify-center items-center">
-      <div className="w-[85%] flex items-start justify-between text-[#fff]">
+    <footer className="bg-[#F6F5F2] w-[100%] flex justify-center items-center">
+      <div className="w-[85%] flex items-start justify-between text-[#333A73]">
         <div className="w-[25%] pr-4 flex flex-col items-end mt-12">
-          <h1 className=" text-[18px]">Optimum Pension House</h1>
-          <p className="text-[12px]">Alrights Reserved | &#169; 2023</p>
+          <div className="">
+            <Logo w="10" h="10" />
+          </div>
+          <h1 className=" text-[12px] text-orange-500">
+            Optimum Pension House
+          </h1>
+          <p className="text-[10px]">All rights Reserved | &#169; 2024</p>
         </div>
         <span className="text-[100px] font-thin">|</span>
         <div className="w-[25%] px-4 mt-12">

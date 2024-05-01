@@ -25,26 +25,51 @@ import Logo from "../Logo/Logo";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { NotificationIcon } from "./NotificationIcon";
+import { useEffect, useState } from "react";
 
 export default function NavbarComponent() {
   const { user, role, logout } = useAuth();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const notification = 1;
+  const notification = 0;
 
   const handleOpen = () => {
     onOpen();
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if the page has been scrolled
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // Add scroll event listener when component mounts
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup by removing event listener when component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
-      <Navbar isBordered className=" bg-[#DD7210] text-[white] h-[80px]">
+      <Navbar
+        className={`bg-[#F6F5F2] h-[80px] fixed top-0 w-full z-10 transition-shadow duration-300 ${
+          isScrolled ? "shadow-lg" : ""
+        }`}
+      >
         <NavbarContent justify="start">
           <NavbarBrand className="mr-4">
-            <Link href="/" className=" gap-2">
-              <Logo />
-              <p className="hidden sm:block font-bold text-[white] ml-4 text-[28px] font-CormorantGaramond italic">
+            <Link href="/" className=" gap-2 text-orange-500">
+              <Logo w="12" h="12" />
+              <p className=" font-DMSerifDisplay sm:block font-light ml-4 text-[26px]">
                 Optimum Pension House
               </p>
             </Link>
@@ -58,7 +83,7 @@ export default function NavbarComponent() {
               color="foreground"
               to="/"
               aria-current="page"
-              className=" hover:border-b-2 border-[#fff]"
+              className=" font-Manrope font-medium text-[#333A73] hover:border-b-2 border-orange-500"
             >
               Home
             </NavLink>
@@ -67,7 +92,7 @@ export default function NavbarComponent() {
             <NavLink
               color="foreground"
               to="/rooms"
-              className=" hover:border-b-2 border-[#fff]"
+              className=" font-Manrope font-medium text-[#333A73] hover:border-b-2  border-orange-500"
             >
               Rooms & Suites
             </NavLink>
@@ -77,7 +102,7 @@ export default function NavbarComponent() {
             <NavLink
               color="foreground"
               to="/gallery"
-              className=" hover:border-b-2 border-[#fff]"
+              className=" font-Manrope font-medium text-[#333A73] hover:border-b-2  border-orange-500"
             >
               Gallery
             </NavLink>
@@ -87,13 +112,27 @@ export default function NavbarComponent() {
             {user ? (
               <NavbarContent as="div" className="items-center" justify="end">
                 <Dropdown placement="bottom-end">
-                  <Badge
-                    isOneChar
-                    content={notification && <NotificationIcon size={12} />}
-                    color="danger"
-                    shape="circle"
-                    placement="top-right"
-                  >
+                  {notification ? (
+                    <Badge
+                      isOneChar
+                      content={notification && <NotificationIcon size={12} />}
+                      color="danger"
+                      shape="circle"
+                      placement="top-right"
+                    >
+                      <DropdownTrigger>
+                        <Avatar
+                          isBordered
+                          as="button"
+                          className="transition-transform"
+                          color="success"
+                          name="Jason Hughes"
+                          size="md"
+                          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                        />
+                      </DropdownTrigger>
+                    </Badge>
+                  ) : (
                     <DropdownTrigger>
                       <Avatar
                         isBordered
@@ -105,7 +144,8 @@ export default function NavbarComponent() {
                         src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
                       />
                     </DropdownTrigger>
-                  </Badge>
+                  )}
+
                   <DropdownMenu
                     aria-label="Profile Actions"
                     variant="flat"
@@ -127,17 +167,25 @@ export default function NavbarComponent() {
                       </DropdownItem>
                     )}
                     {role === "guest" && (
-                      <DropdownItem
-                        key="settings"
-                        color="primary"
-                        onPress={() => handleOpen()}
-                      >
-                        <div className="flex flex-col">
-                          Notification
-                          <span className=" text-tiny text-blue-400">
-                            You successfully booked a room!
-                          </span>
-                        </div>
+                      <DropdownItem key="settings" color="primary">
+                        {notification ? (
+                          <div
+                            className="flex flex-col"
+                            onClick={() => handleOpen()}
+                          >
+                            <h1>Notification <span className="text-green-500">*</span> </h1>
+                            <span className=" text-tiny text-green-400">
+                              You successfully booked a room!
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col">
+                            Notification
+                            <span className=" text-tiny text-gray-300">
+                              No notifications here.
+                            </span>
+                          </div>
+                        )}
                       </DropdownItem>
                     )}
                     {role === "guest" && (
@@ -169,7 +217,7 @@ export default function NavbarComponent() {
               <Button
                 radius="sm"
                 size="sm"
-                className=" bg-[white] text-[#DD7210] font-bold"
+                className=" bg-orange-500 text-[white] font-semibold px-6 shadow-lg"
                 onClick={() => navigate("/login")}
               >
                 Login
@@ -182,8 +230,8 @@ export default function NavbarComponent() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Hello, {user.name}
+              <ModalHeader className="flex gap-1">
+                Hello, <span className=" capitalize">{user.name}</span>
               </ModalHeader>
               <ModalBody>
                 <p>

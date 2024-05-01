@@ -473,8 +473,8 @@ export default function ReservationsTable() {
         isOpen={isUpdateModalOpen}
         onOpenChange={onUpdateModalOpenChange}
         placement="top-center"
-        size="sm"
-        className="p-4"
+        size="xs"
+        className="p-2"
       >
         <UpdateReservationModal
           onUpdateSuccess={handleUpdateSuccess}

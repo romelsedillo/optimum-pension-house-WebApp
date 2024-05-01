@@ -19,26 +19,33 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    // try {
+    //   toast.promise(updateReservation(reservationId, status), {
+    //     loading: "Updating...",
+    //     success: <b>Reservation updated.</b>,
+    //     error: <b>Update failed.</b>,
+    //   });
+    //   RoomUnavailable(roomId);
+    //   onUpdateSuccess();
+    // } catch (error) {
+    //   console.log("Status:", status);
+    //   toast.error(`Error updating reservation: ${error.message}`);
+    // }
 
-    try {
-      toast.promise(updateReservation(reservationId, status), {
-        loading: "Updating...",
-        success: <b>Reservation updated.</b>,
-        error: <b>Update failed.</b>,
-      });
-      RoomUnavailable(roomId);
-      onUpdateSuccess();
-    } catch (error) {
-      console.log("Status:", status);
-      toast.error(`Error updating reservation: ${error.message}`);
+    if (status === "cancel") {
+      console.log("booking cancel");
     }
+    if (status === "confirmed") {
+      console.log("booking confirmed");
+    }
+  
   };
 
   return (
     <ModalContent>
       {(onClose) => (
         <form onSubmit={handleSubmit}>
-          <ModalHeader className="flex flex-col gap-1">
+          <ModalHeader className="flex flex-col gap-1 text-blue-500">
             Update Status
           </ModalHeader>
           <ModalBody>
@@ -52,25 +59,25 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
               value={status}
               onChange={handleStatusChange}
             >
-              <SelectItem key="pending" value="pending">
-                Pending
-              </SelectItem>
-              <SelectItem key="confirmed" value="confirmed">
+              <SelectItem key="confirmed" value="confirmed" className="text-blue-500 hover:text-blue-500">
                 Confirmed
               </SelectItem>
-              <SelectItem key="check-in" value="check-in">
+              <SelectItem key="cancel" value="cancel" className="text-red-500">
+                Cancel
+              </SelectItem>
+              <SelectItem key="check-in" value="check-in" className="text-green-400">
                 CHeck-in
               </SelectItem>
-              <SelectItem key="check-out" value="check-out">
-                check-out
+              <SelectItem key="check-out" value="check-out" className="text-green-400">
+                Check-out
               </SelectItem>
             </Select>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" size="md" onPress={onClose}>
+            <Button color="danger" variant="flat" size="sm" onPress={onClose}>
               Close
             </Button>
-            <Button type="submit" color="primary" size="md" onPress={onClose}>
+            <Button type="submit" color="primary" size="sm" onPress={onClose}>
               Update Status
             </Button>
           </ModalFooter>

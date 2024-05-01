@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar/Navbar";
 import Footer from "../components/Footer/footer";
 const UserLogin = () => {
   return (
-    <>
+    <div className="mt-20">
       <NavBar />
       <div className="flex justify-center w-full px-36 py-12">
         <div className=" w-2/5">
@@ -11,7 +11,7 @@ const UserLogin = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
