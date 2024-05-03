@@ -31,4 +31,3 @@ export const fetchDataFromDatabase = async () => {
     return [];
   }
 };
-console.log(Client);

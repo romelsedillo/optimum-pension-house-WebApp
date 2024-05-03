@@ -2,16 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 
-import { Input } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
-import { Button } from "@nextui-org/react";
-
-// import { toast } from "react-toastify";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { role, loginUser } = useAuth();
   const navigate = useNavigate();
   const loginForm = useRef(null);
@@ -48,63 +45,71 @@ const Login = () => {
       ref={loginForm}
       className="w-full flex flex-col gap-3 px-10 py-6 rounded-lg bg-[#ffffff] border shadow-lg"
     >
-      <h1 className="text-center text-[30px] font-bold text-[#7828C8]">
+      <h1 className="text-center text-[30px] font-bold text-[#333A73] ">
         Hello!
       </h1>
-      <h6 className="text-center text-sm font-bold text-[#676666] mb-3">
+      <h6 className="text-center text-sm font-bold text-[#333A73]  mb-3">
         We are happy to see you again!
       </h6>
-        <Input
-          autoFocus
-          isRequired
-          isClearable
-          variant="bordered"
-          color="secondary"
-          size="sm"
-          type="email"
-          label="Email"
-          className="w-full"
-          name="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          onClear={() => setEmail("")}
-        />
+      <Input
+        autoFocus
+        isRequired
+        isClearable
+        autoComplete="off"
+        variant="bordered"
+        color="primary"
+        size="sm"
+        type="email"
+        label="Email"
+        className="w-full text-[#333A73] "
+        name="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        onClear={() => setEmail("")}
+      />
 
-        <Input
-          isRequired
-          label="Password"
-          variant="bordered"
-          color="secondary"
-          size="sm"
-          name="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          endContent={
-            <button
-              className="focus:outline-none"
-              type="button"
-              onClick={toggleVisibility}
-            >
-              {isVisible ? (
-                <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-              ) : (
-                <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-              )}
-            </button>
-          }
-          type={isVisible ? "text" : "password"}
-          className="w-full outline-none"
-        />
+      <Input
+        isRequired
+        autoComplete="off"
+        label="Password"
+        variant="bordered"
+        color="primary"
+        size="sm"
+        name="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        endContent={
+          <button
+            className="focus:outline-none text-[#333A73] "
+            type="button"
+            onClick={toggleVisibility}
+          >
+            {isVisible ? (
+              <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+            ) : (
+              <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+            )}
+          </button>
+        }
+        type={isVisible ? "text" : "password"}
+        className="w-full"
+      />
 
-      <Button type="submit" color="secondary" size="md" className=" rounded-md">
+      <Button
+        type="submit"
+        size="md"
+        className=" rounded-md bg-[#333A73] text-white"
+      >
         Login
       </Button>
 
-      <div className="my-2 text-center">
-        <p>Don&apos;t have an account?</p>
-        <Link to="/register" className="text-indigo-600 hover:underline">
-          Register here.
-        </Link>
+      <div className="my-6">
+        <p className="text-[#333A73]">
+          Don&apos;t have an account?{" "}
+          <Link to="/register" className=" text-blue-500  hover:underline">
+            Register here.
+          </Link>{" "}
+        </p>
       </div>
     </form>
   );

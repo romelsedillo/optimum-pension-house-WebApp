@@ -9,7 +9,6 @@ import AddGuestCopy from "./AddFunctions/AddGuestCopy";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  const { addGuestCopy } = AddGuestCopy();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -130,6 +129,7 @@ export const AuthProvider = ({ children }) => {
       setUser(accountDetails);
 
       navigate("/");
+      console.log(response);
     } catch (error) {
       console.error(error);
     }

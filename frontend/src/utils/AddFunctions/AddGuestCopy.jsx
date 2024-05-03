@@ -7,7 +7,6 @@ import { ID, Databases } from "appwrite";
 
 const databases = new Databases(client);
 
-// Function to add a new guest to the database
 export const addGuestCopy = async (
   randomString,
   name,
@@ -17,8 +16,6 @@ export const addGuestCopy = async (
   password
 ) => {
   try {
-    // let userId = ID;
-    // Create a new document in the guests collection
     const response = await databases.createDocument(
       DATABASE_ID,
       GUESTS_COLLECTION_ID,

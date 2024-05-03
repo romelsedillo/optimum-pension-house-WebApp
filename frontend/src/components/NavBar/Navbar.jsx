@@ -171,32 +171,32 @@ export default function NavbarComponent() {
                     disabledKeys={["profile"]}
                   >
                     {role === "" && (
-                      <DropdownItem key="profile">
+                      <DropdownItem key="labels">
                         <p className=" capitalize">{user?.labels}</p>
                       </DropdownItem>
                     )}
-                    <DropdownItem key="profile">
+                    <DropdownItem key="name">
                       <p className=" capitalize text-blue-500 text-lg">
                         {user?.name}
                       </p>
                     </DropdownItem>
                     {role === "guest" && (
-                      <DropdownItem key="settings" color="primary">
+                      <DropdownItem key="profile" color="primary">
                         <NavLink color="foreground" to="/profile">
                           Profile
                         </NavLink>
                       </DropdownItem>
                     )}
                     {role === "guest" && (
-                      <DropdownItem key="settings" color="primary">
+                      <DropdownItem key="notification" color="primary">
                         {notification ? (
                           <div
                             className="flex flex-col"
                             onClick={() => handleOpen()}
                           >
                             <h1>
-                              Notification{" "}
-                              <span className="text-green-500">*</span>{" "}
+                              Notification
+                              <span className="text-green-500">*</span>
                             </h1>
                             <span className=" text-tiny text-green-400">
                               {message}
@@ -213,7 +213,7 @@ export default function NavbarComponent() {
                       </DropdownItem>
                     )}
                     {role === "guest" && (
-                      <DropdownItem key="settings" color="primary">
+                      <DropdownItem key="bookings" color="primary">
                         <NavLink color="foreground" to="/bookings">
                           Bookings
                         </NavLink>
@@ -222,7 +222,7 @@ export default function NavbarComponent() {
                     {(role === "receptionist" ||
                       role === "manager" ||
                       role === "admin") && (
-                      <DropdownItem key="settings">
+                      <DropdownItem key="dashboard">
                         <Link
                           href={`/${role}-dashboard/guests`}
                           color="foreground"

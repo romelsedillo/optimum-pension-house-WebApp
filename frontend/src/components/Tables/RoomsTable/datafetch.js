@@ -23,7 +23,7 @@ export const fetchDataFromAppwrite = async () => {
     }));
     return data;
   } catch (error) {
-    console.error("Error fetching data from Appwrite:", error);
+    console.error("Error fetching data from AppWrite:", error);
     return [];
   }
 };

@@ -61,7 +61,7 @@ const BookingsTable = () => {
               color="primary"
               isStriped
               removeWrapper
-              aria-label=""
+              aria-label="table"
               bottomContent={
                 <div className="mt-10 flex w-full justify-center">
                   <Pagination

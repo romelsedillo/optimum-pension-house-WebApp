@@ -7,14 +7,19 @@ import { ID, Databases } from "appwrite";
 
 const databases = new Databases(client);
 
-// Function to add a new guest to the database
-export const addGuest = async (name, email, phone, address, password) => {
+export const addGuest = async (
+  randomString,
+  name,
+  email,
+  phone,
+  address,
+  password
+) => {
   try {
-    // Create a new document in the guests collection
     const response = await databases.createDocument(
       DATABASE_ID,
       GUESTS_COLLECTION_ID,
-      ID.unique(),
+      ID.custom(randomString),
       {
         name: name,
         email: email,
@@ -23,7 +28,6 @@ export const addGuest = async (name, email, phone, address, password) => {
         password: password,
       }
     );
-
     console.log("New guest added with ID:", response.$id);
   } catch (error) {
     console.error("Error adding guest:", error);

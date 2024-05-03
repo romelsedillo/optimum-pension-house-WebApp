@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Input } from "@nextui-org/react";
+
+import { Input, Button } from "@nextui-org/react";
+import { EyeFilledIcon } from "./EyeFilledIcon";
+import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 
 const UserRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,226 +69,224 @@ const UserRegister = () => {
     <form
       ref={registerForm}
       onSubmit={handleSubmit(onSubmit)}
-      className="pt-6 pb-4 px-8 w-full flex flex-col rounded-lg border bg-[#ffffff]"
+      className="py-6 px-10 w-full flex flex-col gap-2 rounded-lg border bg-[#ffffff] shadow-lg"
       autoComplete="off"
     >
-      <h2 className="text-2xl mb-2 font-semibold text-center text-violet-600">
+      <h2 className="text-[30px] mb-8 font-bold text-center text-[#333A73]">
         Register
       </h2>
-      <div className="flex items-center justify-center gap-10">
-        <div className="mb-1 w-full">
-          <label
-            htmlFor="name"
-            className="block text-green-500 text-sm font-medium mb-1"
-          >
-            Name:
-          </label>
-          <input
-            autoFocus
-            type="text"
-            id="name"
-            {...register("name")}
-            className={`w-full px-3 py-2 border-2 rounded-md shadow-sm focus:outline-none ${
-              errors.name ? "focus:border-red-500" : "focus:border-green-500"
-            }`}
-          />
-          <div className=" h-2 mt-1">
-            {errors.name && (
-              <p className="text-red-500 text-[10px]">{errors.name?.message}</p>
-            )}
+      <div>
+        <div className="flex items-center justify-center gap-4">
+          <div className="mb-1 w-full">
+            <Input
+              autoFocus
+              isRequired
+              isClearable
+              label="Name"
+              size="sm"
+              variant="bordered"
+              color="primary"
+              type="text"
+              id="name"
+              {...register("name")}
+              className={`w-full ${
+                errors.name ? "focus:border-red-500" : "focus:border-green-500"
+              }`}
+            />
+            <div className=" h-2">
+              {errors.name && (
+                <p className="text-red-500 text-[10px]">
+                  {errors.name?.message}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* ---- EMAIL ---- */}
-        <div className=" w-full">
-          <label
-            htmlFor="email"
-            className="block text-green-500 text-sm font-medium mb-1"
-          >
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            {...register("email")}
-            className={`w-full px-3 py-2 border-2 rounded-md shadow-sm focus:outline-none ${
-              errors.email ? "focus:border-red-500" : "focus:border-green-500"
-            }`}
-          />
-          {/* errors */}
-          <div className=" h-2 mt-1">
-            {errors.email && (
-              <p className="text-red-500 text-[10px] mt-1">
-                {errors.email?.message}
-              </p>
-            )}
+          {/* ---- EMAIL ---- */}
+          <div className=" w-full">
+            <Input
+              isRequired
+              isClearable
+              variant="bordered"
+              color="primary"
+              size="sm"
+              label="Email"
+              type="email"
+              id="email"
+              {...register("email")}
+              className={`w-full ${
+                errors.email ? "focus:border-red-500" : "focus:border-green-500"
+              }`}
+            />
+            {/* errors */}
+            <div className=" h-2 mt-1">
+              {errors.email && (
+                <p className="text-red-500 text-[10px] mt-1">
+                  {errors.email?.message}
+                </p>
+              )}
+            </div>
+          </div>
+          {/* ---- EMAIL ---- */}
+        </div>
+        <div className="flex gap-4">
+          <div className=" w-full">
+            <Input
+              isRequired
+              isClearable
+              variant="bordered"
+              color="primary"
+              size="sm"
+              label="Phone"
+              type="tel"
+              id="phone"
+              {...register("phone")}
+              className={`w-full ${
+                errors.phone ? "focus:border-red-500" : "focus:border-green-500"
+              }`}
+            />
+            <div className=" h-2">
+              {errors.phone && (
+                <p className="text-red-500 text-[10px]">
+                  {errors.phone?.message}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="mb-1 w-full">
+            <Input
+              isRequired
+              isClearable
+              variant="bordered"
+              color="primary"
+              size="sm"
+              label="Address"
+              type="text"
+              id="address"
+              {...register("address")}
+              className={`w-full ${
+                errors.address
+                  ? "focus:border-red-500"
+                  : "focus:border-green-500"
+              }`}
+            />
+            <div className=" h-2 mt-1">
+              {errors.address && (
+                <p className="text-red-500 text-[10px] mt-1">
+                  {errors.address?.message}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-        {/* ---- EMAIL ---- */}
-      </div>
-      {/* <div className="hidden mb-1 w-full">
-        <label
-          htmlFor="labels"
-          className="block text-green-500 text-sm font-medium mb-1"
-        >
-          labels :
-        </label>
-        <input value={""} type="text" id="phone" {...register("labels")} />
-      </div> */}
-      <div className="flex gap-10">
-        <div className="mb-1 w-full">
-          <label
-            htmlFor="phone"
-            className="block text-green-500 text-sm font-medium mb-1"
-          >
-            Phone :
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            {...register("phone")}
-            className={`w-full px-3 py-2 border-2 rounded-md shadow-sm focus:outline-none ${
-              errors.phone ? "focus:border-red-500" : "focus:border-green-500"
-            }`}
-          />
-          <div className=" h-2 mt-1">
-            {errors.phone && (
-              <p className="text-red-500 text-[10px] mt-1">
-                {errors.phone?.message}
-              </p>
-            )}
+        <div className=" w-full flex gap-4">
+          {/* ---- PASSWORD ---- */}
+          <div className="mb-4 relative w-full">
+            <Input
+              isRequired
+              variant="bordered"
+              color="primary"
+              size="sm"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              {...register("password")}
+              className={`w-full ${
+                errors.password
+                  ? "focus:border-red-500"
+                  : "focus:border-green-500"
+              }`}
+              endContent={
+                <button
+                  className="focus:outline-none text-[#333A73] "
+                  type="button"
+                  onClick={toggleShowPassword}
+                >
+                  {" "}
+                  {showPassword ? (
+                    <EyeSlashFilledIcon
+                      onClick={toggleShowPassword}
+                      className="text-2xl text-default-400 cursor-pointer"
+                    />
+                  ) : (
+                    <EyeFilledIcon
+                      onClick={toggleShowPassword}
+                      className="text-2xl text-default-400 cursor-pointer"
+                    />
+                  )}
+                </button>
+              }
+            />
+
+            {/* errors */}
+            <div className=" h-2 mt-1">
+              {errors.password && (
+                <p className="text-red-500 text-[10px] mt-1">
+                  {errors.password?.message}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="mb-1 w-full">
-          <label
-            htmlFor="address"
-            className="block text-green-500 text-sm font-medium mb-1"
-          >
-            Address :
-          </label>
-          <input
-            type="text"
-            id="address"
-            {...register("address")}
-            className={`w-full px-3 py-2 border-2 rounded-md shadow-sm focus:outline-none ${
-              errors.address ? "focus:border-red-500" : "focus:border-green-500"
-            }`}
-          />
-          <div className=" h-2 mt-1">
-            {errors.address && (
-              <p className="text-red-500 text-[10px] mt-1">
-                {errors.address?.message}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className=" w-full flex items-center justify-center gap-10">
-        {/* ---- PASSWORD ---- */}
-        <div className="mb-4 relative w-full">
-          <label
-            htmlFor="password"
-            className="block text-gray-700 text-sm font-medium mb-1"
-          >
-            Password:
-          </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            {...register("password")}
-            className={`w-full px-3 py-2 border-2 rounded-md shadow-sm focus:outline-none ${
-              errors.password
-                ? "focus:border-red-500"
-                : "focus:border-green-500"
-            }`}
-          />
-          <div
-            className={`absolute inset-y-0 right-0 flex items-center pr-2 mt-10 opacity-50 ${
-              errors.password
-                ? "transform translate-y-[-12px]"
-                : "transform translate-y-[-12px]"
-            }`}
-          >
-            {showPassword ? (
-              <FaEyeSlash
-                onClick={toggleShowPassword}
-                className="cursor-pointer"
-              />
-            ) : (
-              <FaEye onClick={toggleShowPassword} className="cursor-pointer" />
-            )}
-          </div>
-          {/* errors */}
-          <div className=" h-2 mt-1">
-            {errors.password && (
-              <p className="text-red-500 text-[10px] mt-1">
-                {errors.password?.message}
-              </p>
-            )}
-          </div>
-        </div>
-        {/* ---- PASSWORD ---- */}
-        {/* ---- CONFIRM PASSWORD ---- */}
-        <div className="mb-4 relative w-full">
-          <label
-            htmlFor="confirmPassword"
-            className="block text-gray-700 text-sm font-medium mb-1"
-          >
-            Confirm password:
-          </label>
-          <input
-            type={showConfirmPassword ? "text" : "password"}
-            id="confirmPassword"
-            {...register("confirmPassword")}
-            className={`w-full px-3 py-2 border-2 rounded-md shadow-sm focus:outline-none ${
-              errors.confirmPassword
-                ? "focus:border-red-500"
-                : "focus:border-green-500"
-            }`}
-          />
-          <div
-            className={`absolute inset-y-0 right-0 flex items-center pr-2 mt-14 opacity-50 ${
-              errors.confirmPassword
-                ? "transform translate-y-[-20px]"
-                : "transform translate-y-[-20px]"
-            }`}
-          >
-            {showConfirmPassword ? (
-              <FaEyeSlash
-                onClick={toggleShowConfirmPassword}
-                className="cursor-pointer"
-              />
-            ) : (
-              <FaEye
-                onClick={toggleShowConfirmPassword}
-                className="cursor-pointer"
-              />
-            )}
-          </div>
-          {/* errors */}
-          <div className=" h-2 mt-1">
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-[10px]">
-                Passwords don&apos;t match *
-              </p>
-            )}
+          {/* ---- PASSWORD ---- */}
+          {/* ---- CONFIRM PASSWORD ---- */}
+          <div className="mb-4 relative w-full">
+            <Input
+              isRequired
+              variant="bordered"
+              color="primary"
+              size="sm"
+              label="Confirm Password"
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              {...register("confirmPassword")}
+              className={`w-full ${
+                errors.confirmPassword
+                  ? "focus:border-red-500"
+                  : "focus:border-green-500"
+              }`}
+              endContent={
+                <button
+                  className="focus:outline-none text-[#333A73] "
+                  type="button"
+                  onClick={toggleShowConfirmPassword}
+                >
+                  {" "}
+                  {showConfirmPassword ? (
+                    <EyeSlashFilledIcon className="text-2xl text-default-400 cursor-pointer" />
+                  ) : (
+                    <EyeFilledIcon className="text-2xl text-default-400 cursor-pointer" />
+                  )}
+                </button>
+              }
+            />
+
+            {/* errors */}
+            <div className=" h-2 mt-1">
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-[10px]">
+                  Passwords don&apos;t match *
+                </p>
+              )}
+            </div>
           </div>
         </div>
         {/* ---- CONFIRM PASSWORD ---- */}
       </div>
-      <div className="flex justify-center">
-        <button
-          type="submit"
-          className="w-full mt-2 py-2 px-4 bg-violet-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300"
-        >
-          Register
-        </button>
-      </div>
-      <div className="my-2 text-center">
-        <p> Already have an account?</p>
-        <Link to="/login" className="text-indigo-600 hover:underline">
-          Login here.
-        </Link>
+      <Button
+        size="md"
+        type="submit"
+        className="w-full rounded-md bg-[#333A73] text-white"
+      >
+        Register
+      </Button>
+      <div className="my-6">
+        <p className="text-[#333A73]">
+          {" "}
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500 hover:underline">
+            Login here.
+          </Link>{" "}
+        </p>
       </div>
     </form>
   );

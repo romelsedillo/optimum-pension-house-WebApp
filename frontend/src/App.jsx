@@ -74,9 +74,9 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/register" element={<UserRegister />} />
-            <Route path="/manager" element={<ManagerLogin />} />
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="*" element={<Page404 />}></Route>
+            {/* <Route path="/manager" element={<ManagerLogin />} /> */}
+            {/* <Route path="/admin" element={<AdminLogin />} /> */}
+            <Route path="*" element={<Page404 />} />
 
             {/* Private routes for regular users */}
             <Route element={<PrivateRoutes />}>
