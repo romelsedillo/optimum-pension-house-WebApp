@@ -1,10 +1,43 @@
 import { useState } from "react";
 import Modal from "react-modal";
 
+import bedroom3 from "./Images/bedroom3.jpg";
+import bedroom4 from "./Images/bedroom4.jpg";
+import double from "./Images/double.jpg";
+import double3 from "./Images/double3.jpg";
+import housekeeper1 from "./Images/house-keeper-1.jpg";
+import housekeeper2 from "./Images/house-keeper-2.jpg";
+import housekeeper3 from "./Images/house-keeper-3.jpg";
+import manager from "./Images/manager.jpg";
+import receptionist1 from "./Images/receptionist-1.jpg";
+import receptionist2 from "./Images/receptionist-2.jpg";
+import singleBed from "./Images/single-bed.jpg";
+import singleBed2 from "./Images/single-bed 2.jpg";
+import singleBed3 from "./Images/single-bed 3.jpg";
+import singleBed4 from "./Images/single-bed 4.jpg";
+import twinBed1 from "./Images/twin bed 1.jpg";
+
 const GalleryComponent = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const imageUrls = [];
+  const imageUrls = [
+    bedroom3,
+    bedroom4,
+    double,
+    double3,
+    housekeeper1,
+    housekeeper2,
+    housekeeper3,
+    manager,
+    receptionist1,
+    receptionist2,
+    singleBed,
+    singleBed2,
+    singleBed3,
+    singleBed4,
+    twinBed1,
+    // Add more image URLs as needed
+  ];
 
   const customStyles = {
     content: {

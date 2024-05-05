@@ -1,5 +1,5 @@
 import NavBar from "../components/NavBar/Navbar";
-import GalleryComponent from "../components/Gallery/galleryComponent";
+// import GalleryComponent from "../components/Gallery/galleryComponent";
 import Footer from "../components/Footer/footer";
 
 const Gallery = () => {
@@ -7,7 +7,7 @@ const Gallery = () => {
     <div className="mt-20">
       <NavBar />
       <div className="w-full h-screen px-36 py-10">
-        <GalleryComponent />
+        {/* <GalleryComponent /> */}
       </div>
       <Footer />
     </div>
