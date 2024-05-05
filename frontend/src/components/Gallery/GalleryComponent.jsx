@@ -1,16 +1,10 @@
 import { useState } from "react";
 import Modal from "react-modal";
 
-import bedroom3 from "./Images/bedroom3.jpg";
-
-
 const GalleryComponent = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const imageUrls = [
-    bedroom3,
-   
-  ];
+  const imageUrls = [];
 
   const customStyles = {
     content: {

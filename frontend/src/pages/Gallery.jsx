@@ -6,7 +6,7 @@ const Gallery = () => {
   return (
     <div className="mt-20">
       <NavBar />
-      <div className="w-full px-36 py-10">
+      <div className="w-full h-screen px-36 py-10">
         <GalleryComponent />
       </div>
       <Footer />
