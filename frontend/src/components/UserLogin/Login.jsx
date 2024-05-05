@@ -43,57 +43,59 @@ const Login = () => {
     <form
       onSubmit={handleSubmit}
       ref={loginForm}
-      className="w-full flex flex-col gap-3 px-10 py-6 rounded-lg bg-[#ffffff] border shadow-lg"
+      className="w-full h-full flex flex-col gap-3 px-10 py-6 bg-[#ffffff]"
     >
-      <h1 className="text-center text-[30px] font-bold text-[#333A73] ">
-        Hello!
-      </h1>
-      <h6 className="text-center text-sm font-bold text-[#333A73]  mb-3">
-        We are happy to see you again!
-      </h6>
-      <Input
-        autoFocus
-        isRequired
-        isClearable
-        autoComplete="off"
-        variant="bordered"
-        color="primary"
-        size="sm"
-        type="email"
-        label="Email"
-        className="w-full text-[#333A73] "
-        name="email"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        onClear={() => setEmail("")}
-      />
+      
+      <div className="flex flex-col gap-2 ">
+        <label htmlFor="email" className="text-tiny text-[#333A73]">
+          Email
+        </label>
+        <Input
+          autoFocus
+          isRequired
+          isClearable
+          variant="bordered"
+          color="primary"
+          size="sm"
+          type="email"
+          className="w-full text-[#333A73] "
+          name="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          onClear={() => setEmail("")}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="email" className="text-tiny text-[#333A73]">
+          Password
+        </label>
 
-      <Input
-        isRequired
-        autoComplete="off"
-        label="Password"
-        variant="bordered"
-        color="primary"
-        size="sm"
-        name="password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        endContent={
-          <button
-            className="focus:outline-none text-[#333A73] "
-            type="button"
-            onClick={toggleVisibility}
-          >
-            {isVisible ? (
-              <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-            ) : (
-              <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-            )}
-          </button>
-        }
-        type={isVisible ? "text" : "password"}
-        className="w-full"
-      />
+        <Input
+          isRequired
+          autoComplete="off"
+          variant="bordered"
+          color="primary"
+          size="sm"
+          name="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          endContent={
+            <button
+              className="focus:outline-none text-[#333A73] "
+              type="button"
+              onClick={toggleVisibility}
+            >
+              {isVisible ? (
+                <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+              ) : (
+                <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+              )}
+            </button>
+          }
+          type={isVisible ? "text" : "password"}
+          className="w-full"
+        />
+      </div>
 
       <Button
         type="submit"

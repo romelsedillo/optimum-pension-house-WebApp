@@ -24,6 +24,7 @@ export default function ReportsTable() {
     return users.slice(start, end);
   }, [page, users]);
 
+  
   return (
     <Table
       isStriped
