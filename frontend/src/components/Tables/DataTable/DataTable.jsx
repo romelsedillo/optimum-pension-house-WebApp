@@ -2,6 +2,9 @@ import React from "react";
 import oph from "../../../assets/images/oph.jpg";
 
 const DataTable = ({ data }) => {
+
+  const totalProfit = data.reduce((acc, item) => acc + item.totalAmount, 0);
+
   return (
     <div
       id="source-html"
@@ -21,7 +24,6 @@ const DataTable = ({ data }) => {
           alignItems: "center",
         }}
       >
-        {/* <img src={oph} alt="" style={{ width: "4rem", height: "auto" }} /> */}
         <h1
           style={{
             textAlign: "center",
@@ -133,7 +135,7 @@ const DataTable = ({ data }) => {
                   textAlign: "left",
                 }}
               >
-                {item.amount}
+               ₱ {item.amount}
               </td>
               <td
                 style={{
@@ -142,7 +144,7 @@ const DataTable = ({ data }) => {
                   textAlign: "left",
                 }}
               >
-                {item.totalAmount}
+               ₱ {item.totalAmount}
               </td>
             </tr>
           ))}
@@ -151,7 +153,7 @@ const DataTable = ({ data }) => {
       <div className="w-full flex items-center justify-end px-32 mt-4">
         <p style={{ textAlign: "right" }}>
           Total Profit:{" "}
-          <span style={{ textDecoration: "underline" }}>$200</span>
+          <span style={{ textDecoration: "underline" }}>₱ {totalProfit}</span>
         </p>
       </div>
       <div className="w-full flex items-center justify-end px-28">

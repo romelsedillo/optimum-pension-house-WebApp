@@ -5,23 +5,29 @@ import ReportsTable from "../components/Tables/ReportsTable/ReportsTable";
 
 import PrintWordButton from "../components/PrintWordButton/PrintWordButton";
 import DataTable from "../components/Tables/DataTable/DataTable";
+import {reportsCollection} from "../utils/Collections/ReportsCollection"
+import { useState, useEffect } from "react";
+
+
 const AdminReports = () => {
-  const tableData = [
-    {
-      date: "2024-04-30",
-      quantity: 2,
-      roomType: "Single",
-      amount: "$100",
-      totalAmount: "$200",
-    },
-    {
-      date: "2024-05-01",
-      quantity: 1,
-      roomType: "Double",
-      amount: "$150",
-      totalAmount: "$150",
-    },
-  ];
+
+  const [data, setData] = useState([])
+
+  const fetchData = async () => {
+    try {
+      const appWriteData = await reportsCollection();
+      setData(appWriteData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+ 
   return (
     <div className="bg-[#F1F5F9] h-screen w-full flex">
       <AdminSidebar />
@@ -34,12 +40,12 @@ const AdminReports = () => {
           </div>
           <div className="w-full flex flex-col gap-4 p-5 border-[1px] bg-white shadow-lg rounded-md">
             <div className="w-full hidden">
-              <DataTable data={tableData} />
+              <DataTable data={data} />
             </div>
             <div className="">
               <PrintWordButton />
             </div>
-            <ReportsTable />
+            <ReportsTable data={data} />
           </div>
         </div>
       </div>
