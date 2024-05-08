@@ -1,7 +1,7 @@
 import { Client, Databases } from "appwrite";
 
 // Function to fetch data from Appwrite
-export  const fetchDataFromAppwrite = async () => {
+export const fetchDataFromAppwrite = async () => {
   try {
     const PROJECT_ID = "65ad1cb002dddf2e1250";
     const DATABASE_ID = "65ad1d3340d360674f4b";
@@ -26,7 +26,6 @@ export  const fetchDataFromAppwrite = async () => {
         status: doc.status,
         // Add more fields as needed
       }));
-
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

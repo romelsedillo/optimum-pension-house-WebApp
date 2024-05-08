@@ -85,7 +85,7 @@ export default function ReservationsTable() {
   });
   const [page, setPage] = React.useState(1);
 
-  const pages = Math.ceil(users.length / rowsPerPage);
+  const pages = Math.ceil(users.length/ rowsPerPage);
 
   const hasSearchFilter = Boolean(filterValue);
   const {
@@ -219,6 +219,8 @@ export default function ReservationsTable() {
     const seconds = ("0" + date.getSeconds()).slice(-2);
     const readableDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
     switch (columnKey) {
+      case "dateCreated":
+        return <>{readableDate}</>;
       case "checkInDate":
         return <>{readableDate}</>;
       case "checkOutDate":
@@ -464,8 +466,7 @@ export default function ReservationsTable() {
         isOpen={isAddModalOpen}
         onOpenChange={onAddModalOpenChange}
         placement="top-center"
-        size="lg"
-        className=""
+        size="4xl"
       >
         <AddReservationModal onAddSuccess={handleAddSuccess} />
       </Modal>

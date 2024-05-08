@@ -44,21 +44,17 @@ const CalendarComp = ({ setCheckIn, setCheckOut }) => {
 
   return (
     <>
-      <div className=" cursor-pointer flex gap-1">
-        <Input
-          size="sm"
-          color="primary"
+      <div className=" flex gap-2">
+        <input
           value={`${format(checkInLocal, "EEEE, MMMM d, yyyy")}`}
           readOnly
-          className="w-full"
+          className="w-full px-2 py-3 border-[1px] cursor-pointer rounded-md text-blue-500 border-blue-500 hover:bg-blue-100 outline-none"
           onClick={() => setOpen(true)}
         />
-        <Input
+        <input
           value={`${format(checkOutLocal, "EEEE, MMMM d, yyyy")}`}
           readOnly
-          size="sm"
-          color="primary"
-          className="w-full"
+          className="w-full px-2 py-3 border-[1px] cursor-pointer rounded-md text-blue-500 border-blue-500 hover:bg-blue-100 outline-none"
           onClick={() => setOpen(true)}
         />
       </div>

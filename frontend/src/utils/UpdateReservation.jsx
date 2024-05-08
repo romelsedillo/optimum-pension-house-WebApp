@@ -20,8 +20,10 @@ export const updateReservation = async (reservationId, status) => {
       }
     );
 
-    console.log("Reservation status change with ID:", response.$id);
+    console.log("Reservation updated with ID:", response.$id);
   } catch (error) {
-    console.error("Error adding guest:", error);
+    console.error("Error updating:", error);
+    console.error("Appwrite error response:", error.response);
   }
 };
+export default updateReservation;

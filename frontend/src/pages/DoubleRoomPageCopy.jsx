@@ -103,11 +103,11 @@ const DoubleRoomPage = () => {
     setIsModalOpen(false);
   };
   return (
-    <>
+    <div className="mt-20">
       <NavBar />
-      <div className="container mx-auto px-[140px] py-10">
+      <div className="container mx-auto px-[140px] py-10 ">
         <Toaster position="top-right" reverseOrder={false} />
-        <div className="bg-gray-100 rounded-lg p-8 h-[42rem] flex flex-col gap-10">
+        <div className=" rounded-lg p-8 h-[42rem] flex flex-col gap-10">
           <div className="flex gap-6 w-full">
             <Card
               isFooterBlurred
@@ -171,7 +171,7 @@ const DoubleRoomPage = () => {
                 </div>
                 <div className="flex gap-8">
                   <p className="font-medium text-lg">
-                    Room Rate: <span className="text-orange-500">₱1120</span>{" "}
+                    Room Rate: <span className="text-orange-500">₱ 1120</span>{" "}
                     /night
                   </p>
                   <p className="font-medium text-lg">
@@ -182,8 +182,8 @@ const DoubleRoomPage = () => {
             </div>
           </div>
 
-          <div className="flex gap-2 items-start justify-between mt-8">
-            <div className="flex flex-col gap-2">
+          <div className="flex gap-2 items-start justify-between bg-blue-50 p-4">
+            <div className="flex flex-col gap-2 text-blue-500">
               <div>
                 <img src={gcashqrcode} alt="" className=" rounded-3xl w-40" />
               </div>
@@ -192,37 +192,9 @@ const DoubleRoomPage = () => {
                 <p>Gcash #: 0912345677889</p>
               </div>
             </div>
-            <div className="flex flex-col justify-center gap-4">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="reference" className="text-blue-500">
-                  Reference # <span className="text-red-500">*</span>
-                </label>
-                <Input
-                  autoFocus
-                  autoComplete="off"
-                  radius="sm"
-                  size="sm"
-                  value={referenceNumber}
-                  name="reference"
-                  type="text"
-                  color="primary"
-                  className="w-full"
-                  onChange={handleReference}
-                />
-              </div>
-              <Button
-                isDisabled={isEmpty}
-                radius="sm"
-                size="md"
-                color="primary"
-                className="w-full"
-                onClick={handleBookNow}
-              >
-                Book Now
-              </Button>
-            </div>
+
             <div className="flex flex-col gap-2">
-              <div className="flex gap-32">
+              <div className="flex gap-32 text-blue-500">
                 <p className="font-semibold">Check-in:</p>
                 <p className="font-semibold">Check-out:</p>
               </div>
@@ -233,6 +205,37 @@ const DoubleRoomPage = () => {
                   chosenDaysCount={chosenDaysCount}
                 />
               </div>
+              <div>
+                <p className="text-blue-500 text-lg">
+                  Total Amount:{" "}
+                  <span className="text-orange-500">&#8369; {totalAmount}</span>
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center gap-4">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="reference" className="text-blue-500">
+                  Reference number:<span className="text-red-500">*</span>
+                </label>
+                <input
+                  autoComplete="off"
+                  value={referenceNumber}
+                  name="reference"
+                  type="text"
+                  className="w-full border-[1px] text-blue-500 border-blue-500 px-3 py-3 rounded-md outline-none"
+                  onChange={handleReference}
+                />
+              </div>
+              <Button
+                isDisabled={isEmpty}
+                radius="sm"
+                size="sm"
+                color="primary"
+                className="w-full"
+                onClick={handleBookNow}
+              >
+                Book Now
+              </Button>
             </div>
           </div>
         </div>
@@ -307,7 +310,7 @@ const DoubleRoomPage = () => {
         </Modal>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

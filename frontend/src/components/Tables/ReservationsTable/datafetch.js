@@ -5,14 +5,17 @@ export const fetchDataFromAppwrite = async () => {
   try {
     const PROJECT_ID = "65ad1cb002dddf2e1250";
     const DATABASE_ID = "65ad1d3340d360674f4b";
-    const COLLECTION_ID = "66065a27d0564ef7fa78";
+    const RESERVATIONS_COLLECTION_ID = "663a1999003268c7f413";
 
     const client = new Client()
       .setEndpoint("https://cloud.appwrite.io/v1")
       .setProject(PROJECT_ID);
     const databases = new Databases(client);
 
-    const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
+    const response = await databases.listDocuments(
+      DATABASE_ID,
+      RESERVATIONS_COLLECTION_ID
+    );
 
     const data = response.documents.map((doc) => ({
       id: doc.$id,
@@ -27,7 +30,7 @@ export const fetchDataFromAppwrite = async () => {
       dateCreated: doc.dateCreated,
       type: doc.type,
     }));
-    data.sort((a, b) => b.dateCreated - a.dateCreated);
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

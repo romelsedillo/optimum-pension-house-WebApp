@@ -30,7 +30,7 @@ export const addGuestCopy = async (
     );
     console.log("New guest added with ID:", response.$id);
   } catch (error) {
-    console.error("Error adding guest:", error);
+    console.error("Error adding guest1:", error);
   }
 };
 export default addGuestCopy;

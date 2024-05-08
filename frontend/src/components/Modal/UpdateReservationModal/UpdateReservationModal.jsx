@@ -7,7 +7,7 @@ import {
 } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
-import { updateReservation } from "../../../utils/UpdateReservation";
+import UpdateReservation from "../../../utils/UpdateReservation";
 import { toast } from "react-hot-toast";
 import RoomUnavailable from "../../../utils/UpdateFunctions/RoomUnavailable";
 import CreateNotification from "../../../utils/Notifications/CreateNotification";
@@ -40,11 +40,12 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      toast.promise(updateReservation(reservationId, status), {
+      toast.promise(UpdateReservation(reservationId, status), {
         loading: "Updating...",
         success: <b>Reservation updated.</b>,
         error: <b>Update failed.</b>,
       });
+
       RoomUnavailable(roomId);
       onUpdateSuccess();
     } catch (error) {
@@ -60,11 +61,9 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
     if (status === "confirmed") {
       const message = "Booking confirmed.";
       const type = "success";
-
       CreateNotification(guestId, message, type);
     }
   };
-
   return (
     <ModalContent>
       {(onClose) => (
@@ -74,7 +73,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
           </ModalHeader>
           <ModalBody>
             <Select
-              label="Edit Status"
+              label="Update Status"
               name="status"
               size="sm"
               variant="bordered"

@@ -19,6 +19,7 @@ import { roomCollectionType } from "../../../utils/Collections/RoomCollectionTyp
 import RoomUnavailable from "../../../utils/UpdateFunctions/RoomUnavailable";
 import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
 import { toast } from "react-hot-toast";
+import CalendarComp from "../../CalendarComp/CalendarComp";
 
 const AddReservationModal = ({ onAddSuccess }) => {
   const [guestData, setGuestData] = useState([]);
@@ -26,9 +27,9 @@ const AddReservationModal = ({ onAddSuccess }) => {
   const [roomData, setRoomData] = useState([]);
   const [guests, setGuests] = useState("");
   const [referenceNumber, setReferenceNumber] = useState();
-  const [checkInDate, setCheckInDate] = useState(new Date());
-  const [checkOutDate, setCheckOutDate] = useState(addDays(new Date(), 1));
-  const chosenDaysCount = differenceInDays(checkOutDate, checkInDate);
+  const [checkIn, setCheckIn] = useState(new Date());
+  const [checkOut, setCheckOut] = useState(addDays(new Date(), 1));
+  const chosenDaysCount = differenceInDays(checkOut, checkIn);
   const [roomType, setRoomType] = useState("");
   const [rooms, setRooms] = useState("");
 
@@ -128,8 +129,8 @@ const AddReservationModal = ({ onAddSuccess }) => {
 
     toast.promise(
       addReservation(
-        checkInDate,
-        checkOutDate,
+        checkIn,
+        checkOut,
         status,
         totalAmount,
         guests,
@@ -144,15 +145,17 @@ const AddReservationModal = ({ onAddSuccess }) => {
         error: <b>Could not save.</b>,
       }
     );
-
+    console.log(`checkindate:${checkIn}`);
+    console.log(`checkoutdate:${checkOut}`);
+    console.log(`currentDateTime:${currentDateTime}`);
     // RoomUnavailable(rooms);
     onAddSuccess();
   };
   const isAnyFieldEmpty =
     guests === "" ||
     referenceNumber === "" ||
-    checkInDate === "" ||
-    checkOutDate === "" ||
+    checkIn === "" ||
+    checkOut === "" ||
     roomType === "" ||
     rooms === "";
 
@@ -203,12 +206,15 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 )}
               </Select>
             </div>
-            <div className="flex gap-2">
-              <div className="w-full flex flex-col">
+            <div className="flex flex-col gap-2">
+              <div className="w-full flex">
                 <label htmlFor="checkIn" className="text-blue-500">
                   CHeck-in Date: <span className="text-red-500">*</span>
                 </label>
-                <Input
+                <label htmlFor="checkOut" className="text-blue-500">
+                  Check-out Date: <span className="text-red-500">*</span>
+                </label>
+                {/* <Input
                   isRequired
                   name="checkIn"
                   size="sm"
@@ -218,13 +224,11 @@ const AddReservationModal = ({ onAddSuccess }) => {
                   color="primary"
                   value={`${format(checkInDate, "yyyy-MM-dd")}`}
                   onChange={(e) => setCheckInDate(e.target.value)}
-                />
+                /> */}
               </div>
               <div className="w-full flex flex-col">
-                <label htmlFor="checkOut" className="text-blue-500">
-                  Check-out Date: <span className="text-red-500">*</span>
-                </label>
-                <Input
+               
+                {/* <Input
                   size="sm"
                   type="date"
                   variant="bordered"
@@ -232,6 +236,13 @@ const AddReservationModal = ({ onAddSuccess }) => {
                   color="primary"
                   value={`${format(checkOutDate, "yyyy-MM-dd")}`}
                   onChange={(e) => setCheckOutDate(e.target.value)}
+                /> */}
+              </div>
+              <div>
+                <CalendarComp
+                  setCheckIn={setCheckIn}
+                  setCheckOut={setCheckOut}
+                  chosenDaysCount={chosenDaysCount}
                 />
               </div>
             </div>
