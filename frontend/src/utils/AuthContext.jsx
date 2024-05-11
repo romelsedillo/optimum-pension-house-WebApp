@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ID } from "appwrite";
 import { Spinner } from "@nextui-org/react";
 import { toast, Bounce } from "react-toastify";
-import CurrentDayTime from "./CurrentDayTime"
+import CurrentDayTime from "./CurrentDayTime";
 
 import AddGuestCopy from "./AddFunctions/AddGuestCopy";
 
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   // };
 
   const loginUser = async (userInfo = null) => {
-    setLoading(true);
+    setLoading(false);
 
     try {
       // Create email session
@@ -62,11 +62,27 @@ export const AuthProvider = ({ children }) => {
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
-
-      toast.error(
-        "Login failed. Please check your credentials and try again.",
-        {
+      console.error(error.response);
+      if (error.response && error.response.code === 401) {
+        toast.error(
+          "Invalid credentials. Please check the email and password.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+        // alert("Login failed. Please check your credentials and try again.");
+        // console.log("Incorrect credentials. Please check and try again.");
+      }
+      if (error.response && error.response.code === 429) {
+        toast.error("Too many request. Please try again later.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -76,8 +92,10 @@ export const AuthProvider = ({ children }) => {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-        }
-      );
+        });
+        // alert("Too many request. Please try again later.");
+        // console.log("Incorrect credentials. Please check and try again.");
+      }
     }
     setLoading(false);
   };
@@ -197,7 +215,7 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     loading,
     setLoading,
-    CurrentDayTime
+    CurrentDayTime,
   };
 
   return (

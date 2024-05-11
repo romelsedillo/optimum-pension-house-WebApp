@@ -1,13 +1,16 @@
 import NavBar from "../components/NavBar/Navbar";
-// import GalleryComponent from "../components/Gallery/galleryComponent";
+import GalleryComponent from "../components/GalleryComponent/GalleryComponent";
 import Footer from "../components/Footer/footer";
 
 const Gallery = () => {
   return (
     <div className="mt-20">
       <NavBar />
-      <div className="w-full h-screen px-36 py-10">
-        {/* <GalleryComponent /> */}
+      <div className="w-full flex flex-col items-center justify-center gap-4 px-36 py-10">
+        <h1 className="text-center text-4xl">Gallery</h1>
+        <div className="">
+          <GalleryComponent />
+        </div>
       </div>
       <Footer />
     </div>

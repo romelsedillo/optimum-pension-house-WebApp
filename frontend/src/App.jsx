@@ -58,6 +58,7 @@ import ReceptionistLogs from "./pages/ReceptionistLogs";
 import { Toaster } from "react-hot-toast";
 import Bookings from "./pages/Bookings";
 import ManagerManagers from "./pages/ManagerManagers";
+import { ToastContainer, Bounce } from "react-toastify";
 
 function App() {
   // const location = useLocation();
@@ -66,13 +67,25 @@ function App() {
     <NextUIProvider>
       <Router>
         <AuthProvider>
-          <div>
-            <Toaster position="top-right" reverseOrder={false} />
-          </div>
+          <Toaster />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          {/* Same as */}
+          <ToastContainer />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/rooms" element={<RoomsAndSuits />} />
-            {/* <Route path="/gallery" element={<Gallery />} /> */}
+            <Route path="/gallery" element={<Gallery />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/register" element={<UserRegister />} />
             {/* <Route path="/manager" element={<ManagerLogin />} /> */}

@@ -56,7 +56,8 @@ const Login = () => {
           isClearable
           variant="bordered"
           color="primary"
-          size="sm"
+          radius="sm"
+          size="md"
           type="email"
           className="w-full text-[#333A73] "
           name="email"
@@ -75,7 +76,8 @@ const Login = () => {
           autoComplete="off"
           variant="bordered"
           color="primary"
-          size="sm"
+          radius="sm"
+          size="md"
           name="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
