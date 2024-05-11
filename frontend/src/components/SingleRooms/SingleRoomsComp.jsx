@@ -1,14 +1,16 @@
-import { useState, useEffect, } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Modal from "react-modal";
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
 import { fetchDataFromAppwrite } from "./datafetch";
+import CardSkeleton from "../Skeleton/CardSkeleton";
 
 import IMG_3115 from "./Images/IMG_3115.jpg";
 
 const SingleRoomComp = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleClick = (roomId) => {
@@ -16,19 +18,18 @@ const SingleRoomComp = () => {
     navigate(`/single/${roomId}`);
   };
 
+  const fetchData = async () => {
+    try {
+      const appWriteData = await fetchDataFromAppwrite();
+      setData(appWriteData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const appWriteData = await fetchDataFromAppwrite();
-        setData(appWriteData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData(); // Call the fetchData function when the component mounts
+    fetchData();
   }, []);
-  console.log(data);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const customStyles = {
@@ -52,46 +53,50 @@ const SingleRoomComp = () => {
 
   return (
     <div className="container mx-auto p-1">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {data.map((room, index) => (
-          <div key={index}>
-            <Card
-              isFooterBlurred
-              key={index}
-              className=" h-[300px] overflow-hidden col-span-12 sm:col-span-5 cursor-pointer"
-            >
-              <Image
-                src={IMG_3115}
-                removeWrapper
-                alt={`Gallery Image ${index + 1}`}
-                className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-                onClick={() => openModal(IMG_3115)}
-              />
-              <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
-                <div>
-                  <p className=" text-white text-md capitalize">
-                    {room.status}
-                  </p>
-                  <p className="text-white text-tiny">Room {room.roomNumber}</p>
-                  <p className="text-white text-tiny capitalize">
-                    {room.floor} floor
-                  </p>
-                </div>
-                <Button
-                  isDisabled={room.status !== "available"}
-                  className="text-tiny"
-                  color={room.status === "available" ? "primary" : "danger"}
-                  radius="full"
-                  size="sm"
-                  onClick={() => handleClick(room.id)}
-                >
-                  {room.status === "available" ? "Available" : "Unavailable"}
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          {data.map((room, index) => (
+            <div key={index}>
+              <Card
+                isFooterBlurred
+                key={index}
+                className=" h-[300px] overflow-hidden col-span-12 sm:col-span-5 cursor-pointer"
+              >
+                <Image
+                  src={IMG_3115}
+                  removeWrapper
+                  alt={`Gallery Image ${index + 1}`}
+                  className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
+                  onClick={() => openModal(IMG_3115)}
+                />
+                <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
+                  <div>
+                    <p className="text-white text-lg">Room {room.roomNumber}</p>
+                    <p className="text-white text-tiny capitalize">
+                      {room.floor} floor
+                    </p>
+                  </div>
+                  <Button
+                    isDisabled={room.status !== "available"}
+                    className="text-tiny"
+                    color={room.status === "available" ? "primary" : "danger"}
+                    radius="full"
+                    size="sm"
+                    onClick={() => handleClick(room.id)}
+                  >
+                    {room.status === "available" ? "Available" : "Unavailable"}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          ))}
+        </div>
+      )}
 
       <Modal
         isOpen={!!selectedImage}

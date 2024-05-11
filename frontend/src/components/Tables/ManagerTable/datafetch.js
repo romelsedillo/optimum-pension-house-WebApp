@@ -17,7 +17,7 @@ export const receptionistCollection = async () => {
 
     // Filter the data to only include employees with the receptionist position
     const data = response.documents
-      .filter((doc) => doc.position === "receptionist")
+      .filter((doc) => doc.position === "manager")
       .map((doc) => ({
         id: doc.$id,
         name: doc.name,

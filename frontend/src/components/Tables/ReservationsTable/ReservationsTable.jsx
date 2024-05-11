@@ -249,9 +249,9 @@ export default function ReservationsTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem onClick={() => alert(user.roomId)}>
+                {/* <DropdownItem onClick={() => alert(user.roomId)}>
                   View
-                </DropdownItem>
+                </DropdownItem> */}
                 <DropdownItem
                   onPress={onUpdateModalOpen}
                   onClick={() => getReservationId(user.id, user.roomId)}
@@ -330,12 +330,12 @@ export default function ReservationsTable() {
             </Dropdown>
             <Button
               className=" text-background"
-              endContent={<PlusIcon />}
+              // endContent={<PlusIcon />}
               size="sm"
               color="primary"
               onPress={onAddModalOpen}
             >
-              Add New
+              Add Reservation
             </Button>
           </div>
         </div>
@@ -466,7 +466,7 @@ export default function ReservationsTable() {
         isOpen={isAddModalOpen}
         onOpenChange={onAddModalOpenChange}
         placement="top-center"
-        size="4xl"
+        size="md"
       >
         <AddReservationModal onAddSuccess={handleAddSuccess} />
       </Modal>

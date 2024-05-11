@@ -160,11 +160,11 @@ const AddReservationModal = ({ onAddSuccess }) => {
     rooms === "";
 
   return (
-    <ModalContent>
+    <ModalContent className=" max-h-[450px] overflow-y-auto">
       {(onClose) => (
         <form onSubmit={handleSubmit}>
           <ModalHeader className="flex flex-col gap-1 text-blue-500">
-            Add New Reservation
+            Add Reservation
           </ModalHeader>
           <ModalBody>
             <div className="w-full flex gap-2">
@@ -207,14 +207,11 @@ const AddReservationModal = ({ onAddSuccess }) => {
               </Select>
             </div>
             <div className="flex flex-col gap-2">
-              <div className="w-full flex">
+              <div className="w-full flex flex-col">
                 <label htmlFor="checkIn" className="text-blue-500">
                   CHeck-in Date: <span className="text-red-500">*</span>
                 </label>
-                <label htmlFor="checkOut" className="text-blue-500">
-                  Check-out Date: <span className="text-red-500">*</span>
-                </label>
-                {/* <Input
+                <Input
                   isRequired
                   name="checkIn"
                   size="sm"
@@ -222,23 +219,25 @@ const AddReservationModal = ({ onAddSuccess }) => {
                   variant="bordered"
                   className="w-full"
                   color="primary"
-                  value={`${format(checkInDate, "yyyy-MM-dd")}`}
-                  onChange={(e) => setCheckInDate(e.target.value)}
-                /> */}
+                  value={`${format(checkIn, "yyyy-MM-dd")}`}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                />
               </div>
               <div className="w-full flex flex-col">
-               
-                {/* <Input
+                <label htmlFor="checkOut" className="text-blue-500">
+                  Check-out Date: <span className="text-red-500">*</span>
+                </label>
+                <Input
                   size="sm"
                   type="date"
                   variant="bordered"
                   className="w-full"
                   color="primary"
-                  value={`${format(checkOutDate, "yyyy-MM-dd")}`}
-                  onChange={(e) => setCheckOutDate(e.target.value)}
-                /> */}
+                  value={`${format(checkOut, "yyyy-MM-dd")}`}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                />
               </div>
-              <div>
+              <div className="hidden">
                 <CalendarComp
                   setCheckIn={setCheckIn}
                   setCheckOut={setCheckOut}
@@ -293,13 +292,13 @@ const AddReservationModal = ({ onAddSuccess }) => {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" size="md" onPress={onClose}>
+            <Button color="danger" variant="flat" size="sm" onPress={onClose}>
               Close
             </Button>
             <Button
               type="submit"
               color="primary"
-              size="md"
+              size="sm"
               onPress={onClose}
               isDisabled={isAnyFieldEmpty}
             >

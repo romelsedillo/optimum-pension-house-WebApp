@@ -5,13 +5,11 @@ import ReportsTable from "../components/Tables/ReportsTable/ReportsTable";
 
 import PrintWordButton from "../components/PrintWordButton/PrintWordButton";
 import DataTable from "../components/Tables/DataTable/DataTable";
-import {reportsCollection} from "../utils/Collections/ReportsCollection"
+import { reportsCollection } from "../utils/Collections/ReportsCollection";
 import { useState, useEffect } from "react";
 
-
 const AdminReports = () => {
-
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -26,8 +24,6 @@ const AdminReports = () => {
     fetchData();
   }, []);
 
-
- 
   return (
     <div className="bg-[#F1F5F9] h-screen w-full flex">
       <AdminSidebar />

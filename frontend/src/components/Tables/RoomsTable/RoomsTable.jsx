@@ -52,7 +52,7 @@ export default function RoomsTable() {
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "roomNumber",
     direction: "ascending",
@@ -205,19 +205,6 @@ export default function RoomsTable() {
               </DropdownTrigger>
               <DropdownMenu>
                 <DropdownItem
-                  onClick={() =>
-                    getRoomDataById(
-                      user.id,
-                      user.roomNumber,
-                      user.floor,
-                      user.roomType,
-                      user.status
-                    )
-                  }
-                >
-                  View
-                </DropdownItem>
-                <DropdownItem
                   onPress={onUpdateModalOpen}
                   onClick={() =>
                     getRoomDataById(
@@ -229,7 +216,7 @@ export default function RoomsTable() {
                     )
                   }
                 >
-                  Edit
+                  Update
                 </DropdownItem>
 
                 <DropdownItem onClick={() => handleDelete(user.id)}>

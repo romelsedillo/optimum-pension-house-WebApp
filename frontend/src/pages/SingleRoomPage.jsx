@@ -68,6 +68,7 @@ const SingleRoomPage = () => {
   const handleBookNow = () => {
     handleOpenModal();
   };
+  const currentDateTime = getCurrentDateTime();
 
   const isEmpty = referenceNumber === "";
   const successHandle = () => {
@@ -87,7 +88,7 @@ const SingleRoomPage = () => {
       currentDateTime,
       type
     );
-    // RoomUnavailable(roomId);
+    RoomUnavailable(roomId);
     navigate("/");
     Swal.fire({
       title: "Reservation in process!",
@@ -102,6 +103,10 @@ const SingleRoomPage = () => {
       },
     });
     setIsModalOpen(false);
+  console.log(currentDateTime);
+  console.log(checkIn);
+  console.log(checkOut);
+
   };
   return (
     <>

@@ -16,7 +16,6 @@ import RoomAvailableCollection from "../../../utils/Collections/RoomAvailableCol
 
 const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
   const [roomTypeData, setRoomTypeData] = useState([]);
-  const [roomData, setRoomData] = useState([]);
   const [roomNumber, setRoomNumber] = useState("");
   const [floor, setFloor] = useState("");
   const [roomType, setRoomType] = useState("");
@@ -31,21 +30,20 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
     }
   };
 
-  const roomFetchData = async () => {
-    try {
-      const appWriteData = await RoomAvailableCollection();
-      setRoomData(appWriteData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const roomFetchData = async () => {
+  //   try {
+  //     const appWriteData = await RoomAvailableCollection();
+  //     setRoomData(appWriteData);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   useEffect(() => {
     setRoomNumber(selectedRoomData?.roomNumber);
     setFloor(selectedRoomData?.floor);
     setRoomType(selectedRoomData?.roomType);
     setStatus(selectedRoomData?.status);
-    console.log(selectedRoomData);
     roomTypeFetchData();
   }, [selectedRoomData]);
 
@@ -63,7 +61,6 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(roomId, roomNumber, floor, status, roomType);
     e.preventDefault();
     try {
       await toast.promise(
@@ -88,7 +85,7 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
     <ModalContent>
       {(onClose) => (
         <form onSubmit={handleSubmit}>
-          <ModalHeader className=" text-blue-500">Edit Room</ModalHeader>
+          <ModalHeader className=" text-blue-500">Update Room</ModalHeader>
           <ModalBody>
             <div className="flex gap-2">
               <Input
@@ -136,7 +133,6 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                 variant="bordered"
                 className="w-full"
                 color="primary"
-                defaultSelectedKeys={["cat"]}
                 onChange={handleRoomTypeChange}
               >
                 {roomTypeData.map((type) => (
@@ -176,7 +172,7 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
               onPress={onClose}
               isDisabled={isAnyFieldEmpty}
             >
-              Edit Room
+              Update Room
             </Button>
           </ModalFooter>
         </form>

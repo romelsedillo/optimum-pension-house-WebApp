@@ -44,12 +44,12 @@ import AdminLogs from "./pages/AdminLogs";
 import ManagerGuests from "./pages/ManagerGuests";
 import ManagerReservations from "./pages/ManagerReservations";
 import ManagerRooms from "./pages/ManagerRooms";
-import ManagerReceptionists from "./pages/ManagerReceptionists";
 import ManagerReports from "./pages/ManagerReports";
 import ManagerLogs from "./pages/ManagerLogs";
 
 // receptionist
 import ReceptionistGuests from "./pages/ReceptionistGuests";
+import ReceptionistReceptionists from "./pages/ReceptionistReceptionists";
 import ReceptionistRooms from "./pages/ReceptionistRooms";
 import ReceptionistReservations from "./pages/ReceptionistReservations";
 import ReceptionistReports from "./pages/ReceptionistReports";
@@ -57,6 +57,7 @@ import ReceptionistLogs from "./pages/ReceptionistLogs";
 
 import { Toaster } from "react-hot-toast";
 import Bookings from "./pages/Bookings";
+import ManagerManagers from "./pages/ManagerManagers";
 
 function App() {
   // const location = useLocation();
@@ -84,7 +85,6 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/single-rooms" element={<SingleRooms />} />
               <Route path="/double-rooms" element={<DoubleRooms />} />
-              <Route path="/bookings" element={<Bookings />} />
               <Route
                 path="/twin-standard-rooms"
                 element={<TwinStandardRooms />}
@@ -95,6 +95,7 @@ function App() {
                 path="/twin-standard/:roomId"
                 element={<TwinStandardRoomPage />}
               />
+              <Route path="/bookings" element={<Bookings />} />
             </Route>
 
             {/* Private routes for Admin */}
@@ -123,8 +124,8 @@ function App() {
                 element={<ManagerGuests />}
               />
               <Route
-                path="/manager-dashboard/receptionists"
-                element={<ManagerReceptionists />}
+                path="/manager-dashboard/managers"
+                element={<ManagerManagers />}
               />
               <Route
                 path="/manager-dashboard/rooms"
@@ -146,6 +147,10 @@ function App() {
               <Route
                 path="/receptionist-dashboard/guests"
                 element={<ReceptionistGuests />}
+              />
+              <Route
+                path="/receptionist-dashboard/receptionists"
+                element={<ReceptionistReceptionists />}
               />
               <Route
                 path="/receptionist-dashboard/rooms"

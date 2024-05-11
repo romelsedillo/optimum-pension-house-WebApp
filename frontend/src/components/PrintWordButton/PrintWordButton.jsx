@@ -1,29 +1,19 @@
 import React from "react";
-import {Button} from "@nextui-org/button";
-const ExportHTMLToWordButton = () => {
-  const exportHTML = () => {
-    var header =
-      "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
-      "xmlns:w='urn:schemas-microsoft-com:office:word' " +
-      "xmlns='http://www.w3.org/TR/REC-html40'>" +
-      "<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
-    var footer = "</body></html>";
-    var sourceHTML = header + document.getElementById("source-html").innerHTML + footer;
+import { Button } from "@nextui-org/button";
+import html2pdf from "html2pdf.js";
 
-    var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
-    var fileDownload = document.createElement("a");
-    document.body.appendChild(fileDownload);
-    fileDownload.href = source;
-    fileDownload.download = 'document.doc';
-    fileDownload.click();
-    document.body.removeChild(fileDownload);
+const ExportHTMLToPDFButton = () => {
+  const exportPDF = () => {
+    const element = document.getElementById("source-html");
+
+    html2pdf().from(element).save("document.pdf");
   };
 
   return (
-    <Button onClick={exportHTML} color="primary" size="sm">
-      Print Report
+    <Button onClick={exportPDF} color="primary" size="sm" className="px-6">
+      Export to PDF
     </Button>
   );
 };
 
-export default ExportHTMLToWordButton;
+export default ExportHTMLToPDFButton;

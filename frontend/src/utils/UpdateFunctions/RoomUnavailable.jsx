@@ -9,7 +9,7 @@ const databases = new Databases(client);
 
 // Function to add a new guest to the database
 export const roomUnavailable = async (roomId) => {
-  const status = "unavailable";
+  const status = "reserved";
   try {
     // Create a new document in the guests collection
     const response = await databases.updateDocument(

@@ -44,7 +44,7 @@ const BookingsTable = () => {
 
     return guestReservation.slice(start, end);
   }, [page, guestReservation]);
-
+console.log(items);
   return (
     <div className=" h-screen flex flex-col items-center justify-start p-8 gap-6">
       <div>
@@ -104,7 +104,7 @@ const BookingsTable = () => {
               </TableHeader>
               <TableBody items={items}>
                 {(item) => (
-                  <TableRow key={item.name}>
+                  <TableRow key={item.id}>
                     {(columnKey) => (
                       <TableCell>{getKeyValue(item, columnKey)}</TableCell>
                     )}

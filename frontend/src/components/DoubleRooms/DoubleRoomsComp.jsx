@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
 import { fetchDataFromAppwrite } from "./datafetch";
+import CardSkeleton from "../Skeleton/CardSkeleton";
 
 import IMG_3115 from "./Images/IMG_3115.jpg";
 
 const DoubleRoomComp = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleClick = (roomId) => {
-    // Navigate to the desired page
     navigate(`/double/${roomId}`);
   };
 
@@ -21,6 +22,7 @@ const DoubleRoomComp = () => {
       try {
         const appwriteData = await fetchDataFromAppwrite();
         setData(appwriteData);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -49,12 +51,32 @@ const DoubleRoomComp = () => {
   const closeModal = () => {
     setSelectedImage(null);
   };
-console.table(data);
+  console.table(data);
   return (
     <div className="container mx-auto p-1">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {data.map((room, index) => (
-          <div key={index}>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          {data.map((room, index) => (
+            <div key={index}>
               <Card
                 isFooterBlurred
                 key={room.id}
@@ -69,12 +91,7 @@ console.table(data);
                 />
                 <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
                   <div>
-                    <p className=" text-white text-md capitalize">
-                      {room.status}
-                    </p>
-                    <p className="text-white text-tiny">
-                      Room {room.roomNumber}
-                    </p>
+                    <p className="text-white text-lg">Room {room.roomNumber}</p>
                     <p className="text-white text-tiny capitalize">
                       {room.floor} floor
                     </p>
@@ -91,10 +108,10 @@ console.table(data);
                   </Button>
                 </CardFooter>
               </Card>
-          </div>
-        ))}
-      </div>
-
+            </div>
+          ))}
+        </div>
+      )}
       <Modal
         isOpen={!!selectedImage}
         onRequestClose={closeModal}

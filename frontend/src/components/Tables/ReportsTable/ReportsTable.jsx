@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableHeader,
@@ -9,22 +9,35 @@ import {
   Pagination,
   getKeyValue,
 } from "@nextui-org/react";
-// import { users } from "./data";
 
-export default function ReportsTable({ data }) {
+export default function ReportsTable({ data, selectedDateRange }) {
   const [page, setPage] = useState(1);
   const rowsPerPage = 15;
 
-  const pages = Math.ceil(data.length / rowsPerPage);
+  // Filter data based on selected date range
+  const filteredData = useMemo(() => {
+    if (!selectedDateRange) return data; // If no date range is selected, return all data
+    return data.filter((item) => {
+      const itemDate = new Date(item.date);
+      return (
+        itemDate >= selectedDateRange.start && itemDate <= selectedDateRange.end
+      );
+    });
+  }, [data, selectedDateRange]);
+
+  const pages = Math.ceil(filteredData.length / rowsPerPage);
 
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return data.slice(start, end);
-  }, [page, data]);
+    return filteredData.slice(start, end);
+  }, [page, filteredData]);
 
-  const totalProfit = data.reduce((acc, item) => acc + item.totalAmount, 0);
+  const totalProfit = filteredData.reduce(
+    (acc, item) => acc + item.totalAmount,
+    0
+  );
 
   return (
     <>
@@ -47,7 +60,7 @@ export default function ReportsTable({ data }) {
                 <p style={{ textAlign: "right" }}>
                   Total Profit:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                  ₱ {totalProfit}
+                    ₱ {totalProfit}
                   </span>
                 </p>
               </div>

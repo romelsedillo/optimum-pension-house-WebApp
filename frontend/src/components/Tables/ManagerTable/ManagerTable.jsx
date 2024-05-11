@@ -20,10 +20,23 @@ import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
-import { columns, statusOptions } from "./data";
 import { capitalize } from "./utils";
 
 import { receptionistCollection } from "./datafetch";
+
+const columns = [
+  { name: "ID", uid: "id", sortable: true },
+  { name: "NAME", uid: "name", sortable: true },
+  { name: "POSITION", uid: "position", sortable: true },
+  { name: "EMAIL", uid: "email", sortable: true },
+  { name: "STATUS", uid: "status", sortable: true },
+  { name: "ACTIONS", uid: "actions" },
+];
+
+const statusOptions = [
+  { name: "Online", uid: "online" },
+  { name: "Offline", uid: "offline" },
+];
 
 const statusColorMap = {
   online: "success",
@@ -38,7 +51,7 @@ const INITIAL_VISIBLE_COLUMNS = [
   "actions",
 ];
 
-export default function ReceptionistTable() {
+export default function ManagerTable() {
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -48,7 +61,7 @@ export default function ReceptionistTable() {
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
+    column: "name",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -194,6 +207,31 @@ export default function ReceptionistTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
+          <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button
+                  endContent={<ChevronDownIcon className="text-small" />}
+                  size="sm"
+                  variant="flat"
+                >
+                  Status
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Table Columns"
+                closeOnSelect={false}
+                selectedKeys={statusFilter}
+                selectionMode="multiple"
+                onSelectionChange={setStatusFilter}
+              >
+                {statusOptions.map((status) => (
+                  <DropdownItem key={status.uid} className="capitalize">
+                    {capitalize(status.name)}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
             <Button
               className=" text-background"
               // endContent={<PlusIcon />}
@@ -201,7 +239,7 @@ export default function ReceptionistTable() {
               color="primary"
               onClick={() => alert("button clicked")}
             >
-              Add Receptionist
+              Add Manager
             </Button>
           </div>
         </div>

@@ -1,9 +1,24 @@
 import React from "react";
 import oph from "../../../assets/images/oph.jpg";
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, selectedDateRange }) => {
+  // Check if selectedDateRange is null or undefined, and provide a default value if it is
+  const startDate = selectedDateRange && selectedDateRange.start instanceof Date
+    ? selectedDateRange.start
+    : null;
+  const endDate = selectedDateRange && selectedDateRange.end instanceof Date
+    ? selectedDateRange.end
+    : null;
 
-  const totalProfit = data.reduce((acc, item) => acc + item.totalAmount, 0);
+  // Filter the data based on the selected date range if it's defined
+  const filteredData = selectedDateRange
+    ? data.filter(item => {
+        const itemDate = new Date(item.date);
+        return itemDate >= startDate && itemDate <= endDate;
+      })
+    : data;
+
+  const totalProfit = filteredData.reduce((acc, item) => acc + item.totalAmount, 0);
 
   return (
     <div
@@ -15,6 +30,8 @@ const DataTable = ({ data }) => {
         alignItems: "center",
         justifyContent: "center",
         gap: "1rem",
+        padding: "10px",
+        color:"#3b82f6"
       }}
     >
       <div
@@ -24,6 +41,11 @@ const DataTable = ({ data }) => {
           alignItems: "center",
         }}
       >
+        <img
+          src={oph}
+          alt="Optimum Pension House"
+          style={{ width: "100px", height: "auto" }}
+        />
         <h1
           style={{
             textAlign: "center",
@@ -38,118 +60,80 @@ const DataTable = ({ data }) => {
       </div>
 
       <div>
-        <p>from January to February</p>
+        {/* Display the date range if it's defined */}
+        {startDate && endDate && (
+          <p>from {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()}</p>
+        )}
       </div>
+      {/* Display the table */}
       <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          border: "1px solid black",
-          color: "#000",
-        }}
-      >
-        <thead>
-          <tr style={{ fontWeight: "bold", backgroundColor: "#f3f4f6" }}>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "8px",
-                textAlign: "left",
-              }}
-            >
-              Date
-            </th>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "8px",
-                textAlign: "left",
-              }}
-            >
-              Quantity
-            </th>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "8px",
-                textAlign: "left",
-              }}
-            >
-              Room type
-            </th>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "8px",
-                textAlign: "left",
-              }}
-            >
-              Amount
-            </th>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "8px",
-                textAlign: "left",
-              }}
-            >
-              Total Amount
-            </th>
-          </tr>
-        </thead>
+  style={{
+    width: "100%",
+    borderCollapse: "collapse",
+    border: "1px solid #3b82f6", // Updated border color
+    color: "#000",
+  }}
+>
+  {/* Table headers */}
+  <thead>
+    {/* Table header rows */}
+  </thead>
 
-        <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td
-                style={{
-                  border: "1px solid #000",
-                  padding: "8px",
-                  textAlign: "left",
-                }}
-              >
-                {item.date}
-              </td>
-              <td
-                style={{
-                  border: "1px solid #000",
-                  padding: "8px",
-                  textAlign: "left",
-                }}
-              >
-                {item.quantity}
-              </td>
-              <td
-                style={{
-                  border: "1px solid #000",
-                  padding: "8px",
-                  textAlign: "left",
-                }}
-              >
-                {item.roomType}
-              </td>
-              <td
-                style={{
-                  border: "1px solid #000",
-                  padding: "8px",
-                  textAlign: "left",
-                }}
-              >
-               ₱ {item.amount}
-              </td>
-              <td
-                style={{
-                  border: "1px solid #000",
-                  padding: "8px",
-                  textAlign: "left",
-                }}
-              >
-               ₱ {item.totalAmount}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  {/* Table body */}
+  <tbody>
+    {/* Map over filtered data and render table rows */}
+    {filteredData.map((item, index) => (
+      <tr key={index}>
+        <td
+          style={{
+            border: "1px solid #3b82f6", // Updated border color
+            padding: "8px",
+            textAlign: "left",
+          }}
+        >
+          {item.date}
+        </td>
+        <td
+          style={{
+            border: "1px solid #3b82f6", // Updated border color
+            padding: "8px",
+            textAlign: "left",
+          }}
+        >
+          {item.quantity}
+        </td>
+        <td
+          style={{
+            border: "1px solid #3b82f6", // Updated border color
+            padding: "8px",
+            textAlign: "left",
+          }}
+        >
+          {item.roomType}
+        </td>
+        <td
+          style={{
+            border: "1px solid #3b82f6", // Updated border color
+            padding: "8px",
+            textAlign: "left",
+          }}
+        >
+          ₱ {item.amount}
+        </td>
+        <td
+          style={{
+            border: "1px solid #3b82f6", // Updated border color
+            padding: "8px",
+            textAlign: "left",
+          }}
+        >
+          ₱ {item.totalAmount}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+      {/* Display total profit and other information */}
       <div className="w-full flex items-center justify-end px-32 mt-4">
         <p style={{ textAlign: "right" }}>
           Total Profit:{" "}

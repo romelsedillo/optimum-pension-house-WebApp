@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ID } from "appwrite";
 import { Spinner } from "@nextui-org/react";
 import { toast, Bounce } from "react-toastify";
+import CurrentDayTime from "./CurrentDayTime"
 
 import AddGuestCopy from "./AddFunctions/AddGuestCopy";
 
@@ -196,6 +197,7 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     loading,
     setLoading,
+    CurrentDayTime
   };
 
   return (

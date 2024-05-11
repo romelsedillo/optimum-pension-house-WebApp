@@ -86,7 +86,7 @@ const DoubleRoomPage = () => {
       currentDateTime,
       type
     );
-    // RoomUnavailable(roomId);
+    RoomUnavailable(roomId);
     navigate("/");
     Swal.fire({
       title: "Reservation in process!",

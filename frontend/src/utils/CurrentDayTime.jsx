@@ -8,3 +8,4 @@ export const getCurrentDateTime = () => {
 
   return dateTimeString;
 };
+export default getCurrentDateTime;

@@ -1,14 +1,16 @@
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Modal from "react-modal";
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
 import { fetchDataFromAppwrite } from "./datafetch";
-
+import CardSkeleton from "../Skeleton/CardSkeleton";
 import IMG_3128 from "./Images/IMG_3128.jpg";
 
 const TwinStandardComp = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   const handleClick = (roomId) => {
@@ -21,6 +23,7 @@ const TwinStandardComp = () => {
       try {
         const appWriteData = await fetchDataFromAppwrite();
         setData(appWriteData);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -52,10 +55,19 @@ const TwinStandardComp = () => {
 
   return (
     <div className="container mx-auto p-1">
+        {loading ? ( 
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {data.map((room, index) => (
           <div key={index}>
-            <Suspense fallback={<p>Loading...</p>}>
               <Card
                 isFooterBlurred
                 key={index}
@@ -70,10 +82,7 @@ const TwinStandardComp = () => {
                 />
                 <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
                   <div>
-                    <p className=" text-white text-md capitalize">
-                      {room.status}
-                    </p>
-                    <p className="text-white text-tiny">
+                    <p className="text-white text-lg">
                       Room {room.roomNumber}
                     </p>
                     <p className="text-white text-tiny capitalize">
@@ -93,11 +102,10 @@ const TwinStandardComp = () => {
                   </Button>
                 </CardFooter>
               </Card>
-            </Suspense>
           </div>
         ))}
       </div>
-
+      )}
       <Modal
         isOpen={!!selectedImage}
         onRequestClose={closeModal}

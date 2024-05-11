@@ -6,7 +6,7 @@ import RoomsBox from "../components/Box/RoomsBox";
 import RoomsOccupiedBox from "../components/Box/RoomsOccupiedBox";
 import ReceptionistTable from "../components/Tables/ReceptionistTable/ReceptionistTable";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-const ManagerReceptionists = () => {
+const ReceptionistReceptionists = () => {
   return (
     <div className="bg-[#F1F5F9] h-screen w-full flex">
       <ManagerSidebar />
@@ -14,8 +14,8 @@ const ManagerReceptionists = () => {
         <EmployeesNavBar />
         <div className="p-4 flex flex-col gap-4">
           <div className="w-full py-1  flex justify-between px-16">
-            <p className="text-[#0070F0] text-3xl">Receptionist</p>
-            <Breadcrumb dashboard="Dashboard" path="Guests" />
+            <p className="text-[#0070F0] text-3xl">Receptionists</p>
+            <Breadcrumb dashboard="Dashboard" path="Receptionist" />
           </div>
           <div className="w-full flex justify-between gap-6">
             <SalesBox />
@@ -32,4 +32,4 @@ const ManagerReceptionists = () => {
   );
 };
 
-export default ManagerReceptionists;
+export default ReceptionistReceptionists;

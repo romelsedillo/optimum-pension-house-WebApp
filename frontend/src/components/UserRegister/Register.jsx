@@ -69,20 +69,19 @@ const UserRegister = () => {
     <form
       ref={registerForm}
       onSubmit={handleSubmit(onSubmit)}
-      className="py-6 px-10 w-full flex flex-col gap-2 rounded-lg border bg-[#ffffff] shadow-lg"
+      className="py-2 px-10 w-full flex flex-col rounded-lg bg-[#ffffff]"
       autoComplete="off"
     >
-      <h2 className="text-[30px] mb-8 font-bold text-center text-[#333A73]">
-        Register
-      </h2>
-      <div>
+      <div className="flex flex-col">
         <div className="flex items-center justify-center gap-4">
           <div className="mb-1 w-full">
+            <label htmlFor="name" className="text-tiny text-[#333A73]">
+              Name <span className="text-red-500">*</span>
+            </label>
             <Input
               autoFocus
               isRequired
               isClearable
-              label="Name"
               size="sm"
               variant="bordered"
               color="primary"
@@ -104,13 +103,15 @@ const UserRegister = () => {
 
           {/* ---- EMAIL ---- */}
           <div className=" w-full">
+            <label htmlFor="email" className="text-tiny text-[#333A73]">
+              Email <span className="text-red-500">*</span>
+            </label>
             <Input
               isRequired
               isClearable
               variant="bordered"
               color="primary"
               size="sm"
-              label="Email"
               type="email"
               id="email"
               {...register("email")}
@@ -131,13 +132,15 @@ const UserRegister = () => {
         </div>
         <div className="flex gap-4">
           <div className=" w-full">
+            <label htmlFor="phone" className="text-tiny text-[#333A73]">
+              Phone <span className="text-red-500">*</span>
+            </label>
             <Input
               isRequired
               isClearable
               variant="bordered"
               color="primary"
               size="sm"
-              label="Phone"
               type="tel"
               id="phone"
               {...register("phone")}
@@ -154,13 +157,15 @@ const UserRegister = () => {
             </div>
           </div>
           <div className="mb-1 w-full">
+            <label htmlFor="address" className="text-tiny text-[#333A73]">
+              Address <span className="text-red-500">*</span>
+            </label>
             <Input
               isRequired
               isClearable
               variant="bordered"
               color="primary"
               size="sm"
-              label="Address"
               type="text"
               id="address"
               {...register("address")}
@@ -182,12 +187,14 @@ const UserRegister = () => {
         <div className=" w-full flex gap-4">
           {/* ---- PASSWORD ---- */}
           <div className="mb-4 relative w-full">
+            <label htmlFor="password" className="text-tiny text-[#333A73]">
+              Password <span className="text-red-500">*</span>
+            </label>
             <Input
               isRequired
               variant="bordered"
               color="primary"
               size="sm"
-              label="Password"
               type={showPassword ? "text" : "password"}
               id="password"
               {...register("password")}
@@ -230,12 +237,17 @@ const UserRegister = () => {
           {/* ---- PASSWORD ---- */}
           {/* ---- CONFIRM PASSWORD ---- */}
           <div className="mb-4 relative w-full">
+            <label
+              htmlFor="confirmPassword"
+              className="text-tiny text-[#333A73]"
+            >
+              Confirm Password <span className="text-red-500">*</span>
+            </label>
             <Input
               isRequired
               variant="bordered"
               color="primary"
               size="sm"
-              label="Confirm Password"
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               {...register("confirmPassword")}

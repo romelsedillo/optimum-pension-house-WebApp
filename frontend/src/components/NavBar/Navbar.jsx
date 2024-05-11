@@ -29,8 +29,9 @@ import { useEffect, useState } from "react";
 import NotificationCollection from "../../utils/Collections/NotificationCollection";
 
 export default function NavbarComponent() {
-  const { user, role, logout } = useAuth();
+  const { user, role, logout, CurrentDayTime } = useAuth();
   const [data, setData] = useState([]);
+  const [currentDateTime, setCurrentDateTime] = useState(CurrentDayTime);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
@@ -46,6 +47,12 @@ export default function NavbarComponent() {
 
   useEffect(() => {
     fetchData();
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(CurrentDayTime());
+    }, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
   const notificationData = data.filter((item) => item.guests === user?.$id);
@@ -80,7 +87,7 @@ export default function NavbarComponent() {
   return (
     <>
       <Navbar
-        className={`bg-[#F6F5F2] h-[80px] fixed top-0 w-full z-10 transition-shadow duration-300 ${
+        className={` bg-[#F6F5F2] h-[80px] fixed top-0 w-full z-10 transition-shadow duration-300 ${
           isScrolled ? "shadow-lg" : ""
         }`}
       >

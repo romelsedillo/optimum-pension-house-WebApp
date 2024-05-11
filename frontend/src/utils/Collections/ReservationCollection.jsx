@@ -31,7 +31,7 @@ function formatTimestamp(isoTimestamp) {
   const seconds = date.getSeconds().toString().padStart(2, "0");
 
   // Create a human-readable date string
-  return `${month} ${day}, ${date.getFullYear()} ${hours}:${minutes}:${seconds}`;
+  return `${month} ${day}, ${date.getFullYear()} `; // ${hours}:${minutes}:${seconds}
 }
 
 export const reservationCollection = async () => {
@@ -51,7 +51,7 @@ export const reservationCollection = async () => {
     );
 
     const data = response.documents.map((doc) => ({
-      id: doc.id,
+      id: doc.$id,
       checkInDate: formatTimestamp(doc.checkInDate),
       checkOutDate: formatTimestamp(doc.checkOutDate),
       status: doc.status,
@@ -61,7 +61,7 @@ export const reservationCollection = async () => {
       room: `room ${doc.rooms.roomNumber} : ${doc.rooms.roomType.typeName}`,
       referenceNumber: doc.referenceNumber,
       type: doc.type,
-      dateCreated: doc.dateCreated,
+      dateCreated: formatTimestamp(doc.dateCreated),
     }));
     data.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
     return data;
