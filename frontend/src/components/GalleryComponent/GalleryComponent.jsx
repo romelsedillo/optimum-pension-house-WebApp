@@ -30,7 +30,7 @@ import { Image } from "@nextui-org/react";
 const GalleryComponent = () => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <Image
           isZoomed
           width={362}
@@ -62,7 +62,7 @@ const GalleryComponent = () => {
           />
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <Image
           isZoomed
           width={365}
@@ -92,6 +92,38 @@ const GalleryComponent = () => {
           width={365}
           alt="NextUI Fruit Image with Zoom"
           src={image9}
+          className=" z-0"
+        />
+      </div>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col gap-2">
+          <Image
+            isZoomed
+            width={400}
+            alt="NextUI Fruit Image with Zoom"
+            src={image11}
+            className=" z-0"
+          />
+          <Image
+            isZoomed
+            width={400}
+            alt="NextUI Fruit Image with Zoom"
+            src={image10}
+            className=" z-0"
+          />
+        </div>
+        <Image
+          isZoomed
+          width={346}
+          alt="NextUI Fruit Image with Zoom"
+          src={image12}
+          className=" z-0"
+        />
+        <Image
+          isZoomed
+          width={346}
+          alt="NextUI Fruit Image with Zoom"
+          src={image13}
           className=" z-0"
         />
       </div>

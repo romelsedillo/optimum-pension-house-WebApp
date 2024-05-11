@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import UpdateReservation from "../../../utils/UpdateReservation";
 import { toast } from "react-hot-toast";
-import RoomUnavailable from "../../../utils/UpdateFunctions/RoomUnavailable";
+import RoomUnavailable from "../../../utils/UpdateFunctions/RoomReserved";
 import CreateNotification from "../../../utils/Notifications/CreateNotification";
 import ReservationCollection from "../../../utils/Collections/ReservationCollection";
 

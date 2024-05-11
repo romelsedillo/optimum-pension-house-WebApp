@@ -8,7 +8,7 @@ import { Databases } from "appwrite";
 const databases = new Databases(client);
 
 // Function to add a new guest to the database
-export const roomUnavailable = async (roomId) => {
+export const roomReserved = async (roomId) => {
   const status = "reserved";
   try {
     // Create a new document in the guests collection
@@ -20,10 +20,8 @@ export const roomUnavailable = async (roomId) => {
         status: status,
       }
     );
-
-    console.log("Room updated with ID:", response.$id);
   } catch (error) {
     console.error("Error updating room:", error);
   }
 };
-export default roomUnavailable;
+export default roomReserved;

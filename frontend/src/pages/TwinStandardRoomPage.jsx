@@ -8,15 +8,14 @@ import Modal from "react-modal";
 import CalendarComp from "../components/CalendarComp/CalendarComp";
 import IMG_3115 from "../components/DoubleRooms/Images/IMG_3115.jpg";
 import Swal from "sweetalert2";
-import { Toaster, toast } from "react-hot-toast";
-import { differenceInDays, addDays } from "date-fns"; // Importing differenceInDays and addDays functions
+import { differenceInDays, addDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { DataRoomFetch } from "../utils/DataRoomFetch";
 import { useAuth } from "../utils/AuthContext";
-import gcashqrcode from "../assets/images/gcash-qrcode.jpg";
+import qrcode from "../assets/images/qrcode.jpg";
 import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
-import RoomUnavailable from "../utils/UpdateFunctions/RoomUnavailable";
+import RoomReserved from "../utils/UpdateFunctions/RoomReserved";
 import { getCurrentDateTime } from "../utils/CurrentDayTime";
 
 const DoubleRoomPage = () => {
@@ -26,7 +25,7 @@ const DoubleRoomPage = () => {
   const [checkIn, setCheckIn] = useState(new Date());
   const [checkOut, setCheckOut] = useState(addDays(new Date(), 1));
   const chosenDaysCount = differenceInDays(checkOut, checkIn);
-  const totalAmount = chosenDaysCount * 1250; // Calculating the difference in days
+  const totalAmount = chosenDaysCount * 1250;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { roomId } = useParams();
@@ -86,7 +85,7 @@ const DoubleRoomPage = () => {
       currentDateTime,
       type
     );
-    // RoomUnavailable(roomId);
+    RoomReserved(roomId);
     navigate("/");
     Swal.fire({
       title: "Reservation in process!",
@@ -103,10 +102,10 @@ const DoubleRoomPage = () => {
     setIsModalOpen(false);
   };
   return (
-    <>
+    <div className="mt-20">
       <NavBar />
-      <div className="container mx-auto px-[140px] py-10">
-        <div className="bg-gray-100 rounded-lg p-8 h-[42rem] flex flex-col gap-10">
+      <div className="container h-[1000px] mx-auto px-[140px] py-10">
+        <div className=" rounded-lg p-8 h-[42rem] flex flex-col gap-10">
           <div className="flex gap-6 w-full">
             <Card
               isFooterBlurred
@@ -126,11 +125,10 @@ const DoubleRoomPage = () => {
             </Card>
             <div className="w-2/3 flex flex-col gap-4">
               <div className="flex items-baseline gap-8">
-                <h1 className="font-semibold text-5xl text-orange-500">
+                <h1 className="font-semibold text-6xl text-orange-500">
                   Twin Standard Room
                 </h1>
               </div>
-
               <div className="flex flex-col gap-4">
                 <div className="flex w-full gap-16">
                   <div className="flex flex-col gap-2">
@@ -139,14 +137,21 @@ const DoubleRoomPage = () => {
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">Fully air conditioned room</p>
+                      <p className="">Fully air conditioned room</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <FontAwesomeIcon
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">LED TV w/ cable</p>
+                      <p className="">LED TV w/ cable</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <FontAwesomeIcon
+                        icon={faCircleCheck}
+                        className="text-green-500"
+                      />
+                      <p className="">Non-smoking rooms</p>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -155,36 +160,58 @@ const DoubleRoomPage = () => {
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">Hot and cold shower</p>
+                      <p className="">Hot and cold shower</p>
                     </div>
                     <div className="flex gap-2">
                       <FontAwesomeIcon
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">
-                        Free WIFI with 50mbps internet speed
-                      </p>
+                      <p className="">Free WIFI with 50mbps internet speed</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <FontAwesomeIcon
+                        icon={faCircleCheck}
+                        className="text-green-500"
+                      />
+                      <p className="">Daily housekeeping</p>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <p className="font-medium text-2xl">
-                    Room Rate: <span className="text-blue-500">₱1250</span>
+                <div className="flex gap-8">
+                  <p className="font-medium text-lg">
+                    Room Rate: <span className="text-orange-500">₱ 1250</span>
+                    /night
                   </p>
-                  <p className="font-medium text-2xl">
-                    Good for:
-                    <span className="text-blue-500"> 3 to 4 persons</span>
+                  <p className="font-medium text-lg">
+                    Good for 3 to 4 persons.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="flex gap-2 items-start justify-between mt-8">
+          <div className="flex gap-2 items-start justify-between p-4">
             <div className="flex flex-col gap-2">
-              <div>
-                <img src={gcashqrcode} alt="" className=" rounded-3xl w-40" />
+              <div className="flex gap-32 text-blue-500">
+                <p className="font-semibold">Check-in:</p>
+                <p className="font-semibold">Check-out:</p>
+              </div>
+              <div className="overflow-hidden">
+                <CalendarComp
+                  setCheckIn={setCheckIn}
+                  setCheckOut={setCheckOut}
+                  chosenDaysCount={chosenDaysCount}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="bg-blue-100 flex items-center justify-center p-4 rounded-sm">
+                <img
+                  src={qrcode}
+                  alt="GCashCode"
+                  className=" rounded-3xl w-40"
+                />
               </div>
               <div>
                 <p>We accept Gcash payments.</p>
@@ -192,20 +219,22 @@ const DoubleRoomPage = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center gap-4">
+              <div>
+                <p className="text-blue-500 text-lg">
+                  Total Amount:{" "}
+                  <span className="text-orange-500">&#8369; {totalAmount}</span>
+                </p>
+              </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="reference" className="text-blue-500">
                   Reference # <span className="text-red-500">*</span>
                 </label>
-                <Input
-                  autoFocus
+                <input
                   autoComplete="off"
-                  radius="sm"
-                  size="sm"
                   value={referenceNumber}
                   name="reference"
                   type="text"
-                  color="primary"
-                  className="w-full"
+                  className="w-full border-[1px] text-sm text-blue-500 border-blue-500 px-3 py-2 rounded-md outline-none"
                   onChange={handleReference}
                 />
               </div>
@@ -219,19 +248,6 @@ const DoubleRoomPage = () => {
               >
                 Book Now
               </Button>
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-32">
-                <p className="font-semibold">Check-in:</p>
-                <p className="font-semibold">Check-out:</p>
-              </div>
-              <div className="overflow-hidden">
-                <CalendarComp
-                  setCheckIn={setCheckIn}
-                  setCheckOut={setCheckOut}
-                  chosenDaysCount={chosenDaysCount}
-                />
-              </div>
             </div>
           </div>
         </div>
@@ -309,7 +325,7 @@ const DoubleRoomPage = () => {
         </Modal>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

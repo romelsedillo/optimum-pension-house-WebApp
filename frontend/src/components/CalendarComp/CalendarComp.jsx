@@ -35,6 +35,9 @@ const CalendarComp = ({ setCheckIn, setCheckOut }) => {
     }
   };
 
+  const toggleDatePicker = () => {
+    setOpen(!open);
+  };
   const handleRangeChange = (ranges) => {
     setCheckInLocal(ranges.selection.startDate);
     setCheckOutLocal(ranges.selection.endDate);
@@ -43,25 +46,27 @@ const CalendarComp = ({ setCheckIn, setCheckOut }) => {
   };
 
   return (
-    <>
+    <div className="">
       <div className=" flex gap-2">
         <input
           value={`${format(checkInLocal, "EEEE, MMMM d, yyyy")}`}
           readOnly
-          className="w-full px-2 py-3 border-[1px] cursor-pointer rounded-md text-blue-500 border-blue-500 hover:bg-blue-100 outline-none"
-          onClick={() => setOpen(true)}
+          className="w-full px-2 py-2 text-sm border-[1px] cursor-pointer rounded-md text-blue-500 border-blue-500 hover:bg-blue-100 outline-none"
+          onClick={toggleDatePicker}
         />
         <input
           value={`${format(checkOutLocal, "EEEE, MMMM d, yyyy")}`}
           readOnly
-          className="w-full px-2 py-3 border-[1px] cursor-pointer rounded-md text-blue-500 border-blue-500 hover:bg-blue-100 outline-none"
-          onClick={() => setOpen(true)}
+          className="w-full px-2 py-2 text-sm border-[1px] cursor-pointer rounded-md text-blue-500 border-blue-500 hover:bg-blue-100 outline-none"
+          onClick={toggleDatePicker}
         />
       </div>
-      <div className="" ref={refOne}>
+      <div
+        className="w-full flex items-center justify-center text-red-500"
+        ref={refOne}
+      >
         {open && (
           <DateRange
-            color="orange"
             onChange={handleRangeChange}
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}
@@ -76,11 +81,11 @@ const CalendarComp = ({ setCheckIn, setCheckOut }) => {
             direction="horizontal"
             minDate={new Date()}
             shownDate={new Date()}
-            className="z-10 rounded-lg"
+            className="rounded-md border border-blue-500 w-full flex justify-center"
           ></DateRange>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

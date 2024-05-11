@@ -13,10 +13,10 @@ import { differenceInDays, addDays } from "date-fns"; // Importing differenceInD
 import { useNavigate } from "react-router-dom";
 import { DataRoomFetch } from "../utils/DataRoomFetch";
 import { useAuth } from "../utils/AuthContext";
-import gcashqrcode from "../assets/images/gcash-qrcode.jpg";
+import qrcode from "../assets/images/qrcode.jpg";
 import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
-import RoomUnavailable from "../utils/UpdateFunctions/RoomUnavailable";
+import RoomUnavailable from "../utils/UpdateFunctions/RoomReserved";
 import { getCurrentDateTime } from "../utils/CurrentDayTime";
 
 const SingleRoomPage = () => {
@@ -75,8 +75,7 @@ const SingleRoomPage = () => {
     const currentDateTime = getCurrentDateTime();
     const type = "online";
     const status = "pending";
-    currentDateTime,
-    type
+    currentDateTime, type;
     AddReservation(
       checkIn,
       checkOut,
@@ -103,17 +102,15 @@ const SingleRoomPage = () => {
       },
     });
     setIsModalOpen(false);
-  console.log(currentDateTime);
-  console.log(checkIn);
-  console.log(checkOut);
-
+    console.log(currentDateTime);
+    console.log(checkIn);
+    console.log(checkOut);
   };
   return (
-    <>
+    <div className="mt-20">
       <NavBar />
-      <div className="container mx-auto px-[140px] py-10">
-        <Toaster position="top-right" reverseOrder={false} />
-        <div className="bg-gray-100 rounded-lg p-8 h-[42rem] flex flex-col gap-10">
+      <div className="container h-[1000px] mx-auto px-[140px] py-10">
+        <div className=" rounded-lg p-8 h-[42rem] flex flex-col gap-10">
           <div className="flex gap-6 w-full">
             <Card
               isFooterBlurred
@@ -133,7 +130,7 @@ const SingleRoomPage = () => {
             </Card>
             <div className="w-2/3 flex flex-col gap-4">
               <div className="flex items-baseline gap-8">
-                <h1 className="font-semibold text-5xl text-orange-500">
+                <h1 className="font-semibold text-6xl text-orange-500">
                   Single Room
                 </h1>
               </div>
@@ -146,32 +143,45 @@ const SingleRoomPage = () => {
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">Fully air conditioned room</p>
+                      <p className="">Fully air conditioned room</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <FontAwesomeIcon
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">LED TV w/ cable</p>
+                      <p className="">LED TV w/ cable</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <FontAwesomeIcon
+                        icon={faCircleCheck}
+                        className="text-green-500"
+                      />
+                      <p className="">Non-smoking rooms</p>
                     </div>
                   </div>
+
                   <div className="flex flex-col gap-2">
                     <div className="flex gap-2">
                       <FontAwesomeIcon
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">Hot and cold shower</p>
+                      <p className="">Hot and cold shower</p>
                     </div>
                     <div className="flex gap-2">
                       <FontAwesomeIcon
                         icon={faCircleCheck}
                         className="text-green-500"
                       />
-                      <p className="text-tiny">
-                        Free WIFI with 50mbps internet speed
-                      </p>
+                      <p className="">Free WIFI with 50mbps internet speed</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <FontAwesomeIcon
+                        icon={faCircleCheck}
+                        className="text-green-500"
+                      />
+                      <p className="">Daily housekeeping</p>
                     </div>
                   </div>
                 </div>
@@ -186,48 +196,9 @@ const SingleRoomPage = () => {
             </div>
           </div>
 
-          <div className="flex gap-2 items-start justify-between mt-8">
+          <div className="flex gap-2 items-start justify-between p-4">
             <div className="flex flex-col gap-2">
-              <div>
-                <img src={gcashqrcode} alt="" className=" rounded-3xl w-40" />
-              </div>
-              <div>
-                <p>We accept Gcash payments.</p>
-                <p>Gcash #: 0912345677889</p>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center gap-4">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="reference" className="text-blue-500">
-                  Reference # <span className="text-red-500">*</span>
-                </label>
-                <Input
-                  autoFocus
-                  autoComplete="off"
-                  radius="sm"
-                  size="sm"
-                  value={referenceNumber}
-                  name="reference"
-                  type="text"
-                  color="primary"
-                  className="w-full"
-                  onChange={handleReference}
-                  onClear={() => setReferenceNumber("")}
-                />
-              </div>
-              <Button
-                isDisabled={isEmpty}
-                radius="sm"
-                size="md"
-                color="primary"
-                className="w-full"
-                onClick={handleBookNow}
-              >
-                Book Now
-              </Button>
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-32">
+              <div className="flex gap-32 text-blue-500">
                 <p className="font-semibold">Check-in:</p>
                 <p className="font-semibold">Check-out:</p>
               </div>
@@ -238,6 +209,52 @@ const SingleRoomPage = () => {
                   chosenDaysCount={chosenDaysCount}
                 />
               </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="bg-blue-100 flex items-center justify-center p-4 rounded-sm">
+                <img
+                  src={qrcode}
+                  alt="GCashCode"
+                  className=" rounded-3xl w-40"
+                />
+              </div>
+              <div>
+                <p>We accept Gcash payments.</p>
+                <p>Gcash #: 0912345677889</p>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center gap-4">
+              <div>
+                <p className="text-blue-500 text-lg">
+                  Total Amount:{" "}
+                  <span className="text-orange-500">&#8369; {totalAmount}</span>
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="reference" className="text-blue-500">
+                  Reference # <span className="text-red-500">*</span>
+                </label>
+                <input
+                  autoFocus
+                  autoComplete="off"
+                  value={referenceNumber}
+                  name="reference"
+                  type="text"
+                  className="w-full border-[1px] text-sm text-blue-500 border-blue-500 px-3 py-2 rounded-md outline-none"
+                  onChange={handleReference}
+                  // onClear={() => setReferenceNumber("")}
+                />
+              </div>
+              <Button
+                isDisabled={isEmpty}
+                radius="sm"
+                size="sm"
+                color="primary"
+                className="w-full"
+                onClick={handleBookNow}
+              >
+                Book Now
+              </Button>
             </div>
           </div>
         </div>
@@ -289,7 +306,7 @@ const SingleRoomPage = () => {
         </Modal>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
