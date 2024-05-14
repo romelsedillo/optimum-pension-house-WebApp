@@ -4,31 +4,25 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Input,
 } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { Select, SelectItem } from "@nextui-org/react";
-import RoomTypeFetch from "../../../utils/Collections/RoomTypefetch";
 import UpdateRoom from "../../../utils/UpdateFunctions/UpdateRoom";
-// import OneRoomCollection from "../../../utils/Collections/OneRoomCollection";
-import RoomAvailableCollection from "../../../utils/Collections/RoomAvailableCollection";
 
 const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
-  const [roomTypeData, setRoomTypeData] = useState([]);
   const [roomNumber, setRoomNumber] = useState("");
   const [floor, setFloor] = useState("");
   const [roomType, setRoomType] = useState("");
   const [status, setStatus] = useState("");
 
-  const roomTypeFetchData = async () => {
-    try {
-      const appWriteData = await RoomTypeFetch();
-      setRoomTypeData(appWriteData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const roomTypeFetchData = async () => {
+  //   try {
+  //     const appWriteData = await RoomTypeFetch();
+  //     setRoomTypeData(appWriteData);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   // const roomFetchData = async () => {
   //   try {
@@ -44,7 +38,7 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
     setFloor(selectedRoomData?.floor);
     setRoomType(selectedRoomData?.roomType);
     setStatus(selectedRoomData?.status);
-    roomTypeFetchData();
+    // roomTypeFetchData();
   }, [selectedRoomData]);
 
   const handleRoomNumberChange = (event) => {
@@ -63,15 +57,16 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await toast.promise(
-        UpdateRoom(roomId, roomNumber, floor, status, roomType),
-        {
-          loading: "Updating...",
-          success: <b>Room updated!</b>,
-          error: <b>Could not update.</b>,
-        }
-      );
-      onUpdateSuccess();
+      // await toast.promise(
+      //   UpdateRoom(roomId, roomNumber, floor, status, roomType),
+      //   {
+      //     loading: "Updating...",
+      //     success: <b>Room updated!</b>,
+      //     error: <b>Could not update.</b>,
+      //   }
+      // );
+      await UpdateRoom(roomId, roomNumber, floor, status, roomType),
+        await onUpdateSuccess();
     } catch (error) {
       console.error("Error updating room.:", error);
       toast.error(`Error updating room.: ${error.message}`);
@@ -80,7 +75,7 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
 
   const isAnyFieldEmpty =
     roomNumber === "" || floor === "" || roomType === "" || status === "";
-
+  console.log(selectedRoomData);
   return (
     <ModalContent>
       {(onClose) => (
@@ -88,20 +83,36 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
           <ModalHeader className=" text-blue-500">Update Room</ModalHeader>
           <ModalBody>
             <div className="flex gap-2">
-              <Input
-                isRequired
-                autoFocus
-                name="roomNumber"
-                size="sm"
-                type="text"
-                label="Room number"
-                variant="bordered"
-                className="w-full"
-                color="primary"
-                value={roomNumber}
-                onChange={handleRoomNumberChange}
-              />
-              <Select
+              <div className="w-full flex flex-col">
+                <label htmlFor="roomNumber">
+                  Room number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="roomNumber"
+                  name="roomNumber"
+                  type="text"
+                  className="w-full px-2 py-2 rounded-md border-2 border-blue-500 outline-none"
+                  value={roomNumber}
+                  onChange={handleRoomNumberChange}
+                />
+              </div>
+              <div className="w-full flex flex-col">
+                <label htmlFor="floor">
+                  Floor number <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="floor"
+                  name="floor"
+                  className="w-full border-2 border-blue-500 px-2 py-2 rounded-md outline-none"
+                  value={floor}
+                  onChange={handleRoomFloorChange}
+                >
+                  <option value="first">First floor</option>
+                  <option value="second">Second floor</option>
+                  <option value="third">Third floor</option>
+                </select>
+              </div>
+              {/* <Select
                 isRequired
                 label="Room floor"
                 name="floor"
@@ -109,23 +120,44 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                 variant="bordered"
                 className="w-full text-black"
                 color="primary"
-                defaultSelectedKeys={[floor]}
-                value={"okay"}
+                defaultSelectedKeys={[""]}
+                value={floor}
                 onChange={handleRoomFloorChange}
               >
                 <SelectItem key="first" value="first">
-                  First floor
+                  first
                 </SelectItem>
                 <SelectItem key="second" value="second">
-                  Second floor
+                  Second
                 </SelectItem>
                 <SelectItem key="third" value="third">
-                  Third floor
+                  third
                 </SelectItem>
-              </Select>
+              </Select> */}
             </div>
             <div className="flex gap-2">
-              <Select
+              <div className="w-full flex flex-col">
+                <label htmlFor="floor">
+                  Room type <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="roomType"
+                  name="roomType"
+                  className="w-full border-2 border-blue-500 px-2 py-2 rounded-md outline-none"
+                  value={roomType}
+                  onChange={handleRoomTypeChange}
+                >
+                  <option value="single room">single room</option>
+                  <option value="double room">double room</option>
+                  <option value="twin standard room">twin standard room</option>
+                  {/* {roomTypeData.map((type) => (
+                    <option key={type.id} value={type.id}>
+                      {type.typeName}
+                    </option>
+                  ))} */}
+                </select>
+              </div>
+              {/* <Select
                 isRequired
                 label="Room type"
                 name="roomType"
@@ -140,8 +172,24 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                     {type.typeName}
                   </SelectItem>
                 ))}
-              </Select>
-              <Select
+              </Select> */}
+              <div className="w-full flex flex-col">
+                <label htmlFor="status">
+                  Room status <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  className="w-full border-2 border-blue-500 px-2 py-2 rounded-md outline-none"
+                  value={status}
+                  onChange={handleRoomStatusChange}
+                >
+                  <option value="available">available</option>
+                  <option value="unavailable">unavailable</option>
+                  <option value="under maintenance">under maintenance</option>
+                </select>
+              </div>
+              {/* <Select
                 isRequired
                 label="Room status"
                 name="roomNumber"
@@ -158,17 +206,17 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                 <SelectItem key="under maintenance" value="under maintenance">
                   Under Maintenance
                 </SelectItem>
-              </Select>
+              </Select> */}
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" size="md" onPress={onClose}>
+            <Button color="danger" variant="flat" size="sm" onPress={onClose}>
               Close
             </Button>
             <Button
               type="submit"
               color="primary"
-              size="md"
+              size="sm"
               onPress={onClose}
               isDisabled={isAnyFieldEmpty}
             >

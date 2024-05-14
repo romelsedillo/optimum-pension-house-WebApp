@@ -203,7 +203,7 @@ export default function RoomsTable() {
                   <VerticalDotsIcon className="text-default-400" />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu>
+              <DropdownMenu aria-label="option">
                 <DropdownItem
                   onPress={onUpdateModalOpen}
                   onClick={() =>

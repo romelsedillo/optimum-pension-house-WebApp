@@ -15,6 +15,8 @@ import {
   Chip,
   User,
   Pagination,
+  Modal,
+  useDisclosure,
 } from "@nextui-org/react";
 import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
@@ -22,6 +24,7 @@ import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { capitalize } from "./utils";
 
+import AddEmployeeModal from "../../Modal/AddEmployeeModal/AddEmployeeModal";
 import { receptionistCollection } from "./datafetch";
 
 const columns = [
@@ -69,6 +72,7 @@ export default function ManagerTable() {
   const pages = Math.ceil(users.length / rowsPerPage);
 
   const hasSearchFilter = Boolean(filterValue);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const fetchData = async () => {
     try {
@@ -81,7 +85,13 @@ export default function ManagerTable() {
   useEffect(() => {
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
-
+  const handleAddSuccess = async () => {
+    try {
+      await fetchData(); // Fetch updated data
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
+  };
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
@@ -207,7 +217,7 @@ export default function ManagerTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-          <Dropdown>
+            <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
@@ -237,7 +247,8 @@ export default function ManagerTable() {
               // endContent={<PlusIcon />}
               size="sm"
               color="primary"
-              onClick={() => alert("button clicked")}
+              onPress={onOpen}
+              // onClick={() => alert("button clicked")}
             >
               Add Manager
             </Button>
@@ -315,47 +326,58 @@ export default function ManagerTable() {
   );
 
   return (
-    <Table
-      className="bg-white"
-      isCompact
-      removeWrapper
-      aria-label="Example table with custom cells, pagination and sorting"
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      checkboxesProps={{
-        classNames: {
-          wrapper: "after:bg-foreground after:text-background text-background",
-        },
-      }}
-      classNames={classNames}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
-    >
-      <TableHeader columns={headerColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <>
+      <Table
+        className="bg-white"
+        isCompact
+        removeWrapper
+        aria-label="Example table with custom cells, pagination and sorting"
+        bottomContent={bottomContent}
+        bottomContentPlacement="outside"
+        checkboxesProps={{
+          classNames: {
+            wrapper:
+              "after:bg-foreground after:text-background text-background",
+          },
+        }}
+        classNames={classNames}
+        selectedKeys={selectedKeys}
+        selectionMode="multiple"
+        sortDescriptor={sortDescriptor}
+        topContent={topContent}
+        topContentPlacement="outside"
+        onSelectionChange={setSelectedKeys}
+        onSortChange={setSortDescriptor}
+      >
+        <TableHeader columns={headerColumns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+              allowsSorting={column.sortable}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={"No users found"} items={sortedItems}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      <Modal
+        size="2xl"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
+        <AddEmployeeModal onAddSuccess={handleAddSuccess} />
+      </Modal>
+    </>
   );
 }

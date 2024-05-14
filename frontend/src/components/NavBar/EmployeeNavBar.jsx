@@ -96,7 +96,7 @@ export default function EmployeesNavBar() {
               <DropdownItem
                 key="settings"
                 color="success"
-                href="/receptionist/settings"
+                href={`/${role}/settings`}
               >
                 Account Settings
               </DropdownItem>

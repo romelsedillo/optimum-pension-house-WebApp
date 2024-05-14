@@ -13,12 +13,16 @@ import toast from "react-hot-toast";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { PlusIcon } from "./PlusIcon";
+import { useAuth } from "../../../utils/AuthContext";
 
 import AddAuthEmployee from "../../../utils/AddFunctions/AddAuthEmployee";
+import { capitalize } from "../../../utils/capitalize";
+
 const AddEmployeeModal = ({ onAddSuccess }) => {
+  const { role } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState("romel");
-  const [position, setPosition] = useState("manager");
+  const [position, setPosition] = useState(role);
   const [email, setEmail] = useState("romel@gmail.com");
   const [phone, setPhone] = useState("09123456789");
   const [address, setAddress] = useState("amlan");
@@ -97,7 +101,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
       {(onClose) => (
         <form onSubmit={handleSubmit}>
           <ModalHeader className="flex flex-col gap-1">
-            Add New Employee
+            Add New {capitalize(role)}
           </ModalHeader>
           <ModalBody className="">
             <div className="flex gap-2">
@@ -116,7 +120,19 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 onChange={handleNameChange}
                 onClear={() => setName("")}
               />
-              <Select
+              <Input
+                isRequired
+                isDisabled
+                name="position"
+                size="sm"
+                type="text"
+                label="position"
+                variant="bordered"
+                className="w-full"
+                color="success"
+                value={position}
+              />
+              {/* <Select
                 isRequired
                 label="Position"
                 name="position"
@@ -137,7 +153,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 <SelectItem key="receptionist" value="receptionist">
                   receptionist
                 </SelectItem>
-              </Select>
+              </Select> */}
             </div>
             <div className="flex gap-2">
               <Input
@@ -236,7 +252,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
               endContent={<PlusIcon />}
               isDisabled={isAnyFieldEmpty}
             >
-              Add Guest
+              Add {role}
             </Button>
           </ModalFooter>
         </form>

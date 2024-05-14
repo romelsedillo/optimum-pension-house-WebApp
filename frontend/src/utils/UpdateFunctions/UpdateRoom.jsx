@@ -4,6 +4,7 @@ import {
   ROOMS_COLLECTION_ID,
 } from "../../config/appwriteConfig";
 import { Databases } from "appwrite";
+import { toast, Bounce } from "react-toastify";
 
 const databases = new Databases(client);
 
@@ -29,9 +30,35 @@ export const roomUnavailable = async (
       }
     );
 
-    console.log("Room updated with ID:", response.$id);
+    toast.success("Room updated!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   } catch (error) {
     console.error("Error updating  room:", error);
+    console.error(error.response.code);
+    if (error) {
+      toast.error("Failed updating room.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      // alert("Login failed. Please check your credentials and try again.");
+      // console.log("Incorrect credentials. Please check and try again.");
+    }
   }
 };
 export default roomUnavailable;

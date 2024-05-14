@@ -1,6 +1,6 @@
 import { account } from "../../config/appwriteConfig";
 import { ID } from "appwrite";
-import AddEmployee from "./AddEmployee";
+import AddGuestCopy from "../AddFunctions/AddGuestCopy";
 
 function generateRandomString(length = 20) {
   const characters =
@@ -16,34 +16,30 @@ function generateRandomString(length = 20) {
 // Generate a random string of length 20
 const randomString = generateRandomString();
 
-export const addAuthEmployee = async (
+export const addAuthManager = async (
   name,
   position,
   email,
-  status,
   phone,
   address,
   password
 ) => {
   try {
-    await AddEmployee(
+    await AddGuestCopy(
       randomString,
       name,
       position,
       email,
-      status,
       phone,
       address,
-      password
     );
     let response = await account.create(
       ID.custom(randomString),
       email,
       password,
-      name
+      name,
     );
     // Create an email session
-    await account.createEmailSession(email, password);
     const accountDetails = await account.get();
 
     console.log(accountDetails);
@@ -51,4 +47,4 @@ export const addAuthEmployee = async (
     console.error(error);
   }
 };
-export default addAuthEmployee;
+export default addAuthManager;

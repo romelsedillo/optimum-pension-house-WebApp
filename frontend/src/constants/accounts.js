@@ -32,7 +32,7 @@ export const managerSidebar = [
 
 export const receptionistSidebar = [
   { id: 1, title: "Guests", link: "/receptionist-dashboard/guests", icon: faUser },
-  { id: 2, title: "Receptionists", link: "/receptionist-dashboard/receptionist", icon: faUser },
+  { id: 2, title: "Receptionists", link: "/receptionist-dashboard/receptionists", icon: faUser },
   { id: 3, title: "Rooms", link: "/receptionist-dashboard/rooms", icon: faBuilding },
   { id: 4, title: "Reservations", link: "/receptionist-dashboard/reservations", icon: faCalendarCheck },
   { id: 5, title: "Reports", link: "/receptionist-dashboard/reports", icon: faClipboardList },

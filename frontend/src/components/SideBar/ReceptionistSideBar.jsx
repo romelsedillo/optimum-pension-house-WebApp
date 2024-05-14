@@ -27,7 +27,7 @@ const Sidebar = () => {
       } relative duration-500 h-screen bg-[#1C2434]`}
     >
       <div
-        className="hidden border-[3px] absolute cursor-pointer -right-4 top-24 w-10 h-10 bg-white flex items-center justify-center font-bold"
+        className="hidden border-[3px] absolute cursor-pointer -right-4 top-24 w-10 h-10 bg-white items-center justify-center font-bold"
         onClick={handleToggleSidebar}
       >
         <FontAwesomeIcon icon={faBars} className="w-6 h-6" />
