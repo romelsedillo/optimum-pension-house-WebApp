@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import RoomOccupied from "../../../utils/UpdateFunctions/RoomOccupied";
 import CreateNotification from "../../../utils/Notifications/CreateNotification";
 import ReservationCollection from "../../../utils/Collections/ReservationCollection";
+import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
 
 const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const [status, setStatus] = useState("");
@@ -33,12 +34,14 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const reservationData = data.filter((item) => item.id === reservationId);
 
   const guestId = reservationData[0]?.guestId;
+  console.log(guestId);
 
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const currentDateTime = getCurrentDateTime();
     try {
       toast.promise(UpdateReservation(reservationId, status), {
         loading: "Updating...",
@@ -55,14 +58,50 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
 
     if (status === "cancel") {
       const message = "Booking canceled.";
-      const type = "failed";
-      CreateNotification(guestId, message, type);
+      const type = "cancel";
+      CreateNotification(
+        message,
+        type,
+        currentDateTime,
+        guestId,
+        reservationId
+      );
     }
     if (status === "confirmed") {
       const message = "Booking confirmed.";
-      const type = "success";
-      CreateNotification(guestId, message, type);
+      const type = "confirmed";
+      CreateNotification(
+        message,
+        type,
+        currentDateTime,
+        guestId,
+        reservationId
+      );
     }
+    if (status === "check-in") {
+      const message = "Check-in.";
+      const type = "check-in";
+      CreateNotification(
+        message,
+        type,
+        currentDateTime,
+        guestId,
+        reservationId
+      );
+    }
+    if (status === "check-out") {
+      const message = "Check-out.";
+      const type = "check-out";
+      CreateNotification(
+        message,
+        type,
+        currentDateTime,
+        guestId,
+        reservationId
+      );
+    }
+    console.log(currentDateTime);
+    console.log(guestId);
   };
   return (
     <ModalContent>

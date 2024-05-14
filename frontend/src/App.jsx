@@ -59,6 +59,7 @@ import { Toaster } from "react-hot-toast";
 import Bookings from "./pages/Bookings";
 import ManagerManagers from "./pages/ManagerManagers";
 import { ToastContainer, Bounce } from "react-toastify";
+import Notifications from "./pages/Notifications";
 
 function App() {
   // const location = useLocation();
@@ -108,6 +109,7 @@ function App() {
                 path="/twin-standard/:roomId"
                 element={<TwinStandardRoomPage />}
               />
+              <Route path="/notifications" element={<Notifications />} />
               <Route path="/bookings" element={<Bookings />} />
             </Route>
 

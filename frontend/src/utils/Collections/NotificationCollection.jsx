@@ -1,4 +1,5 @@
 import { Client, Databases } from "appwrite";
+import formatDate from "../formatDate";
 
 // Function to fetch data from Appwrite
 export const notificationCollection = async () => {
@@ -20,17 +21,17 @@ export const notificationCollection = async () => {
     // Extract the data from the response and return it
     const data = response.documents.map((doc) => ({
       id: doc.$id,
-      guests: doc.guests.$id,
+      guests: doc.guests?.$id,
       message: doc.message,
-      type: doc.type
+      type: doc.type,
+      reservationId: doc.reservations?.$id,
+      dateCreated: formatDate(doc.dateCreated),
     }));
-    
 
-    // If you want the smallest number of index to be the last, reverse the sorted array
-    data.reverse();
-    return data;
+    const limitedData = data.reverse().slice(0, 8);
+    return limitedData;
   } catch (error) {
-    console.error("Error fetching data from AppWrite:", error);
+    console.error("Error fetching notifications:", error);
     return [];
   }
 };

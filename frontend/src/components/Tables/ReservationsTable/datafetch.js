@@ -23,12 +23,13 @@ export const fetchDataFromAppwrite = async () => {
       checkOutDate: doc.checkOutDate,
       status: doc.status,
       totalAmount: doc.totalAmount,
-      guest: doc.guests.name,
+      guest: doc.guests?.name,
       roomId: doc.rooms.$id,
       room: `room ${doc.rooms.roomNumber} : ${doc.rooms.roomType.typeName}`,
       referenceNumber: doc.referenceNumber,
       dateCreated: doc.dateCreated,
       type: doc.type,
+      guestId: doc.guests?.$id,
     }));
     console.log(data);
     return data;

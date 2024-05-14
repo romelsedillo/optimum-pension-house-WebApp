@@ -7,8 +7,12 @@ import PrintWordButton from "../components/PrintWordButton/PrintWordButton";
 import DatePicker from "../components/DatePicker/DatePicker";
 import DataTable from "../components/Tables/DataTable/DataTable";
 import { reportsCollection } from "../utils/Collections/ReportsCollection";
+import { useAuth } from "../utils/AuthContext";
+
 
 const ManagerReports = () => {
+  const { role, user, } = useAuth();
+
   const [data, setData] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState(null); // State to hold the selected date range
 
@@ -29,7 +33,7 @@ const ManagerReports = () => {
   const handleDateRangeChange = (dateRange) => {
     setSelectedDateRange(dateRange);
   };
-
+console.log(user);
   return (
     <div className="bg-[#F1F5F9] h-screen w-full flex">
       <ManagerSidebar />

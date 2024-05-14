@@ -27,26 +27,37 @@ import { useAuth } from "../../utils/AuthContext";
 import { NotificationIcon } from "./NotificationIcon";
 import { useEffect, useState } from "react";
 import NotificationCollection from "../../utils/Collections/NotificationCollection";
+import reservationCollection from "../../utils/Collections/ReservationCollection";
 
 export default function NavbarComponent() {
   const { user, role, logout, CurrentDayTime } = useAuth();
-  const [data, setData] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const [currentDateTime, setCurrentDateTime] = useState(CurrentDayTime);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  const fetchNotifications = async () => {
     try {
       const appWriteData = await NotificationCollection();
-      setData(appWriteData);
+      setNotifications(appWriteData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching notification notifications:", error);
+    }
+  };
+  const fetchReservations = async () => {
+    try {
+      const appWriteData = await reservationCollection();
+      setReservations(appWriteData);
+    } catch (error) {
+      console.error("Error fetching reservation notifications:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchNotifications();
+    fetchReservations();
     const intervalId = setInterval(() => {
       setCurrentDateTime(CurrentDayTime());
     }, 1000);
@@ -55,10 +66,16 @@ export default function NavbarComponent() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const notificationData = data.filter((item) => item.guests === user?.$id);
+  const notificationData = notifications.filter(
+    (item) => item.guests === user?.$id
+  );
   const notification = notificationData.length;
   const message = notificationData[0]?.message;
   const type = notificationData[0]?.type;
+
+  const reservationData = reservations.filter(
+    (item) => item.guestId === user?.$id
+  );
 
   const handleOpen = () => {
     onOpen();
@@ -84,6 +101,9 @@ export default function NavbarComponent() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // console.log(notifications);
+  // console.log(reservationData);
   return (
     <>
       <Navbar
@@ -197,9 +217,9 @@ export default function NavbarComponent() {
                     {role === "guest" && (
                       <DropdownItem key="notification" color="primary">
                         {notification ? (
-                          <div
+                          <NavLink
                             className="flex flex-col"
-                            onClick={() => handleOpen()}
+                            to="/notifications"
                           >
                             <h1>
                               Notification
@@ -208,7 +228,7 @@ export default function NavbarComponent() {
                             <span className=" text-tiny text-green-400">
                               {message}
                             </span>
-                          </div>
+                          </NavLink>
                         ) : (
                           <div className="flex flex-col">
                             Notification
