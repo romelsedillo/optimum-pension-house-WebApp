@@ -159,9 +159,9 @@ const Notifications = () => {
                       are as follows:
                     </p>
                     <div>
-                      <p>Room Type: {selectedReservations.room} </p>
-                      <p>Check-in Date: {selectedReservations.checkInDate}</p>
-                      <p>Check-out Date: {selectedReservations.checkOutDate}</p>
+                      <p>Room Type: {selectedReservations?.room} </p>
+                      <p>Check-in Date: {selectedReservations?.checkInDate}</p>
+                      <p>Check-out Date: {selectedReservations?.checkOutDate}</p>
                     </div>
                     <p>
                       Thank you for choosing to stay with us! We look forward to
@@ -175,9 +175,9 @@ const Notifications = () => {
                       We are delighted to inform you that you have successfully
                       checked in. Here are the details of your stay:
                     </p>
-                    <p>Room Details: {selectedReservations.room}</p>
-                    <p>Check-in Date: {selectedReservations.checkInDate}</p>
-                    <p>Check-out Date: {selectedReservations.checkOutDate}</p>
+                    <p>Room Details: {selectedReservations?.room}</p>
+                    <p>Check-in Date: {selectedReservations?.checkInDate}</p>
+                    <p>Check-out Date: {selectedReservations?.checkOutDate}</p>
                     <p>
                       Thank you for choosing to stay with us! We hope you have a
                       comfortable and enjoyable stay. If you need any assistance
@@ -210,10 +210,10 @@ const Notifications = () => {
                       caused. Here are the details of your canceled reservation
                       and the processed refund:
                     </p>
-                    <p>Room Details: {selectedReservations.room}</p>
-                    <p>Check-in Date: {selectedReservations.checkInDate}</p>
-                    <p>Check-out Date: {selectedReservations.checkOutDate}</p>
-                    <p>Refund Amount: {selectedReservations.totalAmount}</p>
+                    <p>Room Details: {selectedReservations?.room}</p>
+                    <p>Check-in Date: {selectedReservations?.checkInDate}</p>
+                    <p>Check-out Date: {selectedReservations?.checkOutDate}</p>
+                    <p>Refund Amount: {selectedReservations?.totalAmount}</p>
                     <p>
                       Refund Reference Number:{" "}
                       {selectedReservations.referenceNumber}
