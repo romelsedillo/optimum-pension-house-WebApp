@@ -16,11 +16,12 @@ import { useAuth } from "../utils/AuthContext";
 import qrcode from "../assets/images/qrcode.jpg";
 import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
-import RoomUnavailable from "../utils/UpdateFunctions/RoomReserved";
+import RoomReserved from "../utils/UpdateFunctions/RoomReserved";
 import { getCurrentDateTime } from "../utils/CurrentDayTime";
+import { addLogs } from "../utils/AddFunctions/AddLogs";
 
 const SingleRoomPage = () => {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const [roomData, setRoomData] = useState(null);
   const [referenceNumber, setReferenceNumber] = useState("");
   const [checkIn, setCheckIn] = useState(new Date());
@@ -31,18 +32,17 @@ const SingleRoomPage = () => {
   const navigate = useNavigate();
   const { roomId } = useParams();
 
+  const fetchData = async () => {
+    try {
+      const data = await DataRoomFetch(roomId);
+      // Access the first element of the array as an object
+      const roomObject = data.length > 0 ? data[0] : null;
+      setRoomData(roomObject);
+    } catch (error) {
+      console.error("Error fetching room data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await DataRoomFetch(roomId);
-        // Access the first element of the array as an object
-        const roomObject = data.length > 0 ? data[0] : null;
-        setRoomData(roomObject);
-      } catch (error) {
-        console.error("Error fetching room data:", error);
-      }
-    };
-
     fetchData();
   }, [roomId]);
 
@@ -68,18 +68,17 @@ const SingleRoomPage = () => {
   const handleBookNow = () => {
     handleOpenModal();
   };
-  const currentDateTime = getCurrentDateTime();
 
   const isEmpty = referenceNumber === "";
   const successHandle = () => {
     const currentDateTime = getCurrentDateTime();
     const type = "online";
-    const status = "pending";
-    currentDateTime, type;
+    const reservationStatus = "pending";
+    // currentDateTime, type;
     AddReservation(
       checkIn,
       checkOut,
-      status,
+      reservationStatus,
       totalAmount,
       user.$id,
       roomId,
@@ -87,7 +86,12 @@ const SingleRoomPage = () => {
       currentDateTime,
       type
     );
-    RoomUnavailable(roomId);
+    RoomReserved(roomId);
+    const position = role ? role : "guest";
+    const actions = "Reservation";
+    const details = `Room ${roomData?.roomNumber}`;
+    const status = "success";
+    addLogs(currentDateTime, user?.name, position, actions, details, status);
     navigate("/");
     Swal.fire({
       title: "Reservation in process!",
@@ -102,9 +106,6 @@ const SingleRoomPage = () => {
       },
     });
     setIsModalOpen(false);
-    console.log(currentDateTime);
-    console.log(checkIn);
-    console.log(checkOut);
   };
   return (
     <div className="mt-20">

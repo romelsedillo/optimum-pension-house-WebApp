@@ -16,7 +16,7 @@ import { differenceInDays, addDays } from "date-fns";
 import format from "date-fns/format";
 import { addReservation } from "../../../utils/AddFunctions/AddReservation";
 import { roomCollectionType } from "../../../utils/Collections/RoomCollectionType";
-import RoomUnavailable from "../../../utils/UpdateFunctions/RoomReserved";
+import RoomReserved from "../../../utils/UpdateFunctions/RoomReserved";
 import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
 import { toast } from "react-hot-toast";
 import CalendarComp from "../../CalendarComp/CalendarComp";
@@ -145,10 +145,8 @@ const AddReservationModal = ({ onAddSuccess }) => {
         error: <b>Could not save.</b>,
       }
     );
-    console.log(`checkindate:${checkIn}`);
-    console.log(`checkoutdate:${checkOut}`);
-    console.log(`currentDateTime:${currentDateTime}`);
-    // RoomUnavailable(rooms);
+    
+    RoomReserved(rooms);
     onAddSuccess();
   };
   const isAnyFieldEmpty =

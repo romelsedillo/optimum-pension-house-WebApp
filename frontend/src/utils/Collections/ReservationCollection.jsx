@@ -51,17 +51,17 @@ export const reservationCollection = async () => {
     );
 
     const data = response.documents.map((doc) => ({
-      id: doc.$id,
-      checkInDate: formatTimestamp(doc.checkInDate),
-      checkOutDate: formatTimestamp(doc.checkOutDate),
-      status: doc.status,
-      totalAmount: doc.totalAmount,
-      guestId: doc.guests.$id,
-      guest: doc.guests?.name,
-      room: `room ${doc.rooms.roomNumber} : ${doc.rooms.roomType.typeName}`,
-      referenceNumber: doc.referenceNumber,
-      type: doc.type,
-      dateCreated: formatTimestamp(doc.dateCreated),
+      id: doc?.$id,
+      checkInDate: formatTimestamp(doc?.checkInDate),
+      checkOutDate: formatTimestamp(doc?.checkOutDate),
+      status: doc?.status,
+      totalAmount: doc?.totalAmount,
+      guestId: doc?.guests?.$id,
+      guest: doc?.guests?.name,
+      room: `room ${doc?.rooms?.roomNumber} : ${doc?.rooms?.roomType?.typeName}`,
+      referenceNumber: doc?.referenceNumber,
+      type: doc?.type,
+      dateCreated: formatTimestamp(doc?.dateCreated),
     }));
     data.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
     return data;

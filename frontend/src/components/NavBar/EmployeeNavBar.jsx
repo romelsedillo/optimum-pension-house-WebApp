@@ -16,7 +16,7 @@ import { useAuth } from "../../utils/AuthContext";
 import { reservationCollection } from "../../utils/Collections/ReservationCollection";
 import { useState, useEffect } from "react";
 import { getCurrentDateTime } from "../../utils/CurrentDayTime";
-
+import { addLogs } from "../../utils/AddFunctions/AddLogs"
 export default function EmployeesNavBar() {
   const { role, user, logout } = useAuth();
   const [count, setCount] = useState([]);
@@ -44,8 +44,24 @@ export default function EmployeesNavBar() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleLogout = () => {
+    const actions = "logout";
+    const details = "logout";
+    const status = "success";
+    const position = role;
+    addLogs(currentDateTime, user?.name, position, actions, details, status);
+
+
+    logout()
+
+  };
+
   return (
-    <Navbar isBordered maxWidth="full" className="py-1 px-6 flex justify-center">
+    <Navbar
+      isBordered
+      maxWidth="full"
+      className="py-1 px-6 flex justify-center"
+    >
       <NavbarContent className="w-full">
         <NavbarItem className="">
           <h1 className="text-blue-500 text-lg">{currentDateTime}</h1>
@@ -100,7 +116,11 @@ export default function EmployeesNavBar() {
               >
                 Account Settings
               </DropdownItem>
-              <DropdownItem key="logout" color="danger" onClick={logout}>
+              <DropdownItem
+                key="logout"
+                color="danger"
+                onClick={() => handleLogout()}
+              >
                 Log Out
               </DropdownItem>
             </DropdownMenu>

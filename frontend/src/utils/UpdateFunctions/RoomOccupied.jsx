@@ -8,8 +8,8 @@ import { Databases } from "appwrite";
 const databases = new Databases(client);
 
 // Function to add a new guest to the database
-export const roomOccupied = async (roomId) => {
-  const status = "occupied";
+export const roomOccupied = async (roomId, status) => {
+ 
   try {
     // Create a new document in the guests collection
     const response = await databases.updateDocument(

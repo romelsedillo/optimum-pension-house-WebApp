@@ -48,60 +48,61 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
         success: <b>Reservation updated.</b>,
         error: <b>Update failed.</b>,
       });
-
-      RoomOccupied(roomId);
+      if (status === "canceled") {
+        const status = "available";
+        RoomOccupied(roomId, status);
+        const message = "Booking canceled.";
+        const type = "cancel";
+        CreateNotification(
+          message,
+          type,
+          currentDateTime,
+          guestId,
+          reservationId
+        );
+      }
+      if (status === "confirmed") {
+        const status = "occupied";
+        RoomOccupied(roomId, status);
+        const message = "Booking confirmed.";
+        const type = "confirmed";
+        CreateNotification(
+          message,
+          type,
+          currentDateTime,
+          guestId,
+          reservationId
+        );
+      }
+      if (status === "check-in") {
+        const message = "Check-in.";
+        const type = "check-in";
+        CreateNotification(
+          message,
+          type,
+          currentDateTime,
+          guestId,
+          reservationId
+        );
+      }
+      if (status === "check-out") {
+        const message = "Check-out.";
+        const type = "check-out";
+        CreateNotification(
+          message,
+          type,
+          currentDateTime,
+          guestId,
+          reservationId
+        );
+      }
       onUpdateSuccess();
+      console.log(status);
+
     } catch (error) {
       console.log("Status:", status);
       toast.error(`Error updating reservation: ${error.message}`);
     }
-
-    if (status === "cancel") {
-      const message = "Booking canceled.";
-      const type = "cancel";
-      CreateNotification(
-        message,
-        type,
-        currentDateTime,
-        guestId,
-        reservationId
-      );
-    }
-    if (status === "confirmed") {
-      const message = "Booking confirmed.";
-      const type = "confirmed";
-      CreateNotification(
-        message,
-        type,
-        currentDateTime,
-        guestId,
-        reservationId
-      );
-    }
-    if (status === "check-in") {
-      const message = "Check-in.";
-      const type = "check-in";
-      CreateNotification(
-        message,
-        type,
-        currentDateTime,
-        guestId,
-        reservationId
-      );
-    }
-    if (status === "check-out") {
-      const message = "Check-out.";
-      const type = "check-out";
-      CreateNotification(
-        message,
-        type,
-        currentDateTime,
-        guestId,
-        reservationId
-      );
-    }
-    console.log(currentDateTime);
-    console.log(guestId);
   };
   return (
     <ModalContent>
@@ -128,7 +129,11 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
               >
                 Confirmed
               </SelectItem>
-              <SelectItem key="cancel" value="cancel" className="text-red-500">
+              <SelectItem
+                key="canceled"
+                value="canceled"
+                className="text-red-500"
+              >
                 Cancel
               </SelectItem>
               <SelectItem

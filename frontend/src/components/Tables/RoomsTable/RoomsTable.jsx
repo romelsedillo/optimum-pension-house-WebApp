@@ -46,6 +46,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 
 export default function RoomsTable() {
   const [users, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -79,6 +80,7 @@ export default function RoomsTable() {
     try {
       const appWriteData = await fetchDataFromAppwrite();
       setData(appWriteData);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -409,6 +411,7 @@ export default function RoomsTable() {
         </TableHeader>
         <TableBody
           emptyContent={
+            // "No data found..."
             <Spinner
               label="Loading. Please wait."
               color="primary"

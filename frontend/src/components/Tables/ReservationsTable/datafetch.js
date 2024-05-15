@@ -18,23 +18,23 @@ export const fetchDataFromAppwrite = async () => {
     );
 
     const data = response.documents.map((doc) => ({
-      id: doc.$id,
-      checkInDate: doc.checkInDate,
-      checkOutDate: doc.checkOutDate,
-      status: doc.status,
-      totalAmount: doc.totalAmount,
-      guest: doc.guests?.name,
-      roomId: doc.rooms.$id,
-      room: `room ${doc.rooms.roomNumber} : ${doc.rooms.roomType.typeName}`,
-      referenceNumber: doc.referenceNumber,
-      dateCreated: doc.dateCreated,
-      type: doc.type,
-      guestId: doc.guests?.$id,
+      id: doc?.$id,
+      checkInDate: doc?.checkInDate,
+      checkOutDate: doc?.checkOutDate,
+      status: doc?.status,
+      totalAmount: doc?.totalAmount,
+      guest: doc?.guests?.name,
+      roomId: doc?.rooms?.$id,
+      room: `room ${doc?.rooms?.roomNumber} : ${doc?.rooms?.roomType?.typeName}`,
+      referenceNumber: doc?.referenceNumber,
+      dateCreated: doc?.dateCreated,
+      type: doc?.type,
+      guestId: doc?.guests?.$id,
     }));
-    console.log(data);
+    data.reverse();
     return data;
   } catch (error) {
-    console.error("Error fetching data from Appwrite:", error);
+    console.error("Error fetching rooms:", error);
     return [];
   }
 };

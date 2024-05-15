@@ -89,7 +89,7 @@ const SingleRoomComp = () => {
                     size="sm"
                     onClick={() => handleClick(room.id)}
                   >
-                    {room.status === "available" ? "Available" : "Unavailable"}
+                    {room.status === "available" ? "Available" : "Reserved"}
                   </Button>
                 </CardFooter>
               </Card>

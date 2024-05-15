@@ -26,7 +26,7 @@ export const fetchDataFromAppwrite = async () => {
       address: doc.address,
       // Add more fields as needed
     }));
-
+    data.reverse();
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

@@ -17,9 +17,10 @@ import { Input, Button, Card, CardFooter, Image } from "@nextui-org/react";
 import AddReservation from "../utils/AddFunctions/AddReservation";
 import RoomReserved from "../utils/UpdateFunctions/RoomReserved";
 import { getCurrentDateTime } from "../utils/CurrentDayTime";
+import { addLogs } from "../utils/AddFunctions/AddLogs";
 
 const DoubleRoomPage = () => {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const [roomData, setRoomData] = useState(null);
   const [referenceNumber, setReferenceNumber] = useState("");
   const [checkIn, setCheckIn] = useState(new Date());
@@ -72,12 +73,12 @@ const DoubleRoomPage = () => {
   const successHandle = () => {
     const currentDateTime = getCurrentDateTime();
     const type = "online";
-    const status = "pending";
+    const reservationStatus = "pending";
 
     AddReservation(
       checkIn,
       checkOut,
-      status,
+      reservationStatus,
       totalAmount,
       user.$id,
       roomId,
@@ -86,6 +87,11 @@ const DoubleRoomPage = () => {
       type
     );
     RoomReserved(roomId);
+    const position = role ? role : "guest";
+    const actions = "Reservation";
+    const details = `Room ${roomData?.roomNumber}`;
+    const status = "success";
+    addLogs(currentDateTime, user?.name, position, actions, details, status);
     navigate("/");
     Swal.fire({
       title: "Reservation in process!",

@@ -15,11 +15,11 @@ export const fetchDataFromAppwrite = async () => {
     const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
 
     const data = response.documents.map((doc) => ({
-      id: doc.$id,
-      roomNumber: doc.roomNumber,
-      floor: doc.floor,
-      status: doc.status,
-      roomType: doc.roomType.typeName,
+      id: doc?.$id,
+      roomNumber: doc?.roomNumber,
+      floor: doc?.floor,
+      status: doc?.status,
+      roomType: doc?.roomType?.typeName,
     }));
     return data;
   } catch (error) {

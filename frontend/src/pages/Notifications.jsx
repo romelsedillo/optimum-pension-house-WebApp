@@ -120,10 +120,6 @@ const Notifications = () => {
                     <span className="font-semibold">Message:</span>{" "}
                     {notification.message}
                   </p>
-                  <p className="text-sm">
-                    <span className="font-semibold">Message:</span>{" "}
-                    {notification.type}
-                  </p>
                   <div>
                     <Button
                       size="sm"
@@ -216,7 +212,7 @@ const Notifications = () => {
                     <p>Refund Amount: {selectedReservations?.totalAmount}</p>
                     <p>
                       Refund Reference Number:{" "}
-                      {selectedReservations.referenceNumber}
+                      {selectedReservations?.referenceNumber}
                     </p>
                     <p>
                       If you have any questions or need further assistance

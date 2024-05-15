@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -9,20 +9,36 @@ import {
   Pagination,
   getKeyValue,
 } from "@nextui-org/react";
-import { users } from "./data";
+// import { users } from "./data";
+import { logsCollection } from "../../../utils/Collections/logsCollection";
 
 export default function ActivityLogsTable() {
+  const [data, setData] = useState([]);
+
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
-  const pages = Math.ceil(users.length / rowsPerPage);
+  const pages = Math.ceil(data.length / rowsPerPage);
 
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return users.slice(start, end);
-  }, [page, users]);
+    return data.slice(start, end);
+  }, [page, data]);
+
+  const fetchData = async () => {
+    try {
+      const appWriteData = await logsCollection();
+      setData(appWriteData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Table
@@ -45,10 +61,9 @@ export default function ActivityLogsTable() {
         wrapper: "min-h-[222px]",
       }}
     >
-   
       <TableHeader>
-        <TableColumn key="logId">LOG ID</TableColumn>
-        <TableColumn key="timeStamp">TIMESTAMP</TableColumn>
+        <TableColumn key="id">LOG ID</TableColumn>
+        <TableColumn key="time">TIMESTAMP</TableColumn>
         <TableColumn key="user">USER</TableColumn>
         <TableColumn key="position">POSITION</TableColumn>
         <TableColumn key="actions">ACTIONS</TableColumn>

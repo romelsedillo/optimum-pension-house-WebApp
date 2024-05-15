@@ -7,10 +7,12 @@ import { toast, Bounce } from "react-toastify";
 import CurrentDayTime from "./CurrentDayTime";
 
 import AddGuestCopy from "./AddFunctions/AddGuestCopy";
+import { addLogs } from "../utils/AddFunctions/AddLogs";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+  const currentDateTime = CurrentDayTime();
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -21,19 +23,6 @@ export const AuthProvider = ({ children }) => {
     checkUserStatus();
   }, []);
 
-  // const getRedirectPath = (role) => {
-  //   switch (role) {
-  //     case "admin":
-  //       return "/admin-dashboard/admins";
-  //     case "manager":
-  //       return "/manager-dashboard";
-  //     case "receptionist":
-  //       return "/receptionist-dashboard";
-  //     default:
-  //       return "/a";
-  //   }
-  // };
-
   const loginUser = async (userInfo = null) => {
     setLoading(false);
 
@@ -43,23 +32,35 @@ export const AuthProvider = ({ children }) => {
 
       // Get user details
       const accountDetails = await account.get();
-
-      // Set user state
       setUser(accountDetails);
 
       // Set role state
       const role = getUserRole(accountDetails.labels);
       setRole(role);
 
+      const actions = "login";
+      const details = "login";
+      const status = "success";
+      const user = accountDetails.name;
+
       // Redirect to appropriate page based on role
       if (role === "admin") {
         navigate("/admin-dashboard/employees");
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
       } else if (role === "manager") {
         navigate("/manager-dashboard/guests");
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
       } else if (role === "receptionist") {
         navigate("/receptionist-dashboard/guests");
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
       } else {
         navigate("/");
+
+        const position = "guest";
+        addLogs(currentDateTime, user, position, actions, details, status);
       }
     } catch (error) {
       console.error(error.response);
@@ -101,6 +102,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
+
+    
+
     await account.deleteSession("current");
     setUser(null);
     setRole(null); // Reset role state

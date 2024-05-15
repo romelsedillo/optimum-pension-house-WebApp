@@ -1,4 +1,4 @@
-import { useState, useEffect, } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Modal from "react-modal";
@@ -55,8 +55,8 @@ const TwinStandardComp = () => {
 
   return (
     <div className="container mx-auto p-1">
-        {loading ? ( 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
           <CardSkeleton />
           <CardSkeleton />
           <CardSkeleton />
@@ -65,9 +65,9 @@ const TwinStandardComp = () => {
           <CardSkeleton />
         </div>
       ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {data.map((room, index) => (
-          <div key={index}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          {data.map((room, index) => (
+            <div key={index}>
               <Card
                 isFooterBlurred
                 key={index}
@@ -82,9 +82,7 @@ const TwinStandardComp = () => {
                 />
                 <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
                   <div>
-                    <p className="text-white text-lg">
-                      Room {room.roomNumber}
-                    </p>
+                    <p className="text-white text-lg">Room {room.roomNumber}</p>
                     <p className="text-white text-tiny capitalize">
                       {room.floor} floor
                     </p>
@@ -96,15 +94,14 @@ const TwinStandardComp = () => {
                     radius="full"
                     size="sm"
                     onClick={() => handleClick(room.id)}
-
                   >
-                    {room.status === "available" ? "Available" : "Unavailable"}
+                    {room.status === "available" ? "Available" : "Reserved"}
                   </Button>
                 </CardFooter>
               </Card>
-          </div>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
       )}
       <Modal
         isOpen={!!selectedImage}

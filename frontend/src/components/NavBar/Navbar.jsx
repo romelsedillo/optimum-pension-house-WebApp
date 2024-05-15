@@ -28,6 +28,7 @@ import { NotificationIcon } from "./NotificationIcon";
 import { useEffect, useState } from "react";
 import NotificationCollection from "../../utils/Collections/NotificationCollection";
 import reservationCollection from "../../utils/Collections/ReservationCollection";
+import { addLogs } from "../../utils/AddFunctions/AddLogs";
 
 export default function NavbarComponent() {
   const { user, role, logout, CurrentDayTime } = useAuth();
@@ -65,6 +66,17 @@ export default function NavbarComponent() {
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
+
+  const handleLogout = () => {
+    const actions = "logout";
+    const details = "logout";
+    const status = "success";
+    const position = role ? role : "guest";
+
+    addLogs(currentDateTime, user?.name, position, actions, details, status);
+
+    logout();
+  };
 
   const notificationData = notifications.filter(
     (item) => item.guests === user?.$id
@@ -258,7 +270,11 @@ export default function NavbarComponent() {
                         </Link>
                       </DropdownItem>
                     )}
-                    <DropdownItem key="logout" color="danger" onClick={logout}>
+                    <DropdownItem
+                      key="logout"
+                      color="danger"
+                      onClick={() => handleLogout()}
+                    >
                       Log Out
                     </DropdownItem>
                   </DropdownMenu>
