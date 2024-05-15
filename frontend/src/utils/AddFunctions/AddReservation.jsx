@@ -26,15 +26,15 @@ export const addReservation = async (
       RESERVATIONS_COLLECTION_ID,
       ID.unique(),
       {
+        dateCreated: currentDateTime,
+        type: type,
         checkInDate: checkInDate,
         checkOutDate: checkOutDate,
-        status: status,
         totalAmount: totalAmount,
+        referenceNumber: referenceNumber,
+        status: status,
         guests: guests,
         rooms: rooms,
-        referenceNumber: referenceNumber,
-        type: type,
-        dateCreated: currentDateTime,
       }
     );
 

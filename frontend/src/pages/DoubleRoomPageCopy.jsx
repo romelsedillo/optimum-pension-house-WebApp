@@ -80,10 +80,10 @@ const DoubleRoomPage = () => {
       reservationStatus,
       totalAmount,
       user.$id,
-      roomId,
       referenceNumber,
       currentDateTime,
-      type
+      type,
+      roomId
     );
     RoomReserved(roomId);
     const position = role ? role : "guest";

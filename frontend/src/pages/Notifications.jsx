@@ -198,7 +198,7 @@ const Notifications = () => {
                     <p>We look forward to welcoming you back in the future.</p>
                   </div>
                 )}
-                {selectedNotification.type === "cancel" && (
+                {selectedNotification.type === "canceled" && (
                   <div className="flex flex-col gap-1">
                     <p>
                       We regret to inform you that your booking with us has been

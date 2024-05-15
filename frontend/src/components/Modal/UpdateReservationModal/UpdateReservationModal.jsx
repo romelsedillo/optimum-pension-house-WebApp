@@ -52,7 +52,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
         const status = "available";
         RoomOccupied(roomId, status);
         const message = "Booking canceled.";
-        const type = "cancel";
+        const type = "canceled";
         CreateNotification(
           message,
           type,
@@ -98,7 +98,6 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
       }
       onUpdateSuccess();
       console.log(status);
-
     } catch (error) {
       console.log("Status:", status);
       toast.error(`Error updating reservation: ${error.message}`);
