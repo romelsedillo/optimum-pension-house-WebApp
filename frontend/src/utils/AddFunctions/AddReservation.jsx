@@ -17,7 +17,8 @@ export const addReservation = async (
   referenceNumber,
   reservationStatus,
   guests,
-  rooms
+  rooms,
+  chosenDaysCount
 ) => {
   try {
     // Create a new document in the guests collection
@@ -35,12 +36,13 @@ export const addReservation = async (
         status: reservationStatus,
         guests: guests,
         rooms: rooms,
+        totalDays: chosenDaysCount,
       }
     );
 
     console.log("New reservation added with ID:", response.$id);
   } catch (error) {
-    console.error("Error adding employee:", error);
+    console.error("Error creating reservation:", error);
   }
 };
 export default addReservation;

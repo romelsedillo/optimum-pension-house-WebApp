@@ -13,6 +13,7 @@ import RoomOccupied from "../../../utils/UpdateFunctions/RoomOccupied";
 import CreateNotification from "../../../utils/Notifications/CreateNotification";
 import ReservationCollection from "../../../utils/Collections/ReservationCollection";
 import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
+import AddReports from "../../../utils/AddFunctions/AddReports";
 
 const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const [status, setStatus] = useState("");
@@ -34,7 +35,10 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const reservationData = data.filter((item) => item.id === reservationId);
 
   const guestId = reservationData[0]?.guestId;
-  console.log(guestId);
+  const totalDays = reservationData[0]?.totalDays;
+  const roomType = reservationData[0]?.roomType;
+  const totalAmount = reservationData[0]?.totalAmount;
+  console.log(totalDays, roomType, totalAmount);
 
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
@@ -73,6 +77,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
           guestId,
           reservationId
         );
+        AddReports(currentDateTime, totalDays, roomType, totalAmount);
       }
       if (status === "check-in") {
         const message = "Check-in.";

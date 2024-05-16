@@ -80,7 +80,7 @@ export default function ReservationsTable() {
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "dateCreated",
+    column: "",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);

@@ -129,15 +129,16 @@ const AddReservationModal = ({ onAddSuccess }) => {
 
     toast.promise(
       addReservation(
+        currentDateTime,
+        type,
         checkIn,
         checkOut,
-        status,
         totalAmount,
+        referenceNumber,
+        status,
         guests,
         rooms,
-        referenceNumber,
-        currentDateTime,
-        type
+        chosenDaysCount
       ),
       {
         loading: "Saving...",
@@ -145,8 +146,9 @@ const AddReservationModal = ({ onAddSuccess }) => {
         error: <b>Could not save.</b>,
       }
     );
-    
+
     RoomReserved(rooms);
+    onAddSuccess();
     onAddSuccess();
   };
   const isAnyFieldEmpty =

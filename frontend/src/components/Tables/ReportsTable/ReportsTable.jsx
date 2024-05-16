@@ -87,9 +87,9 @@ export default function ReportsTable({ data, selectedDateRange }) {
       >
         <TableHeader>
           <TableColumn key="date">DATE</TableColumn>
-          <TableColumn key="quantity">QUANTITY</TableColumn>
+          <TableColumn key="days">Total Days</TableColumn>
           <TableColumn key="roomType">ROOM TYPE</TableColumn>
-          <TableColumn key="amount">AMOUNT</TableColumn>
+          <TableColumn key="roomRate">AMOUNT</TableColumn>
           <TableColumn key="totalAmount">TOTAL AMOUNT</TableColumn>
         </TableHeader>
         <TableBody items={items}>
