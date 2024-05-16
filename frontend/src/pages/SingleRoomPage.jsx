@@ -76,15 +76,15 @@ const SingleRoomPage = () => {
     const reservationStatus = "pending";
     // currentDateTime, type;
     AddReservation(
+      currentDateTime,
+      type,
       checkIn,
       checkOut,
-      reservationStatus,
       totalAmount,
-      user.$id,
-      roomId,
       referenceNumber,
-      currentDateTime,
-      type
+      reservationStatus,
+      user.$id,
+      roomId
     );
     RoomReserved(roomId);
     const position = role ? role : "guest";

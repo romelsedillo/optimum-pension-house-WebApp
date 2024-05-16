@@ -17,17 +17,20 @@ import { useAuth } from "../../../utils/AuthContext";
 
 import AddAuthEmployee from "../../../utils/AddFunctions/AddAuthEmployee";
 import { capitalize } from "../../../utils/capitalize";
+import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
+import { addLogs } from "../../../utils/AddFunctions/AddLogs";
 
 const AddEmployeeModal = ({ onAddSuccess }) => {
-  const { role } = useAuth();
+  const { role, user } = useAuth();
+  const currentDateTime = getCurrentDateTime();
   const [isVisible, setIsVisible] = useState(false);
-  const [name, setName] = useState("romel");
+  const [name, setName] = useState("");
   const [position, setPosition] = useState(role);
-  const [email, setEmail] = useState("romel@gmail.com");
-  const [phone, setPhone] = useState("09123456789");
-  const [address, setAddress] = useState("amlan");
-  const [password, setPassword] = useState("sedillo19");
-  const [status, setStatus] = useState("offline");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [employeeStatus, setEmployeeStatus] = useState("offline");
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -59,7 +62,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
     setPassword(event.target.value);
   };
   const handleStatusChange = (event) => {
-    setStatus(event.target.value);
+    setEmployeeStatus(event.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -71,7 +74,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
           name,
           position,
           email,
-          status,
+          employeeStatus,
           phone,
           address,
           password
@@ -83,6 +86,10 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
         }
       );
       onAddSuccess();
+      const actions = "Added a manager";
+      const details = name;
+      const status = " succes";
+      addLogs(currentDateTime, user?.name, position, actions, details, status);
     } catch (error) {
       console.error("Error adding employee:", error);
       toast.error(`Error adding employee: ${error.message}`);
@@ -229,14 +236,14 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
             </div>
 
             <Input
-              name="status"
+              name="employeeStatus"
               size="sm"
               type="text"
               label="Status"
               variant="bordered"
               className="hidden w-full"
               color="success"
-              value={status}
+              value={employeeStatus}
               onChange={handleStatusChange}
             />
           </ModalBody>

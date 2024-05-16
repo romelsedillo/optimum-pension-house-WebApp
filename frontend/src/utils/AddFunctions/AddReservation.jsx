@@ -9,15 +9,15 @@ const databases = new Databases(client);
 
 // Function to add a new guest to the database
 export const addReservation = async (
+  currentDateTime,
+  type,
   checkInDate,
   checkOutDate,
-  status,
   totalAmount,
-  guests,
-  rooms,
   referenceNumber,
-  currentDateTime,
-  type
+  reservationStatus,
+  guests,
+  rooms
 ) => {
   try {
     // Create a new document in the guests collection
@@ -32,7 +32,7 @@ export const addReservation = async (
         checkOutDate: checkOutDate,
         totalAmount: totalAmount,
         referenceNumber: referenceNumber,
-        status: status,
+        status: reservationStatus,
         guests: guests,
         rooms: rooms,
       }

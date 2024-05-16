@@ -75,14 +75,14 @@ const DoubleRoomPage = () => {
     const reservationStatus = "pending";
 
     AddReservation(
-      checkIn,
-      checkOut,
-      reservationStatus,
-      totalAmount,
-      user.$id,
-      referenceNumber,
       currentDateTime,
       type,
+      checkIn,
+      checkOut,
+      totalAmount,
+      referenceNumber,
+      reservationStatus,
+      user.$id,
       roomId
     );
     RoomReserved(roomId);

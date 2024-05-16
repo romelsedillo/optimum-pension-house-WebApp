@@ -102,9 +102,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-
-    
-
     await account.deleteSession("current");
     setUser(null);
     setRole(null); // Reset role state
