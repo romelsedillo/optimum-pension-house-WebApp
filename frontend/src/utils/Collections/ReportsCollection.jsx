@@ -1,4 +1,5 @@
 import { Client, Databases } from "appwrite";
+import { transformDate } from "../transformDate";
 
 export const reportsCollection = async () => {
   const PROJECT_ID = "65ad1cb002dddf2e1250";
@@ -19,7 +20,7 @@ export const reportsCollection = async () => {
     // Extract the data from the response and return it
     const data = response.documents.map((doc) => ({
       id: doc.$id,
-      date: doc?.date,
+      date: transformDate(doc?.date),
       days: doc?.days,
       roomType: doc?.roomType?.typeName,
       roomRate: doc?.roomType?.rate,

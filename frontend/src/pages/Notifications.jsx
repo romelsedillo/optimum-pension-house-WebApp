@@ -102,7 +102,7 @@ const Notifications = () => {
                   className={`border-2 w-1/2 text-center cursor-pointer flex flex-col gap-2 py-4 px-6 rounded-md ${
                     notification.type === "confirmed"
                       ? "border-green-500"
-                      : notification.type === "cancel"
+                      : notification.type === "canceled"
                       ? "border-red-500"
                       : notification.type === "check-in"
                       ? "border-blue-500"

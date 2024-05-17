@@ -84,7 +84,8 @@ const SingleRoomPage = () => {
       referenceNumber,
       reservationStatus,
       user.$id,
-      roomId
+      roomId,
+      chosenDaysCount
     );
     RoomReserved(roomId);
     const position = role ? role : "guest";

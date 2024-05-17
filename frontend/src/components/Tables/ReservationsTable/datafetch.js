@@ -1,5 +1,5 @@
 import { Client, Databases } from "appwrite";
-
+import { formatNumberWithCommas } from "../../../utils/formatNumberWithCommas";
 // Function to fetch data from Appwrite
 export const fetchDataFromAppwrite = async () => {
   try {
@@ -22,10 +22,10 @@ export const fetchDataFromAppwrite = async () => {
       checkInDate: doc?.checkInDate,
       checkOutDate: doc?.checkOutDate,
       status: doc?.status,
-      totalAmount: doc?.totalAmount,
+      totalAmount: formatNumberWithCommas(`₱ ${doc?.totalAmount}.00`),
       guest: doc?.guests?.name,
       roomId: doc?.rooms?.$id,
-      room: `room ${doc?.rooms?.roomNumber} : ${doc?.rooms?.roomType?.typeName}`,
+      room: `${doc?.rooms?.roomNumber} : ${doc?.rooms?.roomType?.typeName}`,
       referenceNumber: doc?.referenceNumber,
       dateCreated: doc?.dateCreated,
       type: doc?.type,

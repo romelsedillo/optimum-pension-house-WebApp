@@ -16,20 +16,21 @@ export const fetchDataFromAppwrite = async () => {
     const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
 
     // Extract the data from the response and return it
-    const data = response.documents.map((doc) => ({
-      id: doc.$id,
-      name: doc.name,
-      position: doc.position,
-      email: doc.email,
-      status: doc.status,
-      phone: doc.phone,
-      address: doc.address,
-      // Add more fields as needed
-    }));
+    const data = response.documents
+      // .filter((doc) => doc.position != "admin")
+      .map((doc) => ({
+        id: doc.$id,
+        name: doc.name,
+        position: doc.position,
+        email: doc.email,
+        status: doc.status,
+        phone: doc.phone,
+        address: doc.address, 
+      }));
     data.reverse();
     return data;
   } catch (error) {
-    console.error("Error fetching data from Appwrite:", error);
+    console.error("Error fetching employees", error);
     return [];
   }
 };

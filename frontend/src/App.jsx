@@ -18,11 +18,8 @@ import DoubleRooms from "./pages/DoubleRooms";
 import TwinStandardRooms from "./pages/TwinStandardRooms";
 import SingleRoomPage from "./pages/SingleRoomPage";
 import DoubleRoomPageCopy from "./pages/DoubleRoomPageCopy";
-import DoubleRoomPage from "./pages/DoubleRoomPage";
 import TwinStandardRoomPage from "./pages/TwinStandardRoomPage";
 import Page404 from "./pages/Page404";
-import AdminLogin from "./pages/AdminLogin";
-import ManagerLogin from "./pages/ManagerLogin";
 import UserLogin from "./pages/UserLogin";
 
 import PrivateRoutes from "./utils/PrivateRoutes";
@@ -57,7 +54,8 @@ import ReceptionistLogs from "./pages/ReceptionistLogs";
 
 import { Toaster } from "react-hot-toast";
 import Bookings from "./pages/Bookings";
-import ManagerManagers from "./pages/ManagerManagers";
+import ManagerEmployees from "./pages/ManagerEmployees";
+// import ManagerManagers from "./pages/ManagerManagers";
 import { ToastContainer, Bounce } from "react-toastify";
 import Notifications from "./pages/Notifications";
 
@@ -93,7 +91,7 @@ function App() {
             {/* <Route path="/admin" element={<AdminLogin />} /> */}
             <Route path="*" element={<Page404 />} />
 
-            {/* Private routes for regular users */}
+            {/* Private routes for guests */}
             <Route element={<PrivateRoutes />}>
               <Route path="/book" element={<Book />} />
               <Route path="/profile" element={<Profile />} />
@@ -139,8 +137,8 @@ function App() {
                 element={<ManagerGuests />}
               />
               <Route
-                path="/manager-dashboard/managers"
-                element={<ManagerManagers />}
+                path="/manager-dashboard/employees"
+                element={<ManagerEmployees />}
               />
               <Route
                 path="/manager-dashboard/rooms"

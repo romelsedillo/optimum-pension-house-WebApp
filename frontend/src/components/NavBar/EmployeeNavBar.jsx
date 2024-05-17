@@ -16,7 +16,9 @@ import { useAuth } from "../../utils/AuthContext";
 import { reservationCollection } from "../../utils/Collections/ReservationCollection";
 import { useState, useEffect } from "react";
 import { getCurrentDateTime } from "../../utils/CurrentDayTime";
-import { addLogs } from "../../utils/AddFunctions/AddLogs"
+import { addLogs } from "../../utils/AddFunctions/AddLogs";
+import EmployeeStatus from "../../utils/UpdateFunctions/EmployeeStatus";
+
 export default function EmployeesNavBar() {
   const { role, user, logout } = useAuth();
   const [count, setCount] = useState([]);
@@ -34,26 +36,33 @@ export default function EmployeesNavBar() {
 
   const totalPending = count.filter((item) => item.status === "pending").length;
 
-  useEffect(() => {
-    guestFetchData();
+  const timeClock = () => {
     const intervalId = setInterval(() => {
       setCurrentDateTime(getCurrentDateTime());
     }, 1000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
+  };
+  useEffect(() => {
+    guestFetchData();
+    // timeClock();
   }, []);
 
+  const offline = () => {
+    const status = "offline";
+    const userId = user?.$id;
+    EmployeeStatus(userId, status);
+  };
   const handleLogout = () => {
     const actions = "logout";
     const details = "logout";
     const status = "success";
     const position = role;
     addLogs(currentDateTime, user?.name, position, actions, details, status);
+    offline();
 
-
-    logout()
-
+    logout();
   };
 
   return (
@@ -109,13 +118,13 @@ export default function EmployeesNavBar() {
               <DropdownItem key="profile" color="success" className="">
                 {user.email}
               </DropdownItem>
-              <DropdownItem
+              {/* <DropdownItem
                 key="settings"
                 color="success"
                 href={`/${role}/settings`}
               >
                 Account Settings
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem
                 key="logout"
                 color="danger"

@@ -5,10 +5,11 @@ import {
   ModalFooter,
   Button,
   Input,
+  RadioGroup,
+  Radio,
 } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
-// import { fetchDataFromDatabase } from "../../Tables/GuestsTable/datafetch";
 import { guestCollection } from "../../../utils/Collections/GuestCollection";
 import { roomTypeCollection } from "../../../utils/Collections/RoomTypeCollection";
 import { roomCollection } from "../../../utils/Collections/RoomAvailableCollection";
@@ -20,23 +21,26 @@ import RoomReserved from "../../../utils/UpdateFunctions/RoomReserved";
 import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
 import { toast } from "react-hot-toast";
 import CalendarComp from "../../CalendarComp/CalendarComp";
+import { formatNumberWithCommas } from "../../../utils/formatNumberWithCommas";
 
 const AddReservationModal = ({ onAddSuccess }) => {
   const [guestData, setGuestData] = useState([]);
   const [roomTypeData, setRoomTypeData] = useState([]);
   const [roomData, setRoomData] = useState([]);
   const [guests, setGuests] = useState("");
-  const [referenceNumber, setReferenceNumber] = useState();
+  const [referenceNumber, setReferenceNumber] = useState("");
   const [checkIn, setCheckIn] = useState(new Date());
   const [checkOut, setCheckOut] = useState(addDays(new Date(), 1));
   const chosenDaysCount = differenceInDays(checkOut, checkIn);
   const [roomType, setRoomType] = useState("");
   const [rooms, setRooms] = useState("");
-
+  const [discount, setDiscount] = useState(0);
   const [roomTypeRateData, setRoomTypeRateData] = useState("");
   const [roomRate, setRoomRate] = useState(0);
   const [roomPrice, setRoomPrice] = useState(0);
   const [roomTypeBase, setRoomTypeBase] = useState([]);
+
+  const [selectedValue, setSelectedValue] = useState(null); // Change default value to null
 
   useEffect(() => {
     const guestFetchData = async () => {
@@ -80,17 +84,19 @@ const AddReservationModal = ({ onAddSuccess }) => {
   }, [roomType, roomTypeBase]);
 
   const totalAmount = roomPrice * chosenDaysCount;
+  const discountedAmount = totalAmount * (1 - (selectedValue || 0)); // Use selectedValue or 0 if null
+
+  const handleRadioChange = (event) => {
+    const value = Number(event.target.value);
+    setSelectedValue((prevValue) => (prevValue === value ? null : value)); // Deselect if the same value is clicked
+  };
 
   const handleRoomTypeChange = (event) => {
     const selectedRoomTypeId = event.target.value;
-    console.log("Selected room type ID:", selectedRoomTypeId);
-
-    // Find the room type object based on the selected ID
     const selectedRoomType = roomTypeData.find(
       (roomtype) => roomtype.id === selectedRoomTypeId
     );
 
-    // Check if the room type object is found
     if (selectedRoomType) {
       const typeName = selectedRoomType.typeName;
 
@@ -103,12 +109,6 @@ const AddReservationModal = ({ onAddSuccess }) => {
       if (typeName === "twin standard room") {
         setRoomPrice(1250);
       }
-
-      console.log("Selected room type name:", typeName);
-
-      // You can use 'typeName' as needed
-    } else {
-      console.error("Room type not found for ID:", selectedRoomTypeId);
     }
 
     setRoomType(selectedRoomTypeId);
@@ -133,7 +133,7 @@ const AddReservationModal = ({ onAddSuccess }) => {
         type,
         checkIn,
         checkOut,
-        totalAmount,
+        discountedAmount,
         referenceNumber,
         status,
         guests,
@@ -149,11 +149,10 @@ const AddReservationModal = ({ onAddSuccess }) => {
 
     RoomReserved(rooms);
     onAddSuccess();
-    onAddSuccess();
   };
+
   const isAnyFieldEmpty =
     guests === "" ||
-    referenceNumber === "" ||
     checkIn === "" ||
     checkOut === "" ||
     roomType === "" ||
@@ -162,8 +161,8 @@ const AddReservationModal = ({ onAddSuccess }) => {
   return (
     <ModalContent className=" max-h-[450px] overflow-y-auto">
       {(onClose) => (
-        <form onSubmit={handleSubmit}>
-          <ModalHeader className="flex flex-col gap-1 text-blue-500">
+        <form onSubmit={handleSubmit} className="">
+          <ModalHeader className="text-sm text-blue-500">
             Add Reservation
           </ModalHeader>
           <ModalBody>
@@ -206,10 +205,10 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 )}
               </Select>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
               <div className="w-full flex flex-col">
                 <label htmlFor="checkIn" className="text-blue-500">
-                  CHeck-in Date: <span className="text-red-500">*</span>
+                  Check-in Date: <span className="text-red-500">*</span>
                 </label>
                 <Input
                   isRequired
@@ -248,12 +247,12 @@ const AddReservationModal = ({ onAddSuccess }) => {
             <div className="flex gap-2">
               <div className="w-full flex flex-col">
                 <Input
-                  isRequired
+                  autoComplete="off"
                   name="reference"
-                  label="Reference #"
+                  label="Reference # for gcash only"
                   color="primary"
                   size="sm"
-                  type="text"
+                  type="number"
                   variant="bordered"
                   className="w-full"
                   value={referenceNumber}
@@ -285,9 +284,48 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 </Select>
               </div>
             </div>
+
+            <div>
+              <RadioGroup
+                name="discount"
+                orientation="horizontal"
+                label="Select for discount"
+                onChange={handleRadioChange}
+                value={selectedValue}
+              >
+                <Radio value={0.05} checked={selectedValue === 0.05}>
+                  5%
+                </Radio>
+                <Radio value={0.1} checked={selectedValue === 0.1}>
+                  10%
+                </Radio>
+                <Radio value={0.15} checked={selectedValue === 0.15}>
+                  15%
+                </Radio>
+                <Radio value={0.2} checked={selectedValue === 0.2}>
+                  20%
+                </Radio>
+
+                <Radio value={0.25} checked={selectedValue === 0.25}>
+                  25%
+                </Radio>
+                <Radio value={0.3} checked={selectedValue === 0.3}>
+                  30%
+                </Radio>
+              </RadioGroup>
+            </div>
             <div>
               <p className="text-1xl text-blue-500">
-                Total Amount &#8369; {totalAmount}{" "}
+                Total Amount:{" "}
+                <span className="text-1xl">
+                  &#8369; {formatNumberWithCommas(totalAmount)}.00
+                </span>
+              </p>
+              <p className="text-1xl text-blue-500">
+                Discounted Amount:{" "}
+                <span className="text-1xl">
+                  &#8369; {formatNumberWithCommas(discountedAmount)}.00
+                </span>
               </p>
             </div>
           </ModalBody>

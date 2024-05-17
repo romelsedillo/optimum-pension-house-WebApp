@@ -38,8 +38,15 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
   const totalDays = reservationData[0]?.totalDays;
   const roomType = reservationData[0]?.roomType;
   const totalAmount = reservationData[0]?.totalAmount;
-  console.log(totalDays, roomType, totalAmount);
+  const getCurrentFormattedDate = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
 
+    return `${year}-${month}-${day}`;
+  };
+  const currentDate = getCurrentFormattedDate();
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
   };
@@ -77,7 +84,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
           guestId,
           reservationId
         );
-        AddReports(currentDateTime, totalDays, roomType, totalAmount);
+        AddReports( totalDays, roomType, totalAmount, currentDate);
       }
       if (status === "check-in") {
         const message = "Check-in.";

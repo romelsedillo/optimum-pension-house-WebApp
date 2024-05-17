@@ -9,7 +9,8 @@ const columns = [
 
 const statusOptions = [
   { name: "Available", uid: "available" },
-  { name: "Unavailable", uid: "unavailable" },
+  { name: "Reserved", uid: "reserved" },
+  { name: "Occupied", uid: "occupied" },
   { name: "Under Maintenance", uid: "under maintenance" },
 ];
 

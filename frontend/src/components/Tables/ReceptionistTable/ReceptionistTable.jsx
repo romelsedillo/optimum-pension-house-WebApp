@@ -135,10 +135,10 @@ export default function ReceptionistTable() {
       case "status":
         return (
           <Chip
-            className="capitalize border-none gap-1 text-default-600"
+            className=""
             color={statusColorMap[user?.status]}
             size="sm"
-            variant="dot"
+            variant="flat"
           >
             {cellValue}
           </Chip>

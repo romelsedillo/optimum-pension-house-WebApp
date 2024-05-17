@@ -52,7 +52,7 @@ export default function GuestsTable() {
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "name",
     direction: "ascending",
@@ -61,12 +61,13 @@ export default function GuestsTable() {
   const pages = Math.ceil(users.length / rowsPerPage);
   const hasSearchFilter = Boolean(filterValue);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
       const appWriteData = await fetchDataFromDatabase();
       setData(appWriteData);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -145,6 +146,10 @@ export default function GuestsTable() {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
+      case "name":
+        return <div className="capitalize">{cellValue}</div>;
+      case "address":
+        return <div className="capitalize">{cellValue}</div>;
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -237,7 +242,6 @@ export default function GuestsTable() {
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
             </select>
@@ -335,20 +339,23 @@ export default function GuestsTable() {
         </TableHeader>
         <TableBody
           emptyContent={
-            <Spinner
-              label="Loading. Please wait."
-              color="primary"
-              labelColor="primary"
-            />
+            loading ? (
+              <Spinner
+                label="Loading..."
+                color="success"
+                size="sm"
+                labelColor="success"
+              />
+            ) : (
+              "No data found."
+            )
           }
           items={sortedItems}
         >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
-                <TableCell>
-                  {loading ? "" : renderCell(item, columnKey)}
-                </TableCell>
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}
             </TableRow>
           )}

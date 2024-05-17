@@ -32,7 +32,8 @@ import { Spinner } from "@nextui-org/react";
 
 const statusColorMap = {
   available: "success",
-  unavailable: "warning",
+  occupied: "warning",
+  reserved: "secondary",
   "under maintenance": "danger",
 };
 
@@ -188,10 +189,10 @@ export default function RoomsTable() {
       case "status":
         return (
           <Chip
-            className="capitalize border-none gap-1 text-default-600"
+            className=""
             color={statusColorMap[user?.status]}
             size="sm"
-            variant="dot"
+            variant="flat"
           >
             {cellValue}
           </Chip>
@@ -291,6 +292,7 @@ export default function RoomsTable() {
                 ))}
               </DropdownMenu>
             </Dropdown>
+
             <Button
               className=" text-background"
               endContent={<PlusIcon />}
@@ -411,12 +413,16 @@ export default function RoomsTable() {
         </TableHeader>
         <TableBody
           emptyContent={
-            // "No data found..."
-            <Spinner
-              label="Loading. Please wait."
-              color="primary"
-              labelColor="primary"
-            />
+            loading ? (
+              <Spinner
+                size="sm"
+                color="success"
+                label="Loading. Please wait."
+                labelColor="success"
+              />
+            ) : (
+              "No data found."
+            )
           }
           items={sortedItems}
         >

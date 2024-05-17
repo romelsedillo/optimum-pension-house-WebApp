@@ -8,9 +8,10 @@ import {
 import { receptionistSidebar } from "../../constants/accounts";
 import { useAuth } from "../../utils/AuthContext";
 import { useState } from "react";
+import EmployeeStatus from "../../utils/UpdateFunctions/EmployeeStatus";
 
 const Sidebar = () => {
-  const { role, logout } = useAuth();
+  const { role, user, logout } = useAuth();
   const [open, setOpen] = useState(true);
 
   const handleToggleSidebar = () => {
@@ -19,7 +20,16 @@ const Sidebar = () => {
   const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+  const status = "online";
+  const userId = user?.$id;
+  EmployeeStatus(userId, status);
 
+  const handleLogout = () => {
+    const status = "offline";
+    const userId = user?.$id;
+    EmployeeStatus(userId, status);
+    logout();
+  };
   return (
     <div
       className={`${
@@ -80,7 +90,7 @@ const Sidebar = () => {
             </ul>
             <div className="w-full flex items-center gap-4 mt-8 hover:bg-slate-600 py-2 rounded-md px-3">
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <p className="cursor-pointer" onClick={logout}>
+              <p className="cursor-pointer" onClick={() => handleLogout()}>
                 Logout
               </p>
             </div>

@@ -8,9 +8,10 @@ import {
 import { adminSidebar } from "../../constants/accounts";
 import { useAuth } from "../../utils/AuthContext";
 import { useState } from "react";
+import EmployeeStatus from "../../utils/UpdateFunctions/EmployeeStatus";
 
 const AdminSidebar = () => {
-  const { role, logout } = useAuth();
+  const { role, user, logout } = useAuth();
   const [open, setOpen] = useState(true);
 
   const handleToggleSidebar = () => {
@@ -19,7 +20,16 @@ const AdminSidebar = () => {
   const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+  const status = "online";
+  const userId = user?.$id;
+  EmployeeStatus(userId, status);
 
+  const handleLogout = () => {
+    const status = "offline";
+    const userId = user?.$id;
+    EmployeeStatus(userId, status);
+    logout();
+  };
   return (
     <div
       className={`${
@@ -86,7 +96,7 @@ const AdminSidebar = () => {
                 className={`${
                   !open && "scale-0"
                 } duration-300 origin-left cursor-pointer`}
-                onClick={logout}
+                onClick={() => handleLogout()}
               >
                 Logout
               </p>

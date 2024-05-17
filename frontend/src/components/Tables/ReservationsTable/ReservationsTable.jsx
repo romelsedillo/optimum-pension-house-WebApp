@@ -30,7 +30,6 @@ import { toast } from "react-hot-toast";
 import { Spinner } from "@nextui-org/react";
 
 const columns = [
-  { name: "ID", uid: "id", sortable: true },
   { name: "Date Created", uid: "dateCreated", sortable: true },
   { name: "Type", uid: "type", sortable: true },
   { name: "Guest", uid: "guest", sortable: true },
@@ -53,24 +52,24 @@ const statusOptions = [
 const statusColorMap = {
   "check-in": "success",
   "check-out": "warning",
-  pending: "danger",
+  canceled: "danger",
+  pending: "primary",
   confirmed: "secondary",
 };
 
 const INITIAL_VISIBLE_COLUMNS = [
   "dateCreated",
-  "type",
   "guest",
   "checkInDate",
   "checkOutDate",
   "room",
   "totalAmount",
   "status",
-  "referenceNumber",
   "actions",
 ];
 
 export default function ReservationsTable() {
+  const [loading, setLoading] = useState(true);
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -85,7 +84,7 @@ export default function ReservationsTable() {
   });
   const [page, setPage] = React.useState(1);
 
-  const pages = Math.ceil(users.length/ rowsPerPage);
+  const pages = Math.ceil(users.length / rowsPerPage);
 
   const hasSearchFilter = Boolean(filterValue);
   const {
@@ -105,6 +104,7 @@ export default function ReservationsTable() {
     try {
       const appWriteData = await fetchDataFromAppwrite();
       setData(appWriteData);
+      setLoading(false)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -183,31 +183,23 @@ export default function ReservationsTable() {
     const date = new Date(cellValue);
     const getMonthName = (monthIndex) => {
       const months = [
-        "January",
-        "February",
-        "March",
-        "April",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
         "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ];
       return months[monthIndex];
     };
     const getDayOfWeek = (dayIndex) => {
-      const daysOfWeek = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ];
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       return daysOfWeek[dayIndex];
     };
     const year = date.getFullYear();
@@ -217,23 +209,27 @@ export default function ReservationsTable() {
     const hours = ("0" + date.getHours()).slice(-2);
     const minutes = ("0" + date.getMinutes()).slice(-2);
     const seconds = ("0" + date.getSeconds()).slice(-2);
-    const readableDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
+    const readableDate = `${dayOfWeek}, ${month} ${day}, ${year} `;
     switch (columnKey) {
       case "dateCreated":
         return <>{readableDate}</>;
+      case "guest":
+        return (
+          <div className="capitalize flex flex-col text-sm">{cellValue}</div>
+        );
       case "checkInDate":
         return <>{readableDate}</>;
       case "checkOutDate":
         return <>{readableDate}</>;
       case "totalAmount":
-        return <>₱ {cellValue}</>;
+        return <>{cellValue}</>;
       case "status":
         return (
           <Chip
-            className="capitalize border-none gap-1 text-default-600"
+            className=""
             color={statusColorMap[user?.status]}
             size="sm"
-            variant="dot"
+            variant="flat"
           >
             {cellValue}
           </Chip>
@@ -303,6 +299,31 @@ export default function ReservationsTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button
+                  endContent={<ChevronDownIcon className="text-small" />}
+                  size="sm"
+                  variant="flat"
+                >
+                  Columns
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Table Columns"
+                closeOnSelect={false}
+                selectedKeys={visibleColumns}
+                selectionMode="multiple"
+                onSelectionChange={setVisibleColumns}
+              >
+                {columns.map((column) => (
+                  <DropdownItem key={column.uid} className="capitalize">
+                    {capitalize(column.name)}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
@@ -445,11 +466,16 @@ export default function ReservationsTable() {
         </TableHeader>
         <TableBody
           emptyContent={
-            <Spinner
-              label="Loading. Please wait."
-              color="primary"
-              labelColor="primary"
-            />
+            loading ? (
+              <Spinner
+                label="Loading. Please wait."
+                color="success"
+                labelColor="success"
+                size="sm"
+              />
+            ) : (
+              "No data found."
+            )
           }
           items={sortedItems}
         >
@@ -466,7 +492,7 @@ export default function ReservationsTable() {
         isOpen={isAddModalOpen}
         onOpenChange={onAddModalOpenChange}
         placement="top-center"
-        size="md"
+        size="4xl"
       >
         <AddReservationModal onAddSuccess={handleAddSuccess} />
       </Modal>

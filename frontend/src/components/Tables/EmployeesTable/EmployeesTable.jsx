@@ -47,7 +47,7 @@ const statusOptions = [
 
 const statusColorMap = {
   online: "success",
-  offline: "default",
+  offline: "warning",
 };
 
 const INITIAL_VISIBLE_COLUMNS = [
@@ -61,6 +61,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function EmployeesTable() {
+  const [loading, setLoading] = useState(true);
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -82,9 +83,9 @@ export default function EmployeesTable() {
 
   const fetchData = async () => {
     try {
-      // Call the fetchDataFromAppwrite function to fetch data from Appwrite
-      const appwriteData = await fetchDataFromAppwrite();
-      setData(appwriteData);
+      const appWriteData = await fetchDataFromAppwrite();
+      setData(appWriteData);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -163,13 +164,17 @@ export default function EmployeesTable() {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
+      case "name":
+        return <div className="capitalize">{cellValue}</div>;
+      case "address":
+        return <div className="capitalize">{cellValue}</div>;
       case "status":
         return (
           <Chip
-            className="capitalize border-none gap-1 text-default-600"
+            className=""
             color={statusColorMap[user?.status]}
             size="sm"
-            variant="dot"
+            variant="flat"
           >
             {cellValue}
           </Chip>
@@ -378,13 +383,7 @@ export default function EmployeesTable() {
           )}
         </TableHeader>
         <TableBody
-          emptyContent={
-            <Spinner
-              label="Loading. Please wait."
-              color="primary"
-              labelColor="primary"
-            />
-          }
+          emptyContent={loading ? <Spinner size="sm" color="success" label="Loading. Please wait." labelColor="success"/> : "No data found."}
           items={sortedItems}
         >
           {(item) => (

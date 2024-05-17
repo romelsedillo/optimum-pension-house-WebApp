@@ -219,13 +219,13 @@ export default function NavbarComponent() {
                         {user?.name}
                       </p>
                     </DropdownItem>
-                    {role === "guest" && (
+                    {/* {role === "guest" && (
                       <DropdownItem key="profile" color="primary">
                         <NavLink color="foreground" to="/profile">
                           Profile
                         </NavLink>
                       </DropdownItem>
-                    )}
+                    )} */}
                     {role === "guest" && (
                       <DropdownItem key="notification" color="primary">
                         {notification ? (

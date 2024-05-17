@@ -8,6 +8,7 @@ import CurrentDayTime from "./CurrentDayTime";
 
 import AddGuestCopy from "./AddFunctions/AddGuestCopy";
 import { addLogs } from "../utils/AddFunctions/AddLogs";
+import LoginStatus from "./UpdateFunctions/EmployeeStatus";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -22,7 +23,6 @@ export const AuthProvider = ({ children }) => {
     // setLoading(false);
     checkUserStatus();
   }, []);
-
   const loginUser = async (userInfo = null) => {
     setLoading(false);
 
@@ -132,15 +132,12 @@ export const AuthProvider = ({ children }) => {
         userInfo.name,
         userInfo.email,
         userInfo.phone,
-        userInfo.address,
-        userInfo.password
+        userInfo.address
       );
       let response = await account.create(
         ID.custom(randomString),
         userInfo.email,
-        userInfo.password,
-        userInfo.name,
-        userInfo.phone
+        userInfo.password
       );
       // Create an email session
       await account.createEmailSession(userInfo.email, userInfo.password);
@@ -227,6 +224,7 @@ export const AuthProvider = ({ children }) => {
             label="Loading. Please wait."
             color="success"
             labelColor="success"
+            size="sm"
           />
         </div>
       ) : (
