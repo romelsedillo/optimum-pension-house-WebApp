@@ -4,7 +4,7 @@ import html2pdf from "html2pdf.js";
 
 const ExportHTMLToPDFButton = () => {
   const exportPDF = () => {
-    const element = document.getElementById("source-html");
+    const element = document.getElementById("report");
 
     html2pdf().from(element).save("document.pdf");
   };

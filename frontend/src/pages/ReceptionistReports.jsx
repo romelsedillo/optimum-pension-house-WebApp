@@ -3,7 +3,7 @@ import ReceptionistSideBar from "../components/SideBar/ReceptionistSideBar";
 import EmployeeNavBar from "../components/NavBar/EmployeeNavBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import ReportsTable from "../components/Tables/ReportsTable/ReportsTable";
-import PrintWordButton from "../components/PrintWordButton/PrintWordButton";
+import PrintWordButton from "../components/PrintButton/PrintReportButton";
 import DatePicker from "../components/DatePicker/DatePicker";
 import DataTable from "../components/Tables/DataTable/DataTable";
 import { reportsCollection } from "../utils/Collections/ReportsCollection";
@@ -11,7 +11,7 @@ import { reportsCollection } from "../utils/Collections/ReportsCollection";
 import { useAuth } from "../utils/AuthContext";
 
 const ReceptionistReports = () => {
-  const { role, user, } = useAuth();
+  const { role, user } = useAuth();
 
   const [data, setData] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState(null); // State to hold the selected date range

@@ -17,7 +17,6 @@ import {
   Modal,
   useDisclosure,
 } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
@@ -28,6 +27,7 @@ import UpdateReservationModal from "../../Modal/UpdateReservationModal/UpdateRes
 import { fetchDataFromAppwrite } from "./datafetch";
 import { toast } from "react-hot-toast";
 import { Spinner } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { name: "Date Created", uid: "dateCreated", sortable: true },
@@ -69,6 +69,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function ReservationsTable() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
@@ -104,7 +105,7 @@ export default function ReservationsTable() {
     try {
       const appWriteData = await fetchDataFromAppwrite();
       setData(appWriteData);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -133,6 +134,9 @@ export default function ReservationsTable() {
   const getReservationId = (reservationId, roomId) => {
     setReservationId(reservationId);
     setRoomId(roomId);
+  };
+  const handleReceipt = (reservationId) => {
+    navigate(`receipt/${reservationId}`);
   };
 
   const headerColumns = React.useMemo(() => {
@@ -206,9 +210,9 @@ export default function ReservationsTable() {
     const month = getMonthName(date.getMonth());
     const dayOfWeek = getDayOfWeek(date.getDay());
     const day = date.getDate();
-    const hours = ("0" + date.getHours()).slice(-2);
-    const minutes = ("0" + date.getMinutes()).slice(-2);
-    const seconds = ("0" + date.getSeconds()).slice(-2);
+    // const hours = ("0" + date.getHours()).slice(-2);
+    // const minutes = ("0" + date.getMinutes()).slice(-2);
+    // const seconds = ("0" + date.getSeconds()).slice(-2);
     const readableDate = `${dayOfWeek}, ${month} ${day}, ${year} `;
     switch (columnKey) {
       case "dateCreated":
@@ -245,9 +249,9 @@ export default function ReservationsTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                {/* <DropdownItem onClick={() => alert(user.roomId)}>
-                  View
-                </DropdownItem> */}
+                <DropdownItem onClick={() => handleReceipt(user.id)}>
+                  Receipt
+                </DropdownItem>
                 <DropdownItem
                   onPress={onUpdateModalOpen}
                   onClick={() => getReservationId(user.id, user.roomId)}

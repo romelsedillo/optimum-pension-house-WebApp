@@ -28,17 +28,7 @@ import deleteEmployee from "../../../utils/DeleteEmployee";
 import { fetchDataFromAppwrite } from "./datafetch";
 import { toast } from "react-hot-toast";
 import { Spinner } from "@nextui-org/react";
-
-const columns = [
-  { name: "ID", uid: "id", sortable: true },
-  { name: "NAME", uid: "name", sortable: true },
-  { name: "POSITION", uid: "position", sortable: true },
-  { name: "EMAIL", uid: "email", sortable: true },
-  { name: "STATUS", uid: "status", sortable: true },
-  { name: "Phone", uid: "phone", sortable: true },
-  { name: "Address", uid: "address", sortable: true },
-  { name: "ACTIONS", uid: "actions" },
-];
+import { useAuth } from "../../../utils/AuthContext";
 
 const statusOptions = [
   { name: "Online", uid: "online" },
@@ -59,7 +49,16 @@ const INITIAL_VISIBLE_COLUMNS = [
   "status",
   "actions",
 ];
-
+const columns = [
+  { name: "ID", uid: "id", sortable: true },
+  { name: "NAME", uid: "name", sortable: true },
+  { name: "POSITION", uid: "position", sortable: true },
+  { name: "EMAIL", uid: "email", sortable: true },
+  { name: "STATUS", uid: "status", sortable: true },
+  { name: "Phone", uid: "phone", sortable: true },
+  { name: "Address", uid: "address", sortable: true },
+  { name: "ACTIONS", uid: "actions" },
+];
 export default function EmployeesTable() {
   const [loading, setLoading] = useState(true);
   const [users, setData] = useState([]);
@@ -74,6 +73,7 @@ export default function EmployeesTable() {
     column: "name",
     direction: "ascending",
   });
+
   const [page, setPage] = React.useState(1);
 
   const pages = Math.ceil(users.length / rowsPerPage);
@@ -383,7 +383,18 @@ export default function EmployeesTable() {
           )}
         </TableHeader>
         <TableBody
-          emptyContent={loading ? <Spinner size="sm" color="success" label="Loading. Please wait." labelColor="success"/> : "No data found."}
+          emptyContent={
+            loading ? (
+              <Spinner
+                size="sm"
+                color="success"
+                label="Loading. Please wait."
+                labelColor="success"
+              />
+            ) : (
+              "No data found."
+            )
+          }
           items={sortedItems}
         >
           {(item) => (

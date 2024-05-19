@@ -58,6 +58,8 @@ import ManagerEmployees from "./pages/ManagerEmployees";
 // import ManagerManagers from "./pages/ManagerManagers";
 import { ToastContainer, Bounce } from "react-toastify";
 import Notifications from "./pages/Notifications";
+import Unauthorized from "./pages/Unauthorized";
+import Receipt from "./pages/AdminReceipt";
 
 function App() {
   // const location = useLocation();
@@ -87,8 +89,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/register" element={<UserRegister />} />
-            {/* <Route path="/manager" element={<ManagerLogin />} /> */}
-            {/* <Route path="/admin" element={<AdminLogin />} /> */}
+            <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<Page404 />} />
 
             {/* Private routes for guests */}
@@ -128,6 +129,7 @@ function App() {
                 element={<AdminReports />}
               />
               <Route path="/admin-dashboard/logs" element={<AdminLogs />} />
+              <Route path="/admin-dashboard/reservations/receipt/:reservationId" element={<Receipt />} />
             </Route>
 
             {/* Private routes for Managers */}
@@ -153,6 +155,7 @@ function App() {
                 element={<ManagerReports />}
               />
               <Route path="/manager-dashboard/logs" element={<ManagerLogs />} />
+              <Route path="/admin-dashboard/receipt" element={<Receipt />} />
             </Route>
 
             {/* Private routes for Receptionist */}
@@ -182,6 +185,7 @@ function App() {
                 path="/receptionist-dashboard/logs"
                 element={<ReceptionistLogs />}
               />
+              <Route path="/admin-dashboard/receipt" element={<Receipt />} />
             </Route>
           </Routes>
         </AuthProvider>

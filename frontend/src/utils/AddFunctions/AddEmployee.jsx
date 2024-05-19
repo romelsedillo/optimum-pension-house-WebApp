@@ -16,7 +16,6 @@ export const addEmployee = async (
   status,
   phone,
   address,
-  password
 ) => {
   try {
     // Create a new document in the guests collection
@@ -31,7 +30,6 @@ export const addEmployee = async (
         status: status,
         phone: phone,
         address: address,
-        password: password,
       }
     );
 

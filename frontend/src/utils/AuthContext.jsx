@@ -8,7 +8,6 @@ import CurrentDayTime from "./CurrentDayTime";
 
 import AddGuestCopy from "./AddFunctions/AddGuestCopy";
 import { addLogs } from "../utils/AddFunctions/AddLogs";
-import LoginStatus from "./UpdateFunctions/EmployeeStatus";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -23,21 +22,26 @@ export const AuthProvider = ({ children }) => {
     // setLoading(false);
     checkUserStatus();
   }, []);
+
+  const checkUserStatus = async () => {
+    try {
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+      setRole(getUserRole(accountDetails.labels)); // Set role state based on label
+    } catch (error) {
+      console.error(error.message);
+    }
+    setLoading(false);
+  };
   const loginUser = async (userInfo = null) => {
     setLoading(false);
 
     try {
-      // Create email session
       await account.createEmailSession(userInfo.email, userInfo.password);
-
-      // Get user details
       const accountDetails = await account.get();
       setUser(accountDetails);
-
-      // Set role state
       const role = getUserRole(accountDetails.labels);
       setRole(role);
-
       const actions = "login";
       const details = "login";
       const status = "success";
@@ -90,7 +94,7 @@ export const AuthProvider = ({ children }) => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
-          progress: undefined,
+          progress: undefined,  
           theme: "light",
           transition: Bounce,
         });
@@ -181,17 +185,6 @@ export const AuthProvider = ({ children }) => {
 
   //   setLoading(false);
   // };
-
-  const checkUserStatus = async () => {
-    try {
-      const accountDetails = await account.get();
-      setUser(accountDetails);
-      setRole(getUserRole(accountDetails.labels)); // Set role state based on labels
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
-  };
 
   const getUserRole = (labels) => {
     if (labels.includes("admin")) {

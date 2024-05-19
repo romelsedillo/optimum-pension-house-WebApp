@@ -34,7 +34,6 @@ export default function NavbarComponent() {
   const { user, role, logout, CurrentDayTime } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [reservations, setReservations] = useState([]);
-  const [currentDateTime, setCurrentDateTime] = useState(CurrentDayTime);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
@@ -59,12 +58,6 @@ export default function NavbarComponent() {
   useEffect(() => {
     fetchNotifications();
     fetchReservations();
-    const intervalId = setInterval(() => {
-      setCurrentDateTime(CurrentDayTime());
-    }, 1000);
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(intervalId);
   }, []);
 
   const handleLogout = () => {
@@ -73,7 +66,7 @@ export default function NavbarComponent() {
     const status = "success";
     const position = role ? role : "guest";
 
-    addLogs(currentDateTime, user?.name, position, actions, details, status);
+    addLogs(CurrentDayTime, user?.name, position, actions, details, status);
 
     logout();
   };
@@ -114,8 +107,6 @@ export default function NavbarComponent() {
     };
   }, []);
 
-  // console.log(notifications);
-  // console.log(reservationData);
   return (
     <>
       <Navbar
@@ -209,24 +200,19 @@ export default function NavbarComponent() {
                     variant="flat"
                     disabledKeys={["profile"]}
                   >
-                    {role === "" && (
-                      <DropdownItem key="labels">
-                        <p className=" capitalize">{user?.labels}</p>
-                      </DropdownItem>
-                    )}
                     <DropdownItem key="name">
                       <p className=" capitalize text-blue-500 text-lg">
                         {user?.name}
                       </p>
                     </DropdownItem>
-                    {/* {role === "guest" && (
+                    {role === null && (
                       <DropdownItem key="profile" color="primary">
                         <NavLink color="foreground" to="/profile">
                           Profile
                         </NavLink>
                       </DropdownItem>
-                    )} */}
-                    {role === "guest" && (
+                    )}
+                    {!role && (
                       <DropdownItem key="notification" color="primary">
                         {notification ? (
                           <NavLink
@@ -251,16 +237,16 @@ export default function NavbarComponent() {
                         )}
                       </DropdownItem>
                     )}
-                    {role === "guest" && (
+
+                    {!role && (
                       <DropdownItem key="bookings" color="primary">
                         <NavLink color="foreground" to="/bookings">
                           Bookings
                         </NavLink>
                       </DropdownItem>
                     )}
-                    {(role === "receptionist" ||
-                      role === "manager" ||
-                      role === "admin") && (
+
+                    {role && (
                       <DropdownItem key="dashboard">
                         <Link
                           href={`/${role}-dashboard/guests`}
