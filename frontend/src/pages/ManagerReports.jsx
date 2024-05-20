@@ -8,9 +8,11 @@ import DatePicker from "../components/DatePicker/DatePicker";
 import DataTable from "../components/Tables/DataTable/DataTable";
 import { reportsCollection } from "../utils/Collections/ReportsCollection";
 import { useAuth } from "../utils/AuthContext";
+import { Button } from "@nextui-org/react";
 
 const ManagerReports = () => {
   const { role, user } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState(null); // State to hold the selected date range
@@ -19,6 +21,7 @@ const ManagerReports = () => {
     try {
       const appWriteData = await reportsCollection();
       setData(appWriteData);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -46,9 +49,17 @@ const ManagerReports = () => {
             <div className="w-full hidden">
               <DataTable data={data} selectedDateRange={selectedDateRange} />
             </div>
-            <div className="w-1/3 flex gap-3">
-              <DatePicker onDateRangeChange={handleDateRangeChange} />
-              <PrintWordButton />
+            <div className="w-full flex gap-3">
+              <div>
+                <DatePicker onDateRangeChange={handleDateRangeChange} />
+              </div>
+              {loading ? (
+                <Button color="primary" isLoading size="md">
+                  Print report
+                </Button>
+              ) : (
+                <PrintWordButton />
+              )}
             </div>
             {/* Pass selectedDateRange to ReportsTable component */}
             <ReportsTable data={data} selectedDateRange={selectedDateRange} />

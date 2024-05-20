@@ -23,8 +23,8 @@ export const reportsCollection = async () => {
       date: transformDate(doc?.date),
       days: doc?.days,
       roomType: doc?.roomType?.typeName,
-      roomRate: doc?.roomType?.rate,
-      totalAmount: doc?.totalAmount,
+      roomRate: `${doc?.roomType?.rate}`,
+      totalAmount: `${doc?.totalAmount}`,
     }));
 
     return data;

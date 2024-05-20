@@ -12,6 +12,10 @@ import {
 import { useAuth } from "../../../utils/AuthContext";
 import { capitalize } from "../../../utils/capitalize";
 
+function formatCurrency(amount) {
+  return `₱ ${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
+}
+
 export default function ReportsTable({ data, selectedDateRange }) {
   const { role, user } = useAuth();
   const [page, setPage] = useState(1);
@@ -45,7 +49,7 @@ export default function ReportsTable({ data, selectedDateRange }) {
   }, [page, filteredData]);
 
   const totalProfit = filteredData.reduce(
-    (acc, item) => acc + item.totalAmount,
+    (acc, item) => acc + parseFloat(item.totalAmount),
     0
   );
 
@@ -70,7 +74,7 @@ export default function ReportsTable({ data, selectedDateRange }) {
                 <p style={{ textAlign: "right" }}>
                   Total Profit:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    ₱ {totalProfit}
+                    {formatCurrency(totalProfit)}
                   </span>
                 </p>
               </div>
@@ -84,7 +88,7 @@ export default function ReportsTable({ data, selectedDateRange }) {
                   </p>
                   <p style={{ textAlign: "right" }}>
                     Approved By:{" "}
-                    <span style={{ textDecoration: "underline" }}>Manager</span>
+                    <span style={{ textDecoration: "underline" }}> {capitalize(role)}</span>
                   </p>
                 </div>
               </div>
@@ -93,17 +97,21 @@ export default function ReportsTable({ data, selectedDateRange }) {
         }
       >
         <TableHeader>
-          <TableColumn key="date">DATE</TableColumn>
+          <TableColumn key="date">Date</TableColumn>
           <TableColumn key="days">Total Days</TableColumn>
-          <TableColumn key="roomType">ROOM TYPE</TableColumn>
-          <TableColumn key="roomRate">AMOUNT</TableColumn>
-          <TableColumn key="totalAmount">TOTAL AMOUNT</TableColumn>
+          <TableColumn key="roomType">Room Type</TableColumn>
+          <TableColumn key="roomRate">Room Rate</TableColumn>
+          <TableColumn key="totalAmount">Total Amount</TableColumn>
         </TableHeader>
         <TableBody items={items}>
           {(item) => (
             <TableRow key={item.date}>
               {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                <TableCell>
+                  {columnKey === "totalAmount" || columnKey === "roomRate"
+                    ? formatCurrency(parseFloat(item[columnKey]))
+                    : getKeyValue(item, columnKey)}
+                </TableCell>
               )}
             </TableRow>
           )}

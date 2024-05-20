@@ -1,5 +1,5 @@
 import react, { useState, useEffect } from "react";
-import AdminSidebar from "../components/SideBar/AdminSideBar";
+import ReceptionistSidebar from "../components/SideBar/ReceptionistSideBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import EmployeesNavBar from "../components/NavBar/EmployeeNavBar";
 import { Button } from "@nextui-org/react";
@@ -27,7 +27,7 @@ const adminReceipt = () => {
   }, []);
   return (
     <div className="bg-[#F1F5F9] h-screen w-full flex">
-      <AdminSidebar />
+      <ReceptionistSidebar />
       <div className="w-full flex flex-col overflow-y-auto">
         <EmployeesNavBar />
         <div className="p-4 flex flex-col gap-4">

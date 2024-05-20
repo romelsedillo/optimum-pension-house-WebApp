@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { roomCollection } from "../../utils/Collections/RoomCollection";
+import { Spinner } from "@nextui-org/react";
 
 const SalesBox = () => {
   const [count, setCount] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const guestFetchData = async () => {
     try {
       const appWriteData = await roomCollection();
       setCount(appWriteData);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -31,7 +33,8 @@ const SalesBox = () => {
         <FontAwesomeIcon icon={faBuilding} className=" w-4 h-4 text-blue-500" />
       </div>
       <p className=" text-3xl text-green-500">
-        {totalRoomAvailable} / {totalRoom}
+        {loading ? <Spinner size="sm" color="success" /> : totalRoomAvailable} /{" "}
+        {totalRoom}
       </p>
       <h1 className="text-sm">Rooms Available</h1>
     </div>

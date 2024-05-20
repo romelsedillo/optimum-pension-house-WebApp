@@ -10,8 +10,8 @@ const ExportHTMLToPDFButton = () => {
   };
 
   return (
-    <Button onClick={exportPDF} color="primary" size="sm" className="px-6">
-      Export to PDF
+    <Button onClick={exportPDF} color="primary" size="md" >
+      Print report
     </Button>
   );
 };

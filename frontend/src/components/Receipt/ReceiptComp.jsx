@@ -5,7 +5,10 @@ import {
   faPhone,
   faLocationDot,
   faEnvelope,
+  faGlobe
 } from "@fortawesome/free-solid-svg-icons";
+import { currentDate } from "../../utils/CurrentDate";
+
 const ReceiptComp = (props) => {
   const { reservationId } = useParams();
 
@@ -19,31 +22,39 @@ const ReceiptComp = (props) => {
   // if (!reservation) {
   //   return <div>Reservation not found</div>;
   // }
-
+  console.log(reservation);
   return (
-    <div className=" p-10 flex flex-col gap-6 text-[#333A73]">
+    <div className="p-10 flex flex-col gap-6 text-[#333A73]">
       {/* headings */}
       <div className=" flex flex-col gap-4">
         <div className="flex justify-between items-end">
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center">
             <img src={oph} alt="logo" className={`w-24 h-24 rounded-full`} />
             <h1 className="font-bold text-2xl">Optimum Pension House</h1>
           </div>
 
-          <div className="flex flex-col">
-            <p className="text-tiny font-semibold">
-              Mariño Compound, Capitol Area, Daro, Negros Island, Dumaguete,
-              6200
-            </p>
-            <p className="text-tiny font-semibold">optimumpensionhouse.com</p>
-            <p className="text-tiny font-semibold">
-              optimumpensionhouse@gmail.com
-            </p>
-            <p className="text-tiny font-semibold"> 0917 595 6027</p>
+          <div className="flex items-center justify-center gap-2 text-tiny">
+            <div className="flex flex-col gap-1">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <FontAwesomeIcon icon={faGlobe} />
+              <FontAwesomeIcon icon={faEnvelope} />
+              <FontAwesomeIcon icon={faPhone} />
+            </div>
+            <div className="">
+              <p className="">
+                Mariño Compound, Capitol Area, Daro, Negros Island, Dumaguete,
+                6200
+              </p>
+              <p className="">optimumpensionhouse.com</p>
+              <p className="">optimumpensionhouse@gmail.com</p>
+              <p className="">+63 917 595 6027</p>
+            </div>
           </div>
         </div>
         <div className="flex justify-between">
-          <p>Date: _________________</p>
+          <p>
+            Date: <span className=" underline">{currentDate()}</span>
+          </p>
           <p>Receipt#: _________________</p>
         </div>
       </div>
@@ -58,19 +69,35 @@ const ReceiptComp = (props) => {
             <div className="py-1 px-3 border border-t-0 border-r-0 border-[#333A73] w-1/4">
               <p className="mb-2">Name</p>
             </div>
-            <div className="border border-t-0 border-[#333A73] w-3/4"></div>
+            <div className="flex items-center justify-start border border-t-0 border-[#333A73] w-3/4 capitalize">
+              <span className="px-3 text-black">{reservation?.guest}</span>
+            </div>
           </div>
           <div className="flex">
             <div className="py-1 px-3 border border-t-0 border-r-0 border-[#333A73] w-1/4">
               <p className="mb-2">Address</p>
             </div>
-            <div className="border border-t-0 border-[#333A73] w-3/4"></div>
+            <div className="flex items-center justify-start border border-t-0 border-[#333A73] w-3/4 capitalize">
+              <span className="px-3 text-black">
+                {reservation?.guestAddress}
+              </span>
+            </div>
           </div>
           <div className="flex">
             <div className="py-1 px-3 border border-t-0 border-r-0 border-[#333A73] w-1/4">
               <p className="mb-2">Phone</p>
             </div>
-            <div className="border border-t-0 border-[#333A73] w-3/4"></div>
+            <div className="flex items-center justify-start border border-t-0 border-[#333A73] w-3/4 capitalize">
+              <span className="px-3 text-black">{reservation?.guestPhone}</span>
+            </div>
+          </div>
+          <div className="flex">
+            <div className="py-1 px-3 border border-t-0 border-r-0 border-[#333A73] w-1/4">
+              <p className="mb-2">Email</p>
+            </div>
+            <div className="flex items-center justify-start border border-t-0 border-[#333A73] w-3/4">
+              <span className="px-3 text-black">{reservation?.guestEmail}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -93,16 +120,32 @@ const ReceiptComp = (props) => {
         </div>
         <div className="flex">
           <div className="h-8 w-full justify-between items-center border border-r-0 border-[#333A73] border-t-0 py-1">
-            <p className="font-bold text-center"></p>
+            <p className="font-bold text-center">
+              <span className="text-tiny capitalize text-black">
+                {reservation?.room}
+              </span>
+            </p>
           </div>
           <div className="h-8 w-full justify-between items-center border border-r-0 border-[#333A73] border-t-0 py-1">
-            <p className="font-bold text-center"></p>
+            <p className="font-bold text-center">
+              <span className="text-tiny text-black">
+                &#8369; {reservation?.roomRate}
+              </span>
+            </p>
           </div>
           <div className="h-8 w-full justify-between items-center border border-r-0 border-[#333A73] border-t-0 py-1">
-            <p className="font-bold text-center"></p>
+            <p className="font-bold text-center text-black">
+              <span className="text-tiny text-black">
+                {reservation?.totalDays}
+              </span>
+            </p>
           </div>
           <div className="h-8 w-full justify-between items-center border border-[#333A73] border-t-0 py-1">
-            <p className="font-bold text-center"></p>
+            <p className="font-bold text-center">
+              <span className="text-tiny text-black">
+                &#8369; {reservation?.totalAmount}
+              </span>
+            </p>
           </div>
         </div>
         <div className="flex">
@@ -151,7 +194,7 @@ const ReceiptComp = (props) => {
       {/* reservation details */}
       <div className="flex justify-between">
         <div className="flex flex-col gap-4 font-bold ">
-          <p>Payment Method :</p>
+          <p>Payment Method : <span>{reservation?.referenceNumber ? "gcash" : "Cash"}</span></p>
           <p>Remarks :</p>
         </div>
         <div className="flex flex-col w-1/2 items-center justify-center border">
@@ -160,7 +203,11 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-right">Subtotal</p>
             </div>
             <div className="w-full h-6 justify-between items-center border-l-1 border-[#333A73]">
-              <p className="font-bold text-center"></p>
+              <p className="font-bold text-center">
+                <span className="text-tiny text-black">
+                  &#8369; {reservation?.totalAmount}
+                </span>
+              </p>
             </div>
           </div>
           <div className="flex w-full border-1 border-b-0 border-[#333A73]">
@@ -168,7 +215,9 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-right">Discount</p>
             </div>
             <div className="w-full h-6 justify-between items-center border-l-1 border-[#333A73]">
-              <p className="font-bold text-center"></p>
+              <p className="font-bold text-center">
+                <span className="text-tiny text-black">0</span>
+              </p>
             </div>
           </div>
           <div className="flex w-full border-1 border-b-0 border-[#333A73]">
@@ -176,7 +225,9 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-right">TAX / VAT</p>
             </div>
             <div className="w-full h-6 justify-between items-center border-l-1 border-[#333A73]">
-              <p className="font-bold text-center"></p>
+              <p className="font-bold text-center">
+                <span className="text-tiny text-black">0</span>
+              </p>
             </div>
           </div>
           <div className="flex w-full border-1 border-[#333A73]">
@@ -184,7 +235,11 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-right">Total Amount</p>
             </div>
             <div className="w-full h-6justify-between items-center border-l-1 border-[#333A73]">
-              <p className="font-bold text-center"></p>
+              <p className="font-bold text-center">
+                <span className="text-tiny text-black">
+                  &#8369; {reservation?.totalAmount}
+                </span>
+              </p>
             </div>
           </div>
         </div>

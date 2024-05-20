@@ -239,7 +239,8 @@ const DoubleRoomPage = () => {
                   autoComplete="off"
                   value={referenceNumber}
                   name="reference"
-                  type="text"
+                  type="number"
+                  inputMode="numeric"
                   className="w-full border-[1px] text-sm text-blue-500 border-blue-500 px-3 py-2 rounded-md outline-none"
                   onChange={handleReference}
                 />

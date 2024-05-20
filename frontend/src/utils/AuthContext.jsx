@@ -49,22 +49,21 @@ export const AuthProvider = ({ children }) => {
 
       // Redirect to appropriate page based on role
       if (role === "admin") {
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
         navigate("/admin-dashboard/employees");
-        const position = role;
-        addLogs(currentDateTime, user, position, actions, details, status);
       } else if (role === "manager") {
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
         navigate("/manager-dashboard/guests");
-        const position = role;
-        addLogs(currentDateTime, user, position, actions, details, status);
       } else if (role === "receptionist") {
-        navigate("/receptionist-dashboard/guests");
         const position = role;
         addLogs(currentDateTime, user, position, actions, details, status);
+        navigate("/receptionist-dashboard/guests");
       } else {
-        navigate("/");
-
         const position = "guest";
         addLogs(currentDateTime, user, position, actions, details, status);
+        navigate("/");
       }
     } catch (error) {
       console.error(error.response);
@@ -94,7 +93,7 @@ export const AuthProvider = ({ children }) => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
-          progress: undefined,  
+          progress: undefined,
           theme: "light",
           transition: Bounce,
         });

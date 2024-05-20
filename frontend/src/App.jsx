@@ -59,7 +59,10 @@ import ManagerEmployees from "./pages/ManagerEmployees";
 import { ToastContainer, Bounce } from "react-toastify";
 import Notifications from "./pages/Notifications";
 import Unauthorized from "./pages/Unauthorized";
-import Receipt from "./pages/AdminReceipt";
+import AdminReceipt from "./pages/AdminReceipt";
+import ManagerReceipt from "./pages/ManagerReceipt";
+import ReceptionistReceipt from "./pages/ReceptionistReceipt";
+import AccountSettings from "./pages/AccountSettings";
 
 function App() {
   // const location = useLocation();
@@ -129,7 +132,10 @@ function App() {
                 element={<AdminReports />}
               />
               <Route path="/admin-dashboard/logs" element={<AdminLogs />} />
-              <Route path="/admin-dashboard/reservations/receipt/:reservationId" element={<Receipt />} />
+              <Route
+                path="/admin-dashboard/reservations/receipt/:reservationId"
+                element={<AdminReceipt />}
+              />
             </Route>
 
             {/* Private routes for Managers */}
@@ -155,7 +161,14 @@ function App() {
                 element={<ManagerReports />}
               />
               <Route path="/manager-dashboard/logs" element={<ManagerLogs />} />
-              <Route path="/admin-dashboard/receipt" element={<Receipt />} />
+              <Route
+                path="/manager-dashboard/settings"
+                element={<AccountSettings />}
+              />
+              <Route
+                path="/manager-dashboard/reservations/receipt/:reservationId"
+                element={<ManagerReceipt />}
+              />
             </Route>
 
             {/* Private routes for Receptionist */}
@@ -185,7 +198,14 @@ function App() {
                 path="/receptionist-dashboard/logs"
                 element={<ReceptionistLogs />}
               />
-              <Route path="/admin-dashboard/receipt" element={<Receipt />} />
+              <Route
+                path="/receptionist-dashboard/settings"
+                element={<AccountSettings />}
+              />
+              <Route
+                path="/receptionist-dashboard/reservations/receipt/:reservationId"
+                element={<ReceptionistReceipt />}
+              />
             </Route>
           </Routes>
         </AuthProvider>
