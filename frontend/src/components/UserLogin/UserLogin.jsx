@@ -6,10 +6,10 @@ import { Input, Button } from "@nextui-org/react";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 
-const Login = () => {
+const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { role, guestLogin } = useAuth();
+  const { role, userLogin } = useAuth();
   const navigate = useNavigate();
   const loginForm = useRef(null);
 
@@ -18,13 +18,12 @@ const Login = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   useEffect(() => {}, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = loginForm.current.email.value;
     const password = loginForm.current.password.value;
     const userInfo = { email, password };
-    guestLogin(userInfo);
+    userLogin(userInfo);
   };
 
   return (
@@ -94,16 +93,16 @@ const Login = () => {
         Login
       </Button>
 
-      <div className="my-6">
+      {/* <div className="my-6">
         <p className="text-[#333A73]">
           Don&apos;t have an account?{" "}
           <Link to="/register" className=" text-blue-500  hover:underline">
             Register here.
           </Link>{" "}
         </p>
-      </div>
+      </div> */}
     </form>
   );
 };
 
-export default Login;
+export default UserLogin;

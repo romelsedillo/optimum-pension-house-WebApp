@@ -106,7 +106,7 @@ export default function NavbarComponent() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+console.log(user?.name);
   return (
     <>
       <Navbar
@@ -205,13 +205,13 @@ export default function NavbarComponent() {
                         {user?.name}
                       </p>
                     </DropdownItem>
-                    {role === null && (
+                    {/* {role === null && (
                       <DropdownItem key="profile" color="primary">
                         <NavLink color="foreground" to="/profile">
                           Profile
                         </NavLink>
                       </DropdownItem>
-                    )}
+                    )} */}
                     {!role && (
                       <DropdownItem key="notification" color="primary">
                         {notification ? (

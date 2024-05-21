@@ -20,7 +20,7 @@ import SingleRoomPage from "./pages/SingleRoomPage";
 import DoubleRoomPageCopy from "./pages/DoubleRoomPageCopy";
 import TwinStandardRoomPage from "./pages/TwinStandardRoomPage";
 import Page404 from "./pages/Page404";
-import UserLogin from "./pages/UserLogin";
+import GuestLogin from "./pages/GuestLogin";
 
 import PrivateRoutes from "./utils/PrivateRoutes";
 import AdminRoutes from "./utils/AdminRoutes";
@@ -63,6 +63,7 @@ import AdminReceipt from "./pages/AdminReceipt";
 import ManagerReceipt from "./pages/ManagerReceipt";
 import ReceptionistReceipt from "./pages/ReceptionistReceipt";
 import AccountSettings from "./pages/AccountSettings";
+import UserLoginPage from "./pages/UserLoginPage";
 
 function App() {
   // const location = useLocation();
@@ -90,7 +91,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/rooms" element={<RoomsAndSuits />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/login" element={<UserLogin />} />
+            <Route path="/login" element={<GuestLogin />} />
+            <Route path="/user-login" element={<UserLoginPage />} />
             <Route path="/register" element={<UserRegister />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<Page404 />} />

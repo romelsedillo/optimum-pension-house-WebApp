@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   };
-  const loginUser = async (userInfo = null) => {
+
+  const userLogin = async (userInfo = null) => {
     setLoading(false);
 
     try {
@@ -44,22 +45,172 @@ export const AuthProvider = ({ children }) => {
       setRole(role);
       const actions = "login";
       const details = "login";
-      const status = "success";
       const user = accountDetails.name;
 
       // Redirect to appropriate page based on role
       if (role === "admin") {
+        const status = "success";
         const position = role;
         addLogs(currentDateTime, user, position, actions, details, status);
         navigate("/admin-dashboard/employees");
       } else if (role === "manager") {
+        const status = "success";
         const position = role;
         addLogs(currentDateTime, user, position, actions, details, status);
         navigate("/manager-dashboard/guests");
       } else if (role === "receptionist") {
+        const status = "success";
         const position = role;
         addLogs(currentDateTime, user, position, actions, details, status);
         navigate("/receptionist-dashboard/guests");
+      } else if (role === null) {
+        const status = "failed";
+        const position = "guest";
+        addLogs(currentDateTime, user, position, actions, details, status);
+        await account.deleteSession("current");
+        setUser(null);
+        setRole(null); // Reset role state
+        toast.error("You are not authorized to perform this action!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
+      } else {
+        const status = "failed";
+        const position = "guest";
+        addLogs(currentDateTime, user, position, actions, details, status);
+        await account.deleteSession("current");
+        setUser(null);
+        setRole(null); // Reset role state
+
+        toast.error("You are not authorized to perform this action!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error.response);
+      if (error.response && error.response.code === 401) {
+        toast.error(
+          "Invalid credentials. Please check the email and password.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+        // alert("Login failed. Please check your credentials and try again.");
+        // console.log("Incorrect credentials. Please check and try again.");
+      }
+      if (error.response && error.response.code === 429) {
+        toast.error("Too many request. Please try again later.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        // alert("Too many request. Please try again later.");
+        // console.log("Incorrect credentials. Please check and try again.");
+      }
+    }
+    setLoading(false);
+  };
+  const guestLogin = async (userInfo = null) => {
+    setLoading(false);
+
+    try {
+      await account.createEmailSession(userInfo.email, userInfo.password);
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+      const role = getUserRole(accountDetails.labels);
+      setRole(role);
+
+      const user = accountDetails.name;
+      const actions = "login";
+      const details = "login";
+      if (role === "admin") {
+        const status = "failed";
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
+        await account.deleteSession("current");
+        setUser(null);
+        setRole(null);
+        toast.error("You are not authorized to perform this action!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
+      } else if (role === "manager") {
+        const status = "failed";
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
+        await account.deleteSession("current");
+        setUser(null);
+        setRole(null);
+        toast.error("You are not authorized to perform this action!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
+      } else if (role === "receptionist") {
+        const status = "failed";
+        const position = role;
+        addLogs(currentDateTime, user, position, actions, details, status);
+        await account.deleteSession("current");
+        setUser(null);
+        setRole(null);
+        toast.error("You are not authorized to perform this action!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
       } else {
         const position = "guest";
         addLogs(currentDateTime, user, position, actions, details, status);
@@ -140,7 +291,8 @@ export const AuthProvider = ({ children }) => {
       let response = await account.create(
         ID.custom(randomString),
         userInfo.email,
-        userInfo.password
+        userInfo.password,
+        userInfo.name
       );
       // Create an email session
       await account.createEmailSession(userInfo.email, userInfo.password);
@@ -193,14 +345,15 @@ export const AuthProvider = ({ children }) => {
     } else if (labels.includes("receptionist")) {
       return "receptionist";
     } else {
-      return "guest";
+      return null;
     }
   };
 
   const contextData = {
     user,
     role,
-    loginUser,
+    guestLogin,
+    userLogin,
     logout,
     registerUser,
     loading,

@@ -7,7 +7,7 @@ import { useAuth } from "../utils/AuthContext";
 import Logo from "../components/Logo/Logo";
 import loginImage from "../assets/images/login-image.jpg";
 
-const UserLogin = () => {
+const GuestLogin = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -58,4 +58,4 @@ const UserLogin = () => {
   );
 };
 
-export default UserLogin;
+export default GuestLogin;

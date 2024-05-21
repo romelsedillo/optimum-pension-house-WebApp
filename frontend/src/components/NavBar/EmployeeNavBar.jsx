@@ -118,13 +118,13 @@ export default function EmployeesNavBar() {
               <DropdownItem key="profile" color="success" className="">
                 {user.email}
               </DropdownItem>
-              <DropdownItem
+              {/* <DropdownItem
                 key="settings"
                 color="success"
                 href={`/${role}-dashboard/settings`}
               >
                 Account Settings
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem
                 key="logout"
                 color="danger"
