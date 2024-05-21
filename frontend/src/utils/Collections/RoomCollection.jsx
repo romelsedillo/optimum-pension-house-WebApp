@@ -19,14 +19,15 @@ export const roomCollection = async () => {
 
     // Extract the data from the response and return it
     const data = response.documents.map((doc) => ({
-      id: doc.$id,
-      roomNumber: doc.roomNumber,
-      floor: doc.floor,
-      status: doc.status,
-      "room-type": doc.roomType.typeName,
+      id: doc?.$id,
+      roomNumber: doc?.roomNumber,
+      floor: doc?.floor,
+      status: doc?.status,
+      roomType: doc?.roomType?.typeName,
       // Add more fields as needed
     }));
 
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data from Appwrite:", error);

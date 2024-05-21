@@ -32,7 +32,7 @@ export const roomUnavailable = async (
 
     toast.success("Room updated!", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -43,7 +43,7 @@ export const roomUnavailable = async (
     });
   } catch (error) {
     console.error("Error updating  room:", error);
-    console.error(error.response.code);
+    console.error(error.response);
     if (error) {
       toast.error("Failed updating room.", {
         position: "top-right",

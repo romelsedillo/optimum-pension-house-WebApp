@@ -23,11 +23,11 @@ export const roomCollectionType = async (roomTypeId) => {
         (doc) => doc.roomType.$id === roomTypeId && doc.status === "available"
       )
       .map((doc) => ({
-        id: doc.$id,
-        roomNumber: doc.roomNumber,
-        floor: doc.floor,
-        status: doc.status,
-        roomType: doc.roomType.typeName,
+        id: doc?.$id,
+        roomNumber: doc?.roomNumber,
+        floor: doc?.floor,
+        status: doc?.status,
+        roomType: doc?.roomType?.typeName,
         // Add more fields as needed
       }));
 

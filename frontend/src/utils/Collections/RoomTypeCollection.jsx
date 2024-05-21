@@ -1,6 +1,5 @@
 import { Client, Databases } from "appwrite";
 
-
 // Function to fetch data from Appwrite
 export const roomTypeCollection = async () => {
   const PROJECT_ID = "65ad1cb002dddf2e1250";
@@ -22,9 +21,9 @@ export const roomTypeCollection = async () => {
     // Extract the data from the response and return it
     const data = response.documents.map((doc) => ({
       id: doc.$id,
-      typeName: doc.typeName,
-      capacity: doc.capacity,
-      rate: doc.rate,
+      typeName: doc?.typeName,
+      capacity: doc?.capacity,
+      rate: doc?.rate,
       // Add more fields as needed
     }));
 
