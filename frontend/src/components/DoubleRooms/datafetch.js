@@ -1,7 +1,7 @@
 import { Client, Databases } from "appwrite";
 
 // Function to fetch data from Appwrite
-export  const fetchDataFromAppwrite = async () => {
+export const fetchDataFromAppwrite = async () => {
   try {
     const PROJECT_ID = "65ad1cb002dddf2e1250";
     const DATABASE_ID = "65ad1d3340d360674f4b"; // hotel
@@ -17,14 +17,14 @@ export  const fetchDataFromAppwrite = async () => {
 
     // Extract the data from the response and return it
     const data = response.documents
-    .filter((doc) => doc.roomType.typeName === "double room")
-    .map((doc) => ({
-      id: doc.$id,
-      roomNumber: doc.roomNumber,
-      floor: doc.floor,
-      status: doc.status,
-      'room-type': doc.roomType.typeName
-    }));
+      .filter((doc) => doc?.roomType?.typeName === "double room")
+      .map((doc) => ({
+        id: doc?.$id,
+        roomNumber: doc?.roomNumber,
+        floor: doc?.floor,
+        status: doc?.status,
+        "room-type": doc?.roomType?.typeName,
+      }));
 
     return data;
   } catch (error) {

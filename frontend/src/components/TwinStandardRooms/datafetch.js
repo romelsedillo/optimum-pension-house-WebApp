@@ -17,13 +17,13 @@ export const fetchDataFromAppwrite = async () => {
 
     // Extract the data from the response and return it
     const data = response.documents
-      .filter((doc) => doc.roomType.typeName === "twin standard room")
+      .filter((doc) => doc?.roomType?.typeName === "twin standard room")
       .map((doc) => ({
-        id: doc.$id,
-        roomNumber: doc.roomNumber,
-        floor: doc.floor,
-        status: doc.status,
-        "room-type": doc.roomType.typeName,
+        id: doc?.$id,
+        roomNumber: doc?.roomNumber,
+        floor: doc?.floor,
+        status: doc?.status,
+        "room-type": doc?.roomType?.typeName,
       }));
 
     return data;

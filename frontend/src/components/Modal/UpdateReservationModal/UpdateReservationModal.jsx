@@ -84,6 +84,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
           guestId,
           reservationId
         );
+        console.log( totalDays, roomType, totalAmount, currentDate);
         AddReports( totalDays, roomType, totalAmount, currentDate);
       }
       if (status === "check-in") {

@@ -45,13 +45,7 @@ const DoubleRoomPage = () => {
     fetchData();
   }, [roomId]);
 
-  DataRoomFetch(roomId)
-    .then((roomData) => {
-      console.log(roomData);
-    })
-    .catch((error) => {
-      console.error("Error fetching room data:", error);
-    });
+  DataRoomFetch(roomId);
 
   const handleReference = (event) => {
     setReferenceNumber(event.target.value);
@@ -74,17 +68,29 @@ const DoubleRoomPage = () => {
     const type = "online";
     const reservationStatus = "pending";
 
+    console.log(
+      currentDateTime,
+      type,
+      checkIn,
+      checkOut,
+      referenceNumber,
+      reservationStatus,
+      user.$id,
+      roomId,
+      chosenDaysCount,
+      totalAmount
+    );
     AddReservation(
       currentDateTime,
       type,
       checkIn,
       checkOut,
-      totalAmount,
       referenceNumber,
       reservationStatus,
       user.$id,
       roomId,
-      chosenDaysCount
+      chosenDaysCount,
+      totalAmount
     );
     RoomReserved(roomId);
     const position = role ? role : "guest";

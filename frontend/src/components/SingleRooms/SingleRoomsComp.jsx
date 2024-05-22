@@ -76,20 +76,20 @@ const SingleRoomComp = () => {
                 />
                 <CardFooter className="overflow-hidden absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
                   <div>
-                    <p className="text-white text-lg">Room {room.roomNumber}</p>
+                    <p className="text-white text-lg">Room {room?.roomNumber}</p>
                     <p className="text-white text-tiny capitalize">
-                      {room.floor} floor
+                      {room?.floor} floor
                     </p>
                   </div>
                   <Button
-                    isDisabled={room.status !== "available"}
+                    isDisabled={room?.status !== "available"}
                     className="text-tiny"
-                    color={room.status === "available" ? "primary" : "danger"}
+                    color={room?.status === "available" ? "primary" : "danger"}
                     radius="full"
                     size="sm"
-                    onClick={() => handleClick(room.id)}
+                    onClick={() => handleClick(room?.id)}
                   >
-                    {room.status === "available" ? "Available" : "Reserved"}
+                    {room?.status === "available" ? "Available" : "Reserved"}
                   </Button>
                 </CardFooter>
               </Card>

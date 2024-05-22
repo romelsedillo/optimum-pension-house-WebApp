@@ -30,6 +30,7 @@ export const fetchDataFromAppwrite = async () => {
       dateCreated: doc?.dateCreated,
       type: doc?.type,
       guestId: doc?.guests?.$id,
+      totalDays: doc?.totalDays,
     }));
     data.reverse();
     return data;

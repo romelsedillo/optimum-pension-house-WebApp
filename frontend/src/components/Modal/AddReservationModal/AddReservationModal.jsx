@@ -32,11 +32,9 @@ const AddReservationModal = ({ onAddSuccess }) => {
   const [checkIn, setCheckIn] = useState(new Date());
   const [checkOut, setCheckOut] = useState(addDays(new Date(), 1));
   const chosenDaysCount = differenceInDays(checkOut, checkIn);
+  const [isDiscounted, setIsDiscounted] = useState(false);
   const [roomType, setRoomType] = useState("");
   const [rooms, setRooms] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [roomTypeRateData, setRoomTypeRateData] = useState("");
-  const [roomRate, setRoomRate] = useState(0);
   const [roomPrice, setRoomPrice] = useState(0);
   const [roomTypeBase, setRoomTypeBase] = useState([]);
 
@@ -83,8 +81,30 @@ const AddReservationModal = ({ onAddSuccess }) => {
     roomCollectionTypeData();
   }, [roomType, roomTypeBase]);
 
-  const totalAmount = roomPrice * chosenDaysCount;
-  const discountedAmount = totalAmount * (1 - (selectedValue || 0)); // Use selectedValue or 0 if null
+  const subTotal = roomPrice * chosenDaysCount;
+  const totalAmount = subTotal * (1 - (selectedValue || 0));
+  const discountAmount = subTotal - totalAmount;
+  console.log(discountAmount);
+  useEffect(() => {
+    if (selectedValue) {
+      console.log("discounted");
+      setIsDiscounted(true);
+    } else {
+      console.log("not discounted");
+      setIsDiscounted(false);
+    }
+  }, [selectedValue]);
+
+  // useEffect(() => {
+  //   if (totalAmount === subTotal) {
+  //     console.log("not discounted");
+  //     setIsDiscounted(false);
+  //   }
+  //   if (totalAmount !== subTotal) {
+  //     console.log("discounted");
+  //     setIsDiscounted(true);
+  //   }
+  // }, [subTotal]);
 
   const handleRadioChange = (event) => {
     const value = Number(event.target.value);
@@ -133,12 +153,15 @@ const AddReservationModal = ({ onAddSuccess }) => {
         type,
         checkIn,
         checkOut,
-        discountedAmount,
         referenceNumber,
         status,
         guests,
         rooms,
-        chosenDaysCount
+        chosenDaysCount,
+        subTotal,
+        totalAmount,
+        isDiscounted,
+        discountAmount
       ),
       {
         loading: "Saving...",
@@ -149,6 +172,7 @@ const AddReservationModal = ({ onAddSuccess }) => {
 
     RoomReserved(rooms);
     onAddSuccess();
+    console.log(subTotal, totalAmount, isDiscounted);
   };
 
   const isAnyFieldEmpty =
@@ -293,6 +317,9 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 onChange={handleRadioChange}
                 value={selectedValue}
               >
+                {/* <Radio value={0.0} checked={selectedValue === 0.0}>
+                  remove discount
+                </Radio> */}
                 <Radio value={0.05} checked={selectedValue === 0.05}>
                   5%
                 </Radio>
@@ -305,26 +332,25 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 <Radio value={0.2} checked={selectedValue === 0.2}>
                   20%
                 </Radio>
-
-                <Radio value={0.25} checked={selectedValue === 0.25}>
-                  25%
-                </Radio>
-                <Radio value={0.3} checked={selectedValue === 0.3}>
-                  30%
-                </Radio>
               </RadioGroup>
             </div>
             <div>
               <p className="text-1xl text-blue-500">
-                Total Amount:{" "}
+                Subtotal:{" "}
+                <span className="text-1xl">
+                  &#8369; {formatNumberWithCommas(subTotal)}.00
+                </span>
+              </p>
+              <p className="text-1xl text-blue-500">
+                Total:{" "}
                 <span className="text-1xl">
                   &#8369; {formatNumberWithCommas(totalAmount)}.00
                 </span>
               </p>
               <p className="text-1xl text-blue-500">
-                Discounted Amount:{" "}
+                Discount amount:{" "}
                 <span className="text-1xl">
-                  &#8369; {formatNumberWithCommas(discountedAmount)}.00
+                  &#8369; {formatNumberWithCommas(discountAmount)}.00
                 </span>
               </p>
             </div>

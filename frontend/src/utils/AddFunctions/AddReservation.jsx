@@ -13,12 +13,15 @@ export const addReservation = async (
   type,
   checkInDate,
   checkOutDate,
-  totalAmount,
   referenceNumber,
   reservationStatus,
   guests,
   rooms,
-  chosenDaysCount
+  chosenDaysCount,
+  subTotal,
+  totalAmount,
+  isDiscounted,
+  discountAmount
 ) => {
   try {
     // Create a new document in the guests collection
@@ -31,12 +34,15 @@ export const addReservation = async (
         type: type,
         checkInDate: checkInDate,
         checkOutDate: checkOutDate,
-        totalAmount: totalAmount,
         referenceNumber: referenceNumber,
         status: reservationStatus,
         guests: guests,
         rooms: rooms,
         totalDays: chosenDaysCount,
+        subTotal: subTotal,
+        totalAmount: totalAmount,
+        isDiscounted: isDiscounted,
+        discountAmount: discountAmount,
       }
     );
 
