@@ -67,7 +67,9 @@ export const reservationCollection = async () => {
       type: doc?.type,
       dateCreated: formatTimestamp(doc?.dateCreated),
       totalDays: doc?.totalDays,
-      roomType: doc?.rooms?.roomType?.$id
+      roomType: doc?.rooms?.roomType?.$id,
+      discountAmount: doc?.discountAmount,
+      subTotal: doc?.subTotal,
     }));
     data.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
     return data;

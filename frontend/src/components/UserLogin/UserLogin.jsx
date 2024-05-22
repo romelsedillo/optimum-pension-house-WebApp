@@ -37,6 +37,7 @@ const UserLogin = () => {
           Email
         </label>
         <Input
+          id="email"
           autoFocus
           isRequired
           isClearable
@@ -58,6 +59,7 @@ const UserLogin = () => {
         </label>
 
         <Input
+          id="password"
           isRequired
           autoComplete="off"
           variant="bordered"

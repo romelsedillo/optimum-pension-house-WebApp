@@ -8,6 +8,7 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { currentDate } from "../../utils/CurrentDate";
+import { formatCurrencyWithCommas } from "../../utils/formatCurrencyWithCommas";
 
 const ReceiptComp = (props) => {
   const { reservationId } = useParams();
@@ -131,7 +132,7 @@ const ReceiptComp = (props) => {
           <div className="h-8 w-full justify-between items-center border border-r-0 border-[#333A73] border-t-0 py-1">
             <p className="font-bold text-center">
               <span className="text-tiny text-black">
-                &#8369; {reservation?.roomRate}
+                {formatCurrencyWithCommas(reservation?.roomRate)}
               </span>
             </p>
           </div>
@@ -146,7 +147,7 @@ const ReceiptComp = (props) => {
           <div className="h-8 w-full justify-between items-center border border-[#333A73] border-t-0 py-1">
             <p className="font-bold text-center">
               <span className="text-tiny text-black">
-                &#8369; {reservation?.totalAmount}
+                {formatCurrencyWithCommas(reservation?.totalAmount)}
               </span>
             </p>
           </div>
@@ -201,7 +202,6 @@ const ReceiptComp = (props) => {
             Payment Method :{" "}
             <span>{reservation?.referenceNumber ? "gcash" : "Cash"}</span>
           </p>
-          <p>Remarks :</p>
         </div>
         <div className="flex flex-col w-1/2 items-center justify-center border">
           <div className="flex w-full border-1 border-b-0 border-[#333A73]">
@@ -212,7 +212,7 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-center">
                 {" "}
                 <span className="text-tiny text-black">
-                  &#8369; {reservation?.totalAmount}
+                  {formatCurrencyWithCommas(reservation?.subTotal)}
                 </span>
               </p>
             </div>
@@ -223,18 +223,9 @@ const ReceiptComp = (props) => {
             </div>
             <div className="w-full h-10 justify-between items-center border-l-1 border-[#333A73]">
               <p className="font-bold text-center">
-                <span className="text-tiny text-black">0</span>
-              </p>
-            </div>
-          </div>
-          <div className="flex w-full border-1 border-b-0 border-[#333A73]">
-            <div className="w-full justify-between items-center px-2">
-              <p className="font-bold text-right mb-2">TAX / VAT</p>
-            </div>
-            <div className="w-full h-10 justify-between items-center border-l-1 border-[#333A73]">
-              <p className="font-bold text-center">
-                {" "}
-                <span className="text-tiny text-black">0</span>
+                <span className="text-tiny text-black">
+                  {formatCurrencyWithCommas(reservation?.discountAmount)}
+                </span>
               </p>
             </div>
           </div>
@@ -246,7 +237,7 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-center">
                 {" "}
                 <span className="text-tiny text-black">
-                  &#8369; {reservation?.totalAmount}
+                  {formatCurrencyWithCommas(reservation?.totalAmount)}
                 </span>
               </p>
             </div>
