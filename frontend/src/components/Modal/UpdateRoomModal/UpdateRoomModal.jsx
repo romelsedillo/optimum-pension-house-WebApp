@@ -4,6 +4,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Input,
 } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
 
@@ -29,7 +30,6 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
   };
   useEffect(() => {
     setRoomNumber(selectedRoomData?.roomNumber);
-    console.log(selectedRoomData?.roomNumber);
     roomTypeFetchData();
   }, [selectedRoomData]);
 
@@ -50,8 +50,7 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
     e.preventDefault();
 
     try {
-      console.log(roomId, roomNumber, floor, status, roomType),
-        await UpdateRoom(roomId, roomNumber, floor, status, roomType),
+      await UpdateRoom(roomId, roomNumber, floor, status, roomType),
         await onUpdateSuccess();
     } catch (error) {
       console.error("Error updating room:", error);
@@ -61,8 +60,6 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
 
   const isAnyFieldEmpty =
     roomNumber === "" || floor === "" || roomType === "" || status === "";
-  console.log(roomTypeData);
-  console.log(roomType);
   return (
     <ModalContent>
       {(onClose) => (
@@ -71,52 +68,45 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
           <ModalBody>
             <div className="flex gap-2">
               <div className="w-full flex flex-col">
-                <label htmlFor="roomNumber">
-                  Room number <span className="text-red-500">*</span>
-                </label>
-                <input
+                <Input
+                  isRequired
                   id="roomNumber"
                   name="roomNumber"
+                  label="Room number"
+                  size="sm"
                   type="text"
-                  className="w-full px-2 py-2 rounded-md border-2 border-blue-500 outline-none"
+                  className="w-full rounded-md border-2 border-blue-500 outline-none"
                   value={roomNumber}
                   onChange={handleRoomNumberChange}
                 />
               </div>
               <div className="w-full flex flex-col">
-                <label htmlFor="floor">
-                  Floor number <span className="text-red-500">*</span>
-                </label>
-                <select
+                <Select
+                  isRequired
                   id="floor"
                   name="floor"
-                  className="w-full border-2 border-blue-500 px-2 py-2 rounded-md outline-none"
+                  label="Floor"
+                  size="sm"
+                  className="w-full border-2 border-blue-500 rounded-md outline-none"
                   value={floor}
                   onChange={handleRoomFloorChange}
                 >
-                  <option value="">choose floor</option>
-                  <option value="first">First floor</option>
-                  <option value="second">Second floor</option>
-                  <option value="third">Third floor</option>
-                </select>
+                  <SelectItem value="first">First floor</SelectItem>
+                  <SelectItem value="second">Second floor</SelectItem>
+                  <SelectItem value="third">Third floor</SelectItem>
+                </Select>
               </div>
             </div>
             <div className="flex gap-2">
               <div className="w-full flex flex-col">
-                <label htmlFor="roomType">
-                  Room type <span className="text-red-500">*</span>
-                </label>
                 <Select
-                  autoFocus
                   isRequired
                   items={roomTypeData}
-                  name="guestData"
-                  label="  "
+                  name="roomType"
+                  label="Room type"
                   size="sm"
-                  variant="bordered"
-                  className="w-full"
-                  color="primary"
                   onChange={handleRoomTypeChange}
+                  className="w-full border-2 border-blue-500 rounded-md outline-none"
                   value={roomType}
                 >
                   {(roomTypeData) => (
@@ -127,21 +117,22 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                 </Select>
               </div>
               <div className="w-full flex flex-col">
-                <label htmlFor="status">
-                  Room status <span className="text-red-500">*</span>
-                </label>
-                <select
+                <Select
+                  isRequired
                   id="status"
                   name="status"
-                  className="w-full border-2 border-blue-500 px-2 py-2 rounded-md outline-none"
+                  label="Room status"
+                  size="sm"
+                  className="w-full border-2 border-blue-500 rounded-md outline-none"
                   value={status}
                   onChange={handleRoomStatusChange}
                 >
-                  <option value="">status</option>
-                  <option value="available">available</option>
-                  <option value="unavailable">unavailable</option>
-                  <option value="under maintenance">under maintenance</option>
-                </select>
+                  <SelectItem value="available">available</SelectItem>
+                  <SelectItem value="unavailable">unavailable</SelectItem>
+                  <SelectItem value="under maintenance">
+                    under maintenance
+                  </SelectItem>
+                </Select>
               </div>
             </div>
           </ModalBody>

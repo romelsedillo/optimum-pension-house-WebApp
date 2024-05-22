@@ -74,7 +74,9 @@ const SingleRoomPage = () => {
     const currentDateTime = getCurrentDateTime();
     const type = "online";
     const reservationStatus = "pending";
-    // currentDateTime, type;
+    const subTotal = null;
+    const isDiscounted = false;
+    const discountAmount = null;
     console.log(
       currentDateTime,
       type,
@@ -97,7 +99,10 @@ const SingleRoomPage = () => {
       user.$id,
       roomId,
       chosenDaysCount,
-      totalAmount
+      subTotal,
+      totalAmount,
+      isDiscounted,
+      discountAmount
     );
 
     RoomReserved(roomId);

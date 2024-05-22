@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { reservationCollection } from "../../utils/Collections/ReservationCollection";
+import { reservationCollectionSales } from "../../utils/Collections/ReservationCollectionSales";
 import { Spinner } from "@nextui-org/react";
 
 const SalesBox = () => {
@@ -11,7 +11,7 @@ const SalesBox = () => {
 
   const fetchData = async () => {
     try {
-      const appWriteData = await reservationCollection();
+      const appWriteData = await reservationCollectionSales();
       setData(appWriteData);
       setLoading(false);
     } catch (error) {

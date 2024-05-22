@@ -67,7 +67,9 @@ const DoubleRoomPage = () => {
     const currentDateTime = getCurrentDateTime();
     const type = "online";
     const reservationStatus = "pending";
-
+    const subTotal = null;
+    const isDiscounted = false;
+    const discountAmount = null;
     console.log(
       currentDateTime,
       type,
@@ -78,7 +80,10 @@ const DoubleRoomPage = () => {
       user.$id,
       roomId,
       chosenDaysCount,
-      totalAmount
+      subTotal,
+      totalAmount,
+      isDiscounted,
+      discountAmount
     );
     AddReservation(
       currentDateTime,
@@ -90,7 +95,10 @@ const DoubleRoomPage = () => {
       user.$id,
       roomId,
       chosenDaysCount,
-      totalAmount
+      subTotal,
+      totalAmount,
+      isDiscounted,
+      discountAmount
     );
     RoomReserved(roomId);
     const position = role ? role : "guest";
