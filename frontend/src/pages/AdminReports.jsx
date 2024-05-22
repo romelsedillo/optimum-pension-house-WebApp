@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ManagerSidebar from "../components/SideBar/ManagerSideBar";
+import AdminSidebar from "../components/SideBar/AdminSideBar";
+
 import EmployeesNavBar from "../components/NavBar/EmployeeNavBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import ReportsTable from "../components/Tables/ReportsTable/ReportsTable";
@@ -37,7 +38,8 @@ const AdminReports = () => {
   };
   return (
     <div className="bg-[#F1F5F9] h-screen w-full flex">
-      <ManagerSidebar />
+      <AdminSidebar />
+
       <div className="w-full flex flex-col h-screen overflow-y-auto">
         <EmployeesNavBar />
         <div className="p-4 flex flex-col gap-4">
