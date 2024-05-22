@@ -258,9 +258,9 @@ export default function ReservationsTable() {
                 >
                   Update
                 </DropdownItem>
-                <DropdownItem onClick={() => alert("delete clicked")}>
+                {/* <DropdownItem onClick={() => alert("delete clicked")}>
                   Delete
-                </DropdownItem>
+                </DropdownItem> */}
               </DropdownMenu>
             </Dropdown>
           </div>
