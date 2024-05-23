@@ -114,7 +114,7 @@ const ReceiptComp = (props) => {
             <p className="font-bold text-center mb-2">Price/Night</p>
           </div>
           <div className="w-full justify-between items-center border border-r-0 border-[#333A73] py-1">
-            <p className="font-bold text-center mb-2"># of Nights</p>
+            <p className="font-bold text-center mb-2">No. of day/s</p>
           </div>
           <div className="w-full justify-between items-center border border-[#333A73] py-1">
             <p className="font-bold text-center mb-2">Total Price</p>
