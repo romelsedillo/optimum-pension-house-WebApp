@@ -121,7 +121,7 @@ const AddReservationModal = ({ onAddSuccess }) => {
       const typeName = selectedRoomType.typeName;
 
       if (typeName === "single room") {
-        setRoomPrice(890);
+        setRoomPrice(980);
       }
       if (typeName === "double room") {
         setRoomPrice(1120);

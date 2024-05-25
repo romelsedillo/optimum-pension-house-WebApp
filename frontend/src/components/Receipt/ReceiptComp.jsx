@@ -16,6 +16,9 @@ const ReceiptComp = (props) => {
   // Find the reservation that matches the reservationId
   const reservation = props.data.find((item) => item.id === reservationId);
 
+  const totalPrice = reservation?.roomRate * reservation?.totalDays;
+  console.log(reservation?.roomRate);
+  console.log(reservation?.totalDays);
   // if (props.loading) {
   //   return <div>Preparing receipt...</div>;
   // }
@@ -143,7 +146,7 @@ const ReceiptComp = (props) => {
           <div className="h-8 w-full justify-between items-center border border-[#333A73] border-t-0 py-1">
             <p className="font-bold text-center">
               <span className="text-tiny text-black">
-                {formatCurrencyWithCommas(reservation?.totalAmount)}
+                {formatCurrencyWithCommas(totalPrice)}
               </span>
             </p>
           </div>
@@ -198,7 +201,6 @@ const ReceiptComp = (props) => {
             Payment Method :
             <span>{reservation?.referenceNumber ? "gcash" : "Cash"}</span>
           </p>
-      
         </div>
         <div className="flex flex-col w-1/2 items-center justify-center border">
           <div className="flex w-full border-1 border-b-0 border-[#333A73]">
@@ -208,7 +210,8 @@ const ReceiptComp = (props) => {
             <div className="w-full h-6 justify-between items-center border-l-1 border-[#333A73]">
               <p className="font-bold text-center">
                 <span className="text-tiny text-black">
-                  {formatCurrencyWithCommas(reservation?.subTotal)}
+                  {/* {reservation?.subTotal} */}
+                  {formatCurrencyWithCommas(totalPrice)}
                 </span>
               </p>
             </div>

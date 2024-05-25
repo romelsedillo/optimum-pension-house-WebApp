@@ -48,7 +48,6 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await UpdateRoom(roomId, roomNumber, floor, status, roomType),
         await onUpdateSuccess();
@@ -57,6 +56,7 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
       toast.error(`Error updating room: ${error.message}`);
     }
   };
+  console.log(roomId, roomNumber, floor, status, roomType);
 
   const isAnyFieldEmpty =
     roomNumber === "" || floor === "" || roomType === "" || status === "";
@@ -91,9 +91,15 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                   value={floor}
                   onChange={handleRoomFloorChange}
                 >
-                  <SelectItem value="first">First floor</SelectItem>
-                  <SelectItem value="second">Second floor</SelectItem>
-                  <SelectItem value="third">Third floor</SelectItem>
+                  <SelectItem key="first" value="first">
+                    First floor
+                  </SelectItem>
+                  <SelectItem key="second" value="second">
+                    Second floor
+                  </SelectItem>
+                  <SelectItem key="third" value="third">
+                    Third floor
+                  </SelectItem>
                 </Select>
               </div>
             </div>
@@ -127,9 +133,10 @@ const UpdateRoomModal = ({ roomId, selectedRoomData, onUpdateSuccess }) => {
                   value={status}
                   onChange={handleRoomStatusChange}
                 >
-                  <SelectItem value="available">available</SelectItem>
-                  <SelectItem value="unavailable">unavailable</SelectItem>
-                  <SelectItem value="under maintenance">
+                  <SelectItem key="available" value="available">
+                    available
+                  </SelectItem>
+                  <SelectItem key="under maintenance" value="under maintenance">
                     under maintenance
                   </SelectItem>
                 </Select>

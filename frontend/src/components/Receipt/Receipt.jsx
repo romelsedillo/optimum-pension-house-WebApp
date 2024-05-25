@@ -212,7 +212,9 @@ const ReceiptComp = (props) => {
               <p className="font-bold text-center">
                 {" "}
                 <span className="text-tiny text-black">
-                  {formatCurrencyWithCommas(reservation?.subTotal)}
+                  {formatCurrencyWithCommas(
+                    reservation?.subTotal ? null : reservation?.totalAmount
+                  )}
                 </span>
               </p>
             </div>
