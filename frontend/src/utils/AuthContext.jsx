@@ -286,7 +286,8 @@ export const AuthProvider = ({ children }) => {
         userInfo.name,
         userInfo.email,
         userInfo.phone,
-        userInfo.address
+        userInfo.address,
+        userInfo.password
       );
       let response = await account.create(
         ID.custom(randomString),
