@@ -6,7 +6,7 @@ const RoomsAndSuits = () => {
     <div className="mt-20">
       <NavBar />
       <div className=" w-full px-36 py-10">
-        <Rooms></Rooms>
+        <Rooms />
       </div>
       <Footer />
     </div>
