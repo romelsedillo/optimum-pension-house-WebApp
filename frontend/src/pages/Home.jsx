@@ -28,41 +28,39 @@ const Home = () => {
   return (
     <div className="bg-[#F6F5F2] flex flex-col ">
       <NavBar />
-      <div
-        name="home"
-        className="  bg-[#F6F5F2] h-screen w-full mt-[80px] py-10 px-36"
-      >
-        <div className=" flex justify-between w-full ">
-          <div className="flex flex-col gap-6 w-[55%] pt-16">
-            <div className="text-[#333A73]">
+      <div name="home" className="  bg-[#F6F5F2]  w-full px-10 md:px-28 pt-4 pb-16">
+        <div className=" flex flex-col md:flex-row gap-10 justify-between">
+          <div className="w-full flex flex-col justify-center md:justify-start md:items-start md:w1/2 gap-6 pt-16">
+            <div className="text-[#333A73] text-center md:text-start">
               <p className=" font-medium">Welcome to</p>
-              <h1 className="title text-[50px] text-orange-500 font-DMSerifDisplay">
+              <h1 className="title text-[30px] sm:text-[47px] md:text-[47px] text-orange-500 font-DMSerifDisplay">
                 Optimum Pension House
               </h1>
 
-              <p className=" text-[20px] font-Manrope">
+              <p className=" text-[15px] md:text-[25px] font-Manrope">
                 Indulge in Unparalleled Comfort
               </p>
-              <p className="text-[18px] font-Manrope">
+              <p className="text-[14px] md:text-[21px] font-Manrope">
                 Where Every Stay is a Celebration
               </p>
             </div>
-
-            <Button
-              className="bg-orange-500 text-[#fff] rounded-md py-5 w-1/2"
-              onClick={handleNavigateToRooms}
-            >
-              Book Your Stay Now
-            </Button>
+            <div className="flex justify-center">
+              <Button
+                size="md"
+                className="bg-orange-500 text-[#fff] rounded-md py-5"
+                onClick={handleNavigateToRooms}
+              >
+                Book Your Stay Now
+              </Button>
+            </div>
           </div>
-          <div className="w-[45%]">
-            <div className="relative w-full flex justify-center">
+          <div className=" w-full">
+            <div className="flex justify-center md:justify-end">
               <img
                 src={hero2}
                 alt="bedroom image"
-                className="w-[70%] absolute top-[5px] left-[125px]"
+                className="w-full rounded-lg md:w-3/4"
               />
-              <div className="w-[200px] h-[200px] bg-orange-500"></div>
             </div>
           </div>
         </div>
@@ -71,8 +69,8 @@ const Home = () => {
         <AboutUs />
       </div>
       <div className="w-[100%] p-32 bg-white">
-        <div className=" bg-[#F6F5F2] flex rounded-lg">
-          <div className="w-1/3 flex flex-col justify-start gap-4 p-8">
+        <div className="flex flex-col md:flex-row bg-[#F6F5F2] rounded-lg">
+          <div className="w-full flex flex-col justify-start gap-4 p-8">
             <h1 className="text-2xl mt-14 text-left">Location & Map</h1>
             <p className="text-[12px]">
               <span>
@@ -91,12 +89,12 @@ const Home = () => {
               </Button>
             </NavLink>
           </div>
-          <div className="w-2/3">
+          <div className="w-[50px]">
             <MapComponent />
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

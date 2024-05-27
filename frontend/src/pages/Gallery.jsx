@@ -4,7 +4,7 @@ import Footer from "../components/Footer/footer";
 
 const Gallery = () => {
   return (
-    <div className="mt-20">
+    <div className="">
       <NavBar />
       <div className="w-full flex flex-col items-center justify-center gap-4 px-36 py-10">
         <h1 className="text-center text-4xl">Gallery</h1>
