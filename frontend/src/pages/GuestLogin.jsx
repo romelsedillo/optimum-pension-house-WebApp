@@ -15,39 +15,36 @@ const GuestLogin = () => {
     if (user) {
       navigate("/");
     }
-  }, []);
+  }, [user, navigate]);
+
   return (
     <div className="mt-20 bg-[#fff]">
       <NavBar />
-      <div className=" h-screen flex justify-center w-full px-36 py-12">
-        <div className="w-full flex shadow-lg">
+      <div className="flex justify-center w-full px-4 py-8 sm:px-6 md:px-12 lg:px-24 xl:px-36">
+        <div className="w-full flex flex-col lg:flex-row shadow-lg">
           <div
-            className="w-1/2 bg-cover bg-center bg-no-repeat"
+            className="w-full lg:w-1/2 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${loginImage})` }}
           >
-            <div className=" bg-[#333A73] bg-opacity-70 w-full h-full flex flex-col items-center justify-center gap-16">
+            <div className="bg-[#333A73] bg-opacity-70 w-full h-full flex flex-col items-center justify-center gap-8 lg:gap-16 p-4">
               <div className="flex flex-col items-center">
                 <Logo w="16" h="16" />
-                <h1 className="capitalize text-md text-white">
-                  Optimum Pension House
-                </h1>
+                <h1 className="capitalize text-md text-white">Optimum Pension House</h1>
               </div>
               <div className="text-center">
-                <h1 className="text-white text-4xl">Welcome!</h1>
-                <h6 className="font-bold text-white">
-                  We are happy to see you again.
-                </h6>
+                <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl">Welcome!</h1>
+                <h6 className="font-bold text-white">We are happy to see you again.</h6>
               </div>
             </div>
           </div>
 
-          <div className=" w-1/2">
+          <div className="w-full lg:w-1/2 p-4 lg:p-8">
             <div className="mt-8">
-              <h1 className="text-center text-[30px] font-bold text-[#333A73] ">
+              <h1 className="text-center text-2xl sm:text-3xl lg:text-[30px] font-bold text-[#333A73]">
                 Login.
               </h1>
             </div>
-            <div>
+            <div className="mt-4">
               <Login />
             </div>
           </div>

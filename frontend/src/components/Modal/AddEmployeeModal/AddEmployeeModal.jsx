@@ -5,14 +5,11 @@ import {
   ModalFooter,
   Button,
   Input,
-  Select,
-  SelectItem,
 } from "@nextui-org/react";
 import { useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
-import { PlusIcon } from "./PlusIcon";
 import { useAuth } from "../../../utils/AuthContext";
 
 import AddAuthEmployee from "../../../utils/AddFunctions/AddAuthEmployee";
@@ -107,12 +104,13 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
     <ModalContent className="p-4">
       {(onClose) => (
         <form onSubmit={handleSubmit}>
-          <ModalHeader className="flex flex-col gap-1">
+          <ModalHeader className="flex flex-col gap-1 text-blue-500">
             Add New {capitalize(role)}
           </ModalHeader>
           <ModalBody className="">
             <div className="flex gap-2">
               <Input
+                autoComplete="off"
                 name="name"
                 autoFocus
                 isRequired
@@ -122,7 +120,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 placeholder=""
                 variant="bordered"
                 className="w-full"
-                color="success"
+                color="primary"
                 value={name}
                 onChange={handleNameChange}
                 onClear={() => setName("")}
@@ -136,7 +134,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 label="position"
                 variant="bordered"
                 className="w-full"
-                color="success"
+                color="primary"
                 value={position}
               />
               {/* <Select
@@ -164,6 +162,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
             </div>
             <div className="flex gap-2">
               <Input
+                autoComplete="off"
                 isRequired
                 name="email"
                 size="sm"
@@ -174,11 +173,12 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 value={email}
                 onChange={handleEmailChange}
                 isInvalid={isInvalid}
-                color={isInvalid ? "danger" : "success"}
+                color={isInvalid ? "danger" : "primary"}
                 errorMessage={isInvalid && "Please enter a valid email"}
                 onClear={() => setEmail("")}
               />
               <Input
+                autoComplete="off"
                 name="phone"
                 isRequired
                 size="sm"
@@ -187,7 +187,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 placeholder=""
                 variant="bordered"
                 className="w-full"
-                color="success"
+                color={isInvalid ? "danger" : "primary"}
                 value={phone}
                 onChange={handlePhoneChange}
                 onClear={() => setPhone("")}
@@ -195,6 +195,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
             </div>
             <div className="flex gap-2">
               <Input
+                autoComplete="off"
                 name="address"
                 isRequired
                 size="sm"
@@ -203,7 +204,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 placeholder=""
                 variant="bordered"
                 className="w-full"
-                color="success"
+                color="primary"
                 value={address}
                 onChange={handleAddressChange}
                 onClear={() => setAddress("")}
@@ -214,7 +215,7 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
                 label="Password"
                 variant="bordered"
                 placeholder=""
-                color="success"
+                color="primary"
                 className="w-full"
                 value={password}
                 endContent={
@@ -256,7 +257,6 @@ const AddEmployeeModal = ({ onAddSuccess }) => {
               color="primary"
               size="sm"
               onPress={onClose}
-              endContent={<PlusIcon />}
               isDisabled={isAnyFieldEmpty}
             >
               Add {role}

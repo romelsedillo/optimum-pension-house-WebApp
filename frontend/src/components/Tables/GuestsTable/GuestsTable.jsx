@@ -160,17 +160,11 @@ export default function GuestsTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                {role === "admin" ||
-                role === "manager" ||
-                role === "receptionist" ? (
-                  ""
-                ) : (
-                  <DropdownItem onClick={() => alert(user.id)}>
-                    Edit
-                  </DropdownItem>
-                )}
-                <DropdownItem onClick={() => alert(user.id)}>View</DropdownItem>
-                <DropdownItem onClick={() => handleDelete(user.id)}>
+                {/* <DropdownItem onClick={() => alert(user.id)}>View</DropdownItem> */}
+                <DropdownItem
+                  isReadOnly={role === "receptionist" ? true : false}
+                  onClick={() => handleDelete(user.id)}
+                >
                   Delete
                 </DropdownItem>
               </DropdownMenu>

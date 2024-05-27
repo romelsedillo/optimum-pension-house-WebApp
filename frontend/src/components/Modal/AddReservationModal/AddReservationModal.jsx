@@ -185,10 +185,13 @@ const AddReservationModal = ({ onAddSuccess }) => {
   return (
     <ModalContent className=" max-h-[450px] overflow-y-auto">
       {(onClose) => (
-        <form onSubmit={handleSubmit} className="">
-          <ModalHeader className="text-sm text-blue-500">
+        <form onSubmit={handleSubmit} className="text-blue-500">
+          {/* <ModalHeader className="text-sm text-blue-500">
             Add Reservation
-          </ModalHeader>
+          </ModalHeader> */}
+          <div className="w-full text-blue-500 text-center py-2">
+            <h1>Add Reservation</h1>
+          </div>
           <ModalBody>
             <div className="w-full flex gap-2">
               <Select
@@ -320,7 +323,11 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 {/* <Radio value={0.0} checked={selectedValue === 0.0}>
                   remove discount
                 </Radio> */}
-                <Radio value={0.05} checked={selectedValue === 0.05}>
+                <Radio
+                  color="primary"
+                  value={0.05}
+                  checked={selectedValue === 0.05}
+                >
                   5%
                 </Radio>
                 <Radio value={0.1} checked={selectedValue === 0.1}>
@@ -342,15 +349,15 @@ const AddReservationModal = ({ onAddSuccess }) => {
                 </span>
               </p>
               <p className="text-1xl text-blue-500">
-                Total:{" "}
-                <span className="text-1xl">
-                  &#8369; {formatNumberWithCommas(totalAmount)}.00
-                </span>
-              </p>
-              <p className="text-1xl text-blue-500">
                 Discount amount:{" "}
                 <span className="text-1xl">
                   &#8369; {formatNumberWithCommas(discountAmount)}.00
+                </span>
+              </p>
+              <p className="text-1xl text-blue-500">
+                Total:{" "}
+                <span className="text-1xl">
+                  &#8369; {formatNumberWithCommas(totalAmount)}.00
                 </span>
               </p>
             </div>

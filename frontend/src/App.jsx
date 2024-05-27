@@ -7,6 +7,7 @@ import {
 import { AuthProvider } from "./utils/AuthContext";
 import { NextUIProvider } from "@nextui-org/react";
 
+// guests
 import Home from "./pages/Home";
 import RoomsAndSuits from "./pages/RoomsAndSuits";
 import Gallery from "./pages/Gallery";
@@ -21,6 +22,7 @@ import DoubleRoomPageCopy from "./pages/DoubleRoomPageCopy";
 import TwinStandardRoomPage from "./pages/TwinStandardRoomPage";
 import Page404 from "./pages/Page404";
 import GuestLogin from "./pages/GuestLogin";
+import Bookings from "./pages/Bookings";
 
 import PrivateRoutes from "./utils/PrivateRoutes";
 import AdminRoutes from "./utils/AdminRoutes";
@@ -34,15 +36,20 @@ import AdminEmployees from "./pages/AdminEmployees";
 import AdminGuests from "./pages/AdminGuests";
 import AdminReservations from "./pages/AdminReservations";
 import AdminRooms from "./pages/AdminRooms";
+import AdminPrices from "./pages/AdminPrices";
 import AdminReports from "./pages/AdminReports";
 import AdminLogs from "./pages/AdminLogs";
+import AdminReceipt from "./pages/AdminReceipt";
 
 // manager
 import ManagerGuests from "./pages/ManagerGuests";
+import ManagerEmployees from "./pages/ManagerEmployees";
 import ManagerReservations from "./pages/ManagerReservations";
 import ManagerRooms from "./pages/ManagerRooms";
+import ManagerPrices from "./pages/ManagerPrices";
 import ManagerReports from "./pages/ManagerReports";
 import ManagerLogs from "./pages/ManagerLogs";
+import ManagerReceipt from "./pages/ManagerReceipt";
 
 // receptionist
 import ReceptionistGuests from "./pages/ReceptionistGuests";
@@ -51,17 +58,13 @@ import ReceptionistRooms from "./pages/ReceptionistRooms";
 import ReceptionistReservations from "./pages/ReceptionistReservations";
 import ReceptionistReports from "./pages/ReceptionistReports";
 import ReceptionistLogs from "./pages/ReceptionistLogs";
+import ReceptionistReceipt from "./pages/ReceptionistReceipt";
 
 import { Toaster } from "react-hot-toast";
-import Bookings from "./pages/Bookings";
-import ManagerEmployees from "./pages/ManagerEmployees";
 // import ManagerManagers from "./pages/ManagerManagers";
 import { ToastContainer, Bounce } from "react-toastify";
 import Notifications from "./pages/Notifications";
 import Unauthorized from "./pages/Unauthorized";
-import AdminReceipt from "./pages/AdminReceipt";
-import ManagerReceipt from "./pages/ManagerReceipt";
-import ReceptionistReceipt from "./pages/ReceptionistReceipt";
 import AccountSettings from "./pages/AccountSettings";
 import UserLoginPage from "./pages/UserLoginPage";
 
@@ -129,6 +132,7 @@ function App() {
                 element={<AdminReservations />}
               />
               <Route path="/admin-dashboard/rooms" element={<AdminRooms />} />
+              <Route path="/admin-dashboard/prices" element={<AdminPrices />} />
               <Route
                 path="/admin-dashboard/reports"
                 element={<AdminReports />}
@@ -153,6 +157,10 @@ function App() {
               <Route
                 path="/manager-dashboard/rooms"
                 element={<ManagerRooms />}
+              />
+              <Route
+                path="/manager-dashboard/prices"
+                element={<ManagerPrices />}
               />
               <Route
                 path="/manager-dashboard/reservations"

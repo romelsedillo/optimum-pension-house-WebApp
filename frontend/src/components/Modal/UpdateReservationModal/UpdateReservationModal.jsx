@@ -110,6 +110,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
         );
       }
       onUpdateSuccess();
+      onUpdateSuccess();
       console.log(status);
     } catch (error) {
       console.log("Status:", status);

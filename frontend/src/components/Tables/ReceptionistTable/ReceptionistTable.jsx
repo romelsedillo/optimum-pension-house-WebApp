@@ -13,17 +13,14 @@ import {
   DropdownMenu,
   DropdownItem,
   Chip,
-  User,
   Pagination,
   Modal,
   useDisclosure,
 } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { SearchIcon } from "./SearchIcon";
-import { ChevronDownIcon } from "./ChevronDownIcon";
 import { columns, statusOptions } from "./data";
-import { capitalize } from "./utils";
+import { useAuth } from "../../../utils/AuthContext";
 
 import AddEmployeeModal from "../../Modal/AddEmployeeModal/AddEmployeeModal";
 import { receptionistCollection } from "./datafetch";
@@ -42,6 +39,8 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function ReceptionistTable() {
+  const { role } = useAuth();
+
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -103,7 +102,6 @@ export default function ReceptionistTable() {
         Array.from(statusFilter).includes(user.status)
       );
     }
-    console.log(users);
     return filteredUsers;
   }, [users, filterValue, statusFilter, hasSearchFilter]);
 
@@ -153,12 +151,6 @@ export default function ReceptionistTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                {/* <DropdownItem onClick={() => alert("wiew clicked")}>
-                  View
-                </DropdownItem> */}
-                <DropdownItem onClick={() => alert("edit clicked")}>
-                  Update
-                </DropdownItem>
                 <DropdownItem onClick={() => alert("delete clicked")}>
                   Delete
                 </DropdownItem>

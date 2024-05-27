@@ -40,13 +40,12 @@ export default function EmployeesNavBar() {
     const intervalId = setInterval(() => {
       setCurrentDateTime(getCurrentDateTime());
     }, 1000);
-
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   };
   useEffect(() => {
     guestFetchData();
-    // timeClock();
+    timeClock();
   }, []);
 
   const offline = () => {
@@ -69,7 +68,7 @@ export default function EmployeesNavBar() {
     <Navbar
       isBordered
       maxWidth="full"
-      className="py-1 px-6 flex justify-center"
+      className="py-3 px-6 flex justify-center"
     >
       <NavbarContent className="w-full">
         <NavbarItem className="">
@@ -77,7 +76,7 @@ export default function EmployeesNavBar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="flex gap-16 w-full" justify="end">
-        <NavbarItem className="">
+        <NavbarItem className={`${totalPending ? "animate-bounce" : ""}`}>
           <Badge color="danger" content={totalPending} size="lg" shape="circle">
             <Tooltip
               key="left"

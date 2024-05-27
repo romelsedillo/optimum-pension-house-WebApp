@@ -70,6 +70,7 @@ const AddGuestModal = ({ onAddSuccess }) => {
           <ModalBody>
             <div className="flex gap-2">
               <Input
+                autoComplete="off"
                 isRequired
                 autoFocus
                 name="roomNumber"
@@ -143,13 +144,14 @@ const AddGuestModal = ({ onAddSuccess }) => {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" size="md" onPress={onClose}>
+            <Button color="danger" variant="flat" size="sm" radius="sm" onPress={onClose}>
               Close
             </Button>
             <Button
               type="submit"
               color="primary"
-              size="md"
+              size="sm"
+              radius="sm"
               onPress={onClose}
               isDisabled={isAnyFieldEmpty}
             >

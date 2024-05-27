@@ -19,13 +19,13 @@ const UserRegister = () => {
   return (
     <div className="mt-20">
       <NavBar />
-      <div className=" h-screen flex justify-center w-full px-36 py-12">
-        <div className="w-full flex shadow-lg">
+      <div className=" flex justify-center w-full px-4 md:px-36 py-12">
+        <div className="w-full md:flex shadow-lg">
           <div
-            className="w-1/2 bg-cover bg-center bg-no-repeat"
+            className="w-full md:w-1/2 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${loginImage})` }}
           >
-            <div className=" bg-[#333A73] bg-opacity-70 w-full h-full flex flex-col items-center justify-center gap-16">
+            <div className="bg-[#333A73] bg-opacity-70 w-full h-full flex flex-col items-center justify-center gap-16">
               <div className="flex flex-col items-center">
                 <Logo w="16" h="16" />
                 <h1 className="capitalize text-md text-white">
@@ -41,13 +41,14 @@ const UserRegister = () => {
             </div>
           </div>
 
-          <div className=" w-1/2 flex flex-col">
+          <div className="w-full md:w-1/2 flex flex-col">
             <div className="mt-2">
-              <h1 className="text-center text-[30px] font-bold text-[#333A73] ">
-                Register.
+              <h1 className="text-center text-[24px] md:text-[30px] font-bold text-[#333A73]">
+                Register
               </h1>
             </div>
             <div>
+              {/* Assuming Register component is imported and rendered properly */}
               <Register />
             </div>
           </div>

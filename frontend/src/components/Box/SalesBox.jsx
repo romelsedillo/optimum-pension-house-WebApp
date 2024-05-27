@@ -16,11 +16,14 @@ const SalesBox = () => {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
+    const intervalId = setInterval(fetchData, 2000); // Fetch data every 5 seconds
+    return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
 
   useEffect(() => {
@@ -47,11 +50,10 @@ const SalesBox = () => {
       minimumFractionDigits: 2,
     });
   };
-
   return (
     <div className="flex flex-col justify-between bg-white w-full h-[150px] shadow-lg rounded-lg px-8 py-5">
       <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
-        <FontAwesomeIcon icon={faCoins} className=" w-4 h-4 text-blue-500" />
+        <FontAwesomeIcon icon={faCoins} className="w-4 h-4 text-blue-500" />
       </div>
       <p className="text-3xl text-green-500">
         {loading ? (
@@ -60,6 +62,7 @@ const SalesBox = () => {
           formatCurrency(totalSales)
         )}
       </p>
+
       <h1 className="text-sm">Sales Today</h1>
     </div>
   );

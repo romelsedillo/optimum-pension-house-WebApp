@@ -4,6 +4,7 @@ import {
   faCalendarCheck,
   faClipboardList,
   faUser,
+  faPesoSign,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const accounts = [
@@ -27,14 +28,21 @@ export const adminSidebar = [
     icon: faCalendarCheck,
   },
   { id: 4, title: "Rooms", link: "/admin-dashboard/rooms", icon: faBuilding },
+
   {
     id: 5,
+    title: "Prices",
+    link: "/admin-dashboard/prices",
+    icon: faPesoSign,
+  },
+  {
+    id: 6,
     title: "Reports",
     link: "/admin-dashboard/reports",
     icon: faClipboardList,
   },
   {
-    id: 6,
+    id: 7,
     title: "Activity Logs",
     link: "/admin-dashboard/logs",
     icon: faClockRotateLeft,
@@ -49,21 +57,28 @@ export const managerSidebar = [
     link: "/manager-dashboard/employees",
     icon: faUser,
   },
-  { id: 3, title: "Rooms", link: "/manager-dashboard/rooms", icon: faBuilding },
   {
-    id: 4,
+    id: 3,
     title: "Reservations",
     link: "/manager-dashboard/reservations",
     icon: faCalendarCheck,
   },
+  { id: 4, title: "Rooms", link: "/manager-dashboard/rooms", icon: faBuilding },
   {
     id: 5,
+    title: "Prices",
+    link: "/manager-dashboard/prices",
+    icon: faPesoSign,
+  },
+
+  {
+    id: 6,
     title: "Reports",
     link: "/manager-dashboard/reports",
     icon: faClipboardList,
   },
   {
-    id: 6,
+    id: 7,
     title: "Activity Logs",
     link: "/manager-dashboard/logs",
     icon: faClockRotateLeft,
@@ -85,26 +100,21 @@ export const receptionistSidebar = [
   },
   {
     id: 3,
-    title: "Rooms",
-    link: "/receptionist-dashboard/rooms",
-    icon: faBuilding,
-  },
-  {
-    id: 4,
     title: "Reservations",
     link: "/receptionist-dashboard/reservations",
     icon: faCalendarCheck,
   },
   {
+    id: 4,
+    title: "Rooms",
+    link: "/receptionist-dashboard/rooms",
+    icon: faBuilding,
+  },
+
+  {
     id: 5,
     title: "Reports",
     link: "/receptionist-dashboard/reports",
     icon: faClipboardList,
-  },
-  {
-    id: 6,
-    title: "Activity Logs",
-    link: "/receptionist-dashboard/logs",
-    icon: faClockRotateLeft,
   },
 ];

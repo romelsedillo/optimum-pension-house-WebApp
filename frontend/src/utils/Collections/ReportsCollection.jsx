@@ -26,7 +26,7 @@ export const reportsCollection = async () => {
       roomRate: `${doc?.roomType?.rate}`,
       totalAmount: `${doc?.totalAmount}`,
     }));
-    console.log(data);
+    data.reverse()
     return data;
   } catch (error) {
     console.error("Error fetching reports:", error);

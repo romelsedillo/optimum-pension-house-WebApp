@@ -39,7 +39,7 @@ const UserRegister = () => {
       .required("Password is required *")
       .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-        "Password must contain at least 8 characters, one uppercase, one number and one special case character *"
+        "Password must be at least 8 characters and include uppercase, number, and special character*."
       ),
     confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
   });
@@ -69,12 +69,12 @@ const UserRegister = () => {
     <form
       ref={registerForm}
       onSubmit={handleSubmit(onSubmit)}
-      className="py-2 px-10 w-full flex flex-col rounded-lg bg-[#ffffff]"
+      className="py-2 px-4 md:px-10 w-full flex flex-col rounded-lg bg-[#ffffff]"
       autoComplete="off"
     >
       <div className="flex flex-col">
-        <div className="flex items-center justify-center gap-4">
-          <div className="mb-1 w-full">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="mb-4 md:w-1/2">
             <label htmlFor="name" className="text-tiny text-[#333A73]">
               Name <span className="text-red-500">*</span>
             </label>
@@ -82,7 +82,8 @@ const UserRegister = () => {
               autoFocus
               isRequired
               isClearable
-              size="sm"
+              size="md"
+              radius="sm"
               variant="bordered"
               color="primary"
               type="text"
@@ -102,7 +103,7 @@ const UserRegister = () => {
           </div>
 
           {/* ---- EMAIL ---- */}
-          <div className=" w-full">
+          <div className="mb-4 md:w-1/2">
             <label htmlFor="email" className="text-tiny text-[#333A73]">
               Email <span className="text-red-500">*</span>
             </label>
@@ -111,7 +112,8 @@ const UserRegister = () => {
               isClearable
               variant="bordered"
               color="primary"
-              size="sm"
+              size="md"
+              radius="sm"
               type="email"
               id="email"
               {...register("email")}
@@ -130,8 +132,8 @@ const UserRegister = () => {
           </div>
           {/* ---- EMAIL ---- */}
         </div>
-        <div className="flex gap-4">
-          <div className=" w-full">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="mb-4 md:w-1/2">
             <label htmlFor="phone" className="text-tiny text-[#333A73]">
               Phone <span className="text-red-500">*</span>
             </label>
@@ -140,7 +142,8 @@ const UserRegister = () => {
               isClearable
               variant="bordered"
               color="primary"
-              size="sm"
+              size="md"
+              radius="sm"
               type="tel"
               id="phone"
               {...register("phone")}
@@ -156,7 +159,7 @@ const UserRegister = () => {
               )}
             </div>
           </div>
-          <div className="mb-1 w-full">
+          <div className="mb-4 md:w-1/2">
             <label htmlFor="address" className="text-tiny text-[#333A73]">
               Address <span className="text-red-500">*</span>
             </label>
@@ -165,7 +168,8 @@ const UserRegister = () => {
               isClearable
               variant="bordered"
               color="primary"
-              size="sm"
+              size="md"
+              radius="sm"
               type="text"
               id="address"
               {...register("address")}
@@ -184,9 +188,8 @@ const UserRegister = () => {
             </div>
           </div>
         </div>
-        <div className=" w-full flex gap-4">
-          {/* ---- PASSWORD ---- */}
-          <div className="mb-4 relative w-full">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="mb-4 md:w-1/2">
             <label htmlFor="password" className="text-tiny text-[#333A73]">
               Password <span className="text-red-500">*</span>
             </label>
@@ -194,7 +197,8 @@ const UserRegister = () => {
               isRequired
               variant="bordered"
               color="primary"
-              size="sm"
+              size="md"
+              radius="sm"
               type={showPassword ? "text" : "password"}
               id="password"
               {...register("password")}
@@ -236,7 +240,7 @@ const UserRegister = () => {
           </div>
           {/* ---- PASSWORD ---- */}
           {/* ---- CONFIRM PASSWORD ---- */}
-          <div className="mb-4 relative w-full">
+          <div className="mb-4 md:w-1/2">
             <label
               htmlFor="confirmPassword"
               className="text-tiny text-[#333A73]"
@@ -247,7 +251,8 @@ const UserRegister = () => {
               isRequired
               variant="bordered"
               color="primary"
-              size="sm"
+              size="md"
+              radius="sm"
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               {...register("confirmPassword")}

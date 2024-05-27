@@ -8,7 +8,7 @@ const RoomsOccupiedBox = () => {
   const [count, setCount] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const guestFetchData = async () => {
+  const fetchData = async () => {
     try {
       const appWriteData = await roomCollection();
       setCount(appWriteData);
@@ -23,7 +23,9 @@ const RoomsOccupiedBox = () => {
   ).length;
 
   useEffect(() => {
-    guestFetchData();
+    fetchData();
+    const intervalId = setInterval(fetchData, 1000); // Fetch data every 5 seconds
+    return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
   return (
     <div className="flex flex-col justify-between bg-white w-full h-[150px] shadow-lg rounded-lg px-8 py-5">
@@ -32,6 +34,7 @@ const RoomsOccupiedBox = () => {
       </div>
       <p className=" text-3xl text-green-500">
         {loading ? <Spinner size="sm" color="success" /> : totalRoomOccupied}
+        {/* {totalRoomOccupied} */}
       </p>
       <h1 className="text-sm">Rooms Occupied</h1>
     </div>

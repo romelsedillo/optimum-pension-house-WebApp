@@ -17,17 +17,21 @@ export const fetchDataFromAppwrite = async () => {
 
     // Extract the data from the response and return it
     const data = response.documents
-      // .filter((doc) => doc.position != "admin")
+      .filter(
+        (doc) => doc?.position === "receptionist" || doc?.position === "manager"
+      )
+
       .map((doc) => ({
-        id: doc.$id,
-        name: doc.name,
-        position: doc.position,
-        email: doc.email,
-        status: doc.status,
-        phone: doc.phone,
-        address: doc.address, 
+        id: doc?.$id,
+        name: doc?.name,
+        position: doc?.position,
+        email: doc?.email,
+        status: doc?.status,
+        phone: doc?.phone,
+        address: doc?.address,
       }));
     data.reverse();
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching employees", error);

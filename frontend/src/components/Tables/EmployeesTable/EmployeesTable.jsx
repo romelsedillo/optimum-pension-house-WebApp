@@ -17,7 +17,6 @@ import {
   Pagination,
   useDisclosure,
 } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
@@ -60,6 +59,7 @@ const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 export default function EmployeesTable() {
+  const { role } = useAuth();
   const [loading, setLoading] = useState(true);
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
@@ -189,13 +189,23 @@ export default function EmployeesTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem onClick={() => alert("view clicked")}>
+                <DropdownItem
+                  isReadOnly={role === "manager" ? true : false}
+                  onClick={() => alert("view clicked")}
+                >
                   View
                 </DropdownItem>
-                <DropdownItem onClick={() => alert("edit clicked")}>
+
+                <DropdownItem
+                  isReadOnly={role === "manager" ? true : false}
+                  onClick={() => alert("edit clicked")}
+                >
                   Edit
                 </DropdownItem>
-                <DropdownItem onClick={() => handleDeleteEmployee(user.id)}>
+                <DropdownItem
+                  isReadOnly={role === "manager" ? true : false}
+                  onClick={() => handleDeleteEmployee(user.id)}
+                >
                   Delete
                 </DropdownItem>
               </DropdownMenu>
@@ -232,7 +242,7 @@ export default function EmployeesTable() {
               inputWrapper: "border-1",
             }}
             placeholder="Search by name..."
-            size=""
+            size="sm"
             startContent={<SearchIcon className="text-default-300" />}
             value={filterValue}
             variant="bordered"
@@ -266,8 +276,7 @@ export default function EmployeesTable() {
               </DropdownMenu>
             </Dropdown>
             <Button
-              className=" text-background"
-              endContent={<PlusIcon />}
+              className=" text-background px-6"
               size="sm"
               color="primary"
               onPress={onOpen}

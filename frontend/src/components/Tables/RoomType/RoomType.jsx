@@ -12,75 +12,38 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  Chip,
   Pagination,
-  Modal,
   useDisclosure,
+  Modal,
 } from "@nextui-org/react";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
+import { columns, statusOptions } from "./data";
 import { capitalize } from "./utils";
-// import { columns, statusOptions } from "./data";
-import AddReservationModal from "../../Modal/AddReservationModal/AddReservationModal";
-import UpdateReservationModal from "../../Modal/UpdateReservationModal/UpdateReservationModal";
-import { fetchDataFromAppwrite } from "./datafetch";
 import { toast } from "react-hot-toast";
+import AddRoomModal from "../../Modal/AddRoomModal/AddRoomModal";
+import UpdatePriceModal from "../../Modal/UpdatePriceModal/UpdatePriceModal";
+import { fetchDataFromAppwrite } from "./datafetch";
+import { deleteRoom } from "../../../utils/DeleteFunctions/DeleteRoom";
 import { Spinner } from "@nextui-org/react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../utils/AuthContext";
 
-const columns = [
-  { name: "Date Created", uid: "dateCreated", sortable: true },
-  { name: "Type", uid: "type", sortable: true },
-  { name: "Guest", uid: "guest", sortable: true },
-  { name: "Check-in Date", uid: "checkInDate", sortable: true },
-  { name: "Check-out Date", uid: "checkOutDate", sortable: true },
-  { name: "Total Amount", uid: "totalAmount", sortable: true },
-  { name: "Room Details", uid: "room", sortable: true },
-  { name: "Reference #", uid: "referenceNumber", sortable: true },
-  { name: "Status", uid: "status", sortable: true },
-  { name: "ACTIONS", uid: "actions" },
-];
+const INITIAL_VISIBLE_COLUMNS = ["typeName", "capacity", "rate", "actions"];
 
-const statusOptions = [
-  { name: "Check-in", uid: "check-in" },
-  { name: "Check-out", uid: "check-out" },
-  { name: "Pending", uid: "pending" },
-  { name: "Confirmed", uid: "confirmed" },
-];
-
-const statusColorMap = {
-  "check-in": "success",
-  "check-out": "warning",
-  canceled: "danger",
-  pending: "primary",
-  confirmed: "secondary",
-};
-
-const INITIAL_VISIBLE_COLUMNS = [
-  "dateCreated",
-  "guest",
-  "checkInDate",
-  "checkOutDate",
-  "room",
-  "totalAmount",
-  "status",
-  "actions",
-];
-
-export default function ReservationsTable() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+export default function RoomType() {
+  const { role } = useAuth();
   const [users, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(15);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "",
+    column: "typeName",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -88,6 +51,8 @@ export default function ReservationsTable() {
   const pages = Math.ceil(users.length / rowsPerPage);
 
   const hasSearchFilter = Boolean(filterValue);
+  const [roomTypeId, setRoomTypeId] = useState("");
+  const [selectedRoomTypeData, setSelectedRoomTypeData] = useState(null);
   const {
     isOpen: isAddModalOpen,
     onOpen: onAddModalOpen,
@@ -98,8 +63,6 @@ export default function ReservationsTable() {
     onOpen: onUpdateModalOpen,
     onOpenChange: onUpdateModalOpenChange,
   } = useDisclosure();
-  const [reservationId, setReservationId] = useState("");
-  const [roomId, setRoomId] = useState("");
 
   const fetchData = async () => {
     try {
@@ -118,27 +81,44 @@ export default function ReservationsTable() {
     try {
       await fetchData(); // Fetch updated data
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error adding room:", error);
     }
   };
-
   const handleUpdateSuccess = async () => {
     try {
       await fetchData(); // Fetch updated data
     } catch (error) {
-      console.error("Error updating reservation:", error);
-      toast.error(`Error updating reservation: ${error.message}`);
+      console.error("Error adding room:", error);
     }
   };
 
-  const getReservationId = (reservationId, roomId) => {
-    setReservationId(reservationId);
-    setRoomId(roomId);
-  };
-  const handleReceipt = (reservationId) => {
-    navigate(`receipt/${reservationId}`);
+  const handleDelete = async (userId) => {
+    try {
+      await toast.promise(deleteRoom(userId), {
+        loading: "Deleting...",
+        success: <b>Room was successfully deleted!</b>,
+        error: <b>Failed to delete room.</b>,
+      });
+      await fetchData();
+    } catch (error) {
+      console.error("Error deleting room:", error);
+      toast.error(`Error deleting room: ${error.message}`);
+    }
   };
 
+  const getRoomTypeId = (roomTypeId, roomRate) => {
+    setSelectedRoomTypeData({
+      roomTypeId,
+      roomRate,
+    });
+  };
+  const getRoomTypeDataById = (roomTypeId, roomRate) => {
+    setRoomTypeId(roomTypeId);
+    setSelectedRoomTypeData({
+      roomTypeId,
+      roomRate,
+    });
+  };
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
@@ -152,7 +132,7 @@ export default function ReservationsTable() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.guest.toLowerCase().includes(filterValue.toLowerCase())
+        user.roomNumber.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -182,63 +162,17 @@ export default function ReservationsTable() {
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
+
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
-    const date = new Date(cellValue);
-    const getMonthName = (monthIndex) => {
-      const months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-      return months[monthIndex];
-    };
-    const getDayOfWeek = (dayIndex) => {
-      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      return daysOfWeek[dayIndex];
-    };
-    const year = date.getFullYear();
-    const month = getMonthName(date.getMonth());
-    const dayOfWeek = getDayOfWeek(date.getDay());
-    const day = date.getDate();
-    // const hours = ("0" + date.getHours()).slice(-2);
-    // const minutes = ("0" + date.getMinutes()).slice(-2);
-    // const seconds = ("0" + date.getSeconds()).slice(-2);
-    const readableDate = `${dayOfWeek}, ${month} ${day}, ${year} `;
+
     switch (columnKey) {
-      case "dateCreated":
-        return <>{readableDate}</>;
-      case "guest":
+      case "typeName":
         return (
           <div className="capitalize flex flex-col text-sm">{cellValue}</div>
         );
-      case "checkInDate":
-        return <>{readableDate}</>;
-      case "checkOutDate":
-        return <>{readableDate}</>;
-      case "totalAmount":
-        return <>{cellValue}</>;
-      case "status":
-        return (
-          <Chip
-            className=""
-            color={statusColorMap[user?.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
-
+      case "rate":
+        return <>&#8369; {cellValue}.00</>;
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -248,19 +182,20 @@ export default function ReservationsTable() {
                   <VerticalDotsIcon className="text-default-400" />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem onClick={() => handleReceipt(user.id)}>
-                  Receipt
-                </DropdownItem>
+              <DropdownMenu aria-label="option">
                 <DropdownItem
                   onPress={onUpdateModalOpen}
-                  onClick={() => getReservationId(user.id, user.roomId)}
+                  onClick={() => getRoomTypeDataById(user.id, user.rate)}
                 >
                   Update
                 </DropdownItem>
-                {/* <DropdownItem onClick={() => alert("delete clicked")}>
+
+                <DropdownItem
+                  isReadOnly={role === "manager" ? true : false}
+                  onClick={() => handleDelete(user.id)}
+                >
                   Delete
-                </DropdownItem> */}
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -294,7 +229,7 @@ export default function ReservationsTable() {
               base: "w-full sm:max-w-[44%]",
               inputWrapper: "border-1",
             }}
-            placeholder="Search by Guest name..."
+            placeholder="Search ..."
             size="sm"
             startContent={<SearchIcon className="text-default-300" />}
             value={filterValue}
@@ -303,70 +238,19 @@ export default function ReservationsTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  size="sm"
-                  variant="flat"
-                >
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  size="sm"
-                  variant="flat"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
             <Button
-              className=" text-background"
-              // endContent={<PlusIcon />}
+              className=" text-background px-6"
               size="sm"
               color="primary"
               onPress={onAddModalOpen}
             >
-              Add Reservation
+              Add New
             </Button>
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {users.length} users
+            Total: {users.length} rooms
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -374,8 +258,10 @@ export default function ReservationsTable() {
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
             >
+              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
+              <option value="20">20</option>
             </select>
           </label>
         </div>
@@ -433,6 +319,7 @@ export default function ReservationsTable() {
     }),
     []
   );
+
   return (
     <>
       <Table
@@ -472,10 +359,10 @@ export default function ReservationsTable() {
           emptyContent={
             loading ? (
               <Spinner
-                label="Loading. Please wait."
-                color="success"
-                labelColor="success"
                 size="sm"
+                color="success"
+                label="Loading. Please wait."
+                labelColor="success"
               />
             ) : (
               "No data found."
@@ -496,21 +383,22 @@ export default function ReservationsTable() {
         isOpen={isAddModalOpen}
         onOpenChange={onAddModalOpenChange}
         placement="top-center"
-        size="4xl"
+        size="md"
+        className="p-2"
       >
-        <AddReservationModal onAddSuccess={handleAddSuccess} />
+        <AddRoomModal onAddSuccess={handleAddSuccess} />
       </Modal>
       <Modal
         isOpen={isUpdateModalOpen}
         onOpenChange={onUpdateModalOpenChange}
         placement="top-center"
-        size="xs"
+        size="md"
         className="p-2"
       >
-        <UpdateReservationModal
+        <UpdatePriceModal
+          roomTypeId={roomTypeId}
+          selectedRoomTypeData={selectedRoomTypeData}
           onUpdateSuccess={handleUpdateSuccess}
-          reservationId={reservationId}
-          roomId={roomId}
         />
       </Modal>
     </>

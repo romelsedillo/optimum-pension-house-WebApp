@@ -71,7 +71,7 @@ const ManagerSidebar = () => {
                         // color: isActive ? "greenyellow" : "",
                         borderRadius: "5px",
                       })}
-                      className="cursor-pointer hover:text-slate-300 text-white no-underline flex gap-4 p-2"
+                      className="cursor-pointer hover:text-slate-300 text-white no-underline flex items-center gap-4 p-2"
                       to={item.link}
                     >
                       <FontAwesomeIcon icon={item.icon} />

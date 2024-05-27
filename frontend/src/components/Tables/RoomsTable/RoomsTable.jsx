@@ -29,6 +29,8 @@ import UpdateRoomModal from "../../Modal/UpdateRoomModal/UpdateRoomModal";
 import { fetchDataFromAppwrite } from "./datafetch";
 import { deleteRoom } from "../../../utils/DeleteFunctions/DeleteRoom";
 import { Spinner } from "@nextui-org/react";
+import { useAuth } from "../../../utils/AuthContext";
+
 
 const statusColorMap = {
   available: "success",
@@ -46,6 +48,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function RoomsTable() {
+  const { role } = useAuth();
   const [users, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterValue, setFilterValue] = React.useState("");
@@ -222,7 +225,7 @@ export default function RoomsTable() {
                   Update
                 </DropdownItem>
 
-                <DropdownItem onClick={() => handleDelete(user.id)}>
+                <DropdownItem isReadOnly={role === "receptionist"? true : false} onClick={() => handleDelete(user.id)}>
                   Delete
                 </DropdownItem>
               </DropdownMenu>
@@ -259,7 +262,7 @@ export default function RoomsTable() {
               inputWrapper: "border-1",
             }}
             placeholder="Search by room number..."
-            size=""
+            size="sm"
             startContent={<SearchIcon className="text-default-300" />}
             value={filterValue}
             variant="bordered"
@@ -294,8 +297,7 @@ export default function RoomsTable() {
             </Dropdown>
 
             <Button
-              className=" text-background"
-              endContent={<PlusIcon />}
+              className=" text-background px-6"
               size="sm"
               color="primary"
               onPress={onAddModalOpen}

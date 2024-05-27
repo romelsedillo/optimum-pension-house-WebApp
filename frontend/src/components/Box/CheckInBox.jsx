@@ -21,6 +21,8 @@ const CheckInBox = () => {
 
   useEffect(() => {
     fetchData();
+    const intervalId = setInterval(fetchData, 2000); // Fetch data every 5 seconds
+    return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
 
   useEffect(() => {
@@ -50,9 +52,9 @@ const CheckInBox = () => {
           className=" w-4 h-4 text-blue-500"
         />
       </div>
-      <p className=" text-3xl text-green-500">
-        {loading ? <Spinner color="success" size="sm"/> : totalCheckIn}
-      </p>
+      <div className=" text-3xl text-green-500">
+        {loading ? <Spinner color="success" size="sm" /> : totalCheckIn}
+      </div>
       <h1 className="text-sm">Check-ins Today</h1>
     </div>
   );
