@@ -33,7 +33,7 @@ const Home = () => {
           <div className="w-full flex flex-col justify-center md:justify-start md:items-start md:w1/2 gap-6 pt-16">
             <div className="text-[#333A73] text-center md:text-start">
               <p className=" font-medium">Welcome to</p>
-              <h1 className="title text-[30px] sm:text-[47px] md:text-[47px] text-orange-500 font-DMSerifDisplay">
+              <h1 className="title text-[30px] sm:text-[46px] md:text-[47px] text-orange-500 font-DMSerifDisplay">
                 Optimum Pension House
               </h1>
 
