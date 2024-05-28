@@ -18,7 +18,7 @@ const GuestLogin = () => {
   }, [user, navigate]);
 
   return (
-    <div className="mt-20 bg-[#fff]">
+    <div className=" bg-[#fff]">
       <NavBar />
       <div className="flex justify-center w-full px-4 py-8 sm:px-6 md:px-12 lg:px-24 xl:px-36">
         <div className="w-full flex flex-col lg:flex-row shadow-lg">
@@ -29,11 +29,17 @@ const GuestLogin = () => {
             <div className="bg-[#333A73] bg-opacity-70 w-full h-full flex flex-col items-center justify-center gap-8 lg:gap-16 p-4">
               <div className="flex flex-col items-center">
                 <Logo w="16" h="16" />
-                <h1 className="capitalize text-md text-white">Optimum Pension House</h1>
+                <h1 className="capitalize text-md text-white">
+                  Optimum Pension House
+                </h1>
               </div>
               <div className="text-center">
-                <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl">Welcome!</h1>
-                <h6 className="font-bold text-white">We are happy to see you again.</h6>
+                <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl">
+                  Welcome!
+                </h1>
+                <h6 className="font-bold text-white">
+                  We are happy to see you again.
+                </h6>
               </div>
             </div>
           </div>

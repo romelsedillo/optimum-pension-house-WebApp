@@ -8,7 +8,7 @@ const MapComponent = () => {
       style={{ border: 0 }}
       allowFullScreen=""
       loading="lazy"
-      className="rounded-md w-[300px] sm:w-[500px]"
+      className="rounded-md w-full sm:w-full"
       
     />
   );

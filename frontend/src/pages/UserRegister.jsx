@@ -17,7 +17,7 @@ const UserRegister = () => {
     }
   }, []);
   return (
-    <div className="mt-20">
+    <div className="">
       <NavBar />
       <div className=" flex justify-center w-full px-4 md:px-36 py-12">
         <div className="w-full md:flex shadow-lg">

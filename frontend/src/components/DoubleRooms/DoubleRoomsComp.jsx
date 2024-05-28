@@ -30,7 +30,6 @@ const DoubleRoomComp = () => {
 
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
-  console.log(data);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const customStyles = {
@@ -51,7 +50,6 @@ const DoubleRoomComp = () => {
   const closeModal = () => {
     setSelectedImage(null);
   };
-  console.table(data);
   return (
     <div className="container mx-auto p-1">
       {loading ? (

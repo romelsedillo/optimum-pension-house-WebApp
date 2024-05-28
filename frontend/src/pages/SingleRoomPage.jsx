@@ -127,7 +127,7 @@ const SingleRoomPage = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="mt-20">
+    <div className="">
       <NavBar />
       <div className="container h-[1000px] mx-auto px-[140px] py-10">
         <div className=" rounded-lg p-8 h-[42rem] flex flex-col gap-10">

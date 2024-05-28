@@ -18,7 +18,7 @@ const UserLoginPage = () => {
   }, []);
 
   return (
-    <div className="mt-20 bg-[#fff]">
+    <div className=" bg-[#fff]">
       <NavBar />
       <div className="flex justify-center w-full px-4 py-8 sm:px-6 md:px-12 lg:px-24 xl:px-36">
         <div className="w-full flex flex-col lg:flex-row shadow-lg">

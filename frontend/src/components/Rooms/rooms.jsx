@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
 import { useAuth } from "../../utils/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { roomTypeCollection } from "../../utils/Collections/RoomTypeCollection";
 
 import SingleBedroom from "../../assets/images/single-bed 2.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,9 +17,25 @@ import {
 } from "@nextui-org/react";
 
 const rooms = () => {
+  const [roomRate, setRoomRate] = useState([]);
   const { user } = useAuth();
   const navigate = useNavigate();
-
+  const fetch = async () => {
+    try {
+      const appWriteData = await roomTypeCollection();
+      setRoomRate(appWriteData);
+    } catch (error) {
+      console.error("Error fetching notification notifications:", error);
+    }
+  };
+  useEffect(() => {
+    fetch();
+  }, []);
+  const singleRoom = roomRate.find((room) => room?.typeName === "single room");
+  const doubleRoom = roomRate.find((room) => room?.typeName === "double room");
+  const twinStandardRoom = roomRate.find(
+    (room) => room?.typeName === "twin standard room"
+  );
   return (
     <>
       <div className=" bg-[#f5f5f5] w-full flex flex-col items-center py-10">
@@ -39,7 +56,11 @@ const rooms = () => {
           {/* ------------ SINGLE ROOM ---------- */}
           <div className="w-full flex justify-center px-12">
             <div className="w-[50%] ">
-              <img src={SingleBedroom} alt="" className="w-[450px] rounded-md" />
+              <img
+                src={SingleBedroom}
+                alt=""
+                className="w-[450px] rounded-md"
+              />
             </div>
             <div className="flex flex-col items-center justify-center w-[50%] px-16 gap-3">
               <div className="flex flex-col gap-2">
@@ -53,8 +74,11 @@ const rooms = () => {
                   and classic charm.
                 </p>
                 <p className=" font-Montserrat">
-                  Room Rate: <span className="text-[#9B8046]">₱ 980</span> /
-                  NIGHT{" "}
+                  Room Rate:{" "}
+                  <span className="text-[#9B8046]">
+                    &#8369; {singleRoom?.rate}.00
+                  </span>{" "}
+                  / NIGHT{" "}
                 </p>
                 <p className=" font-Montserrat">Good for: 1 person</p>
               </div>
@@ -105,7 +129,9 @@ const rooms = () => {
                   size="md"
                   radius="sm"
                   className=" bg-[#DD7210] text-white"
-                  onClick={() => (user ? navigate("/single-rooms") : navigate("/login"))}
+                  onClick={() =>
+                    user ? navigate("/single-rooms") : navigate("/login")
+                  }
                 >
                   BOOK NOW
                 </Button>
@@ -115,7 +141,11 @@ const rooms = () => {
           {/* -------------- DOUBLE ROOM -------------------------------- */}
           <div className="w-full flex flex-row-reverse justify-center px-12">
             <div className="w-[50%] ">
-              <img src={SingleBedroom} alt="" className="w-[450px] rounded-md" />
+              <img
+                src={SingleBedroom}
+                alt=""
+                className="w-[450px] rounded-md"
+              />
             </div>
             <div className="flex flex-col items-center justify-center w-[50%] px-16  gap-2">
               <div className="flex flex-col gap-2">
@@ -129,8 +159,11 @@ const rooms = () => {
                   sophistication with a cozy ambiance for a truly relaxing stay.
                 </p>
                 <p className=" font-Montserrat">
-                  Room Rate: <span className="text-[#9B8046]">₱ 1120</span> /
-                  NIGHT{" "}
+                  Room Rate:{" "}
+                  <span className="text-[#9B8046]">
+                    &#8369; {doubleRoom?.rate}.00
+                  </span>{" "}
+                  / NIGHT{" "}
                 </p>
                 <p className="text-[12px] font-bold font-Montserrat">
                   1 Matrimonial Bed | plus 1 extra bed{" "}
@@ -184,7 +217,9 @@ const rooms = () => {
                   size="md"
                   radius="sm"
                   className=" bg-[#DD7210] text-white"
-                  onClick={() => (user ? navigate("/double-rooms") : navigate("/login"))}
+                  onClick={() =>
+                    user ? navigate("/double-rooms") : navigate("/login")
+                  }
                 >
                   BOOK NOW
                 </Button>
@@ -195,7 +230,11 @@ const rooms = () => {
           {/* --------------- TWIN DOUBLE ------------------------------ */}
           <div className="w-full flex justify-center px-12">
             <div className="w-[50%] ">
-              <img src={SingleBedroom} alt="" className="w-[450px] rounded-md" />
+              <img
+                src={SingleBedroom}
+                alt=""
+                className="w-[450px] rounded-md"
+              />
             </div>
             <div className="flex flex-col items-center justify-center w-[50%] px-16  gap-2">
               <div className="flex flex-col ga2-1 w-full">
@@ -209,8 +248,11 @@ const rooms = () => {
                   retreat with thoughtful amenities.
                 </p>
                 <p className=" font-Montserrat">
-                  Room Rate: <span className="text-[#9B8046]">₱ 1250</span> /
-                  NIGHT{" "}
+                  Room Rate:{" "}
+                  <span className="text-[#9B8046]">
+                    &#8369; {twinStandardRoom?.rate}.00
+                  </span>{" "}
+                  / NIGHT{" "}
                 </p>
                 <p className="text-[12px] font-bold font-Montserrat">
                   2 Single Beds / 1 Matrimonial Bed
@@ -264,7 +306,9 @@ const rooms = () => {
                   size="md"
                   radius="sm"
                   className=" bg-[#DD7210] text-white"
-                  onClick={() => (user ? navigate("/twin-standard-rooms") : navigate("/login"))}
+                  onClick={() =>
+                    user ? navigate("/twin-standard-rooms") : navigate("/login")
+                  }
                 >
                   BOOK NOW
                 </Button>

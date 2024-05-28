@@ -10,3 +10,4 @@ export const formatCurrencyWithCommas = (amount) => {
   // Format the number with commas
   return `₱ ${number.toLocaleString()}.00`;
 };
+export default formatCurrencyWithCommas;

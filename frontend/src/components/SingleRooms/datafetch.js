@@ -25,7 +25,6 @@ export const fetchDataFromAppwrite = async () => {
         status: doc?.status,
         roomType: doc?.roomType?.typeName,
       }));
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching single room:", error);

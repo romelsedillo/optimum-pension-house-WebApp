@@ -82,11 +82,11 @@ const Notifications = () => {
   };
   console.log(selectedReservations);
   return (
-    <div className="mt-20">
+    <div className="">
       <NavBar />
       <div
-        className={`w-full flex flex-col items-center justify-start gap-4 px-36 py-10 ${
-          notifications.length < 2 ? "h-screen" : ""
+        className={`w-full  flex flex-col items-center justify-start gap-4 px-36 py-10 ${
+          notifications.length < 4 ? "" : "h-screen"
         }`}
       >
         {isLoading ? (

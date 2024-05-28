@@ -6,7 +6,7 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 const SingleRooms = () => {
   return (
-    <div className="mt-20">
+    <div className="">
       <NavBar />
       <div className="w-full h-screen px-36 py-10 bg-white">
         <div className="mb-4 flex flex-col gap-4 text-[#333A73]">

@@ -31,7 +31,6 @@ const TwinStandardComp = () => {
 
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
-  console.log(data);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const customStyles = {
