@@ -71,6 +71,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 export default function ReservationsTable() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [reservationStatus, setReservationStatus] = useState("");
   const [users, setData] = useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -131,9 +132,10 @@ export default function ReservationsTable() {
     }
   };
 
-  const getReservationId = (reservationId, roomId) => {
+  const getReservationId = (reservationId, roomId, reservationStatus) => {
     setReservationId(reservationId);
     setRoomId(roomId);
+    setReservationStatus(reservationStatus);
   };
   const handleReceipt = (reservationId) => {
     navigate(`receipt/${reservationId}`);
@@ -254,13 +256,15 @@ export default function ReservationsTable() {
                 </DropdownItem>
                 <DropdownItem
                   onPress={onUpdateModalOpen}
-                  onClick={() => getReservationId(user.id, user.roomId)}
+                  onClick={() =>
+                    getReservationId(user.id, user.roomId, user.status)
+                  }
                 >
                   Update
                 </DropdownItem>
-                {/* <DropdownItem onClick={() => alert("delete clicked")}>
-                  Delete
-                </DropdownItem> */}
+                <DropdownItem onClick={() => alert(`status:${user.status}`)}>
+                  status
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -497,6 +501,7 @@ export default function ReservationsTable() {
         onOpenChange={onAddModalOpenChange}
         placement="top-center"
         size="4xl"
+        radius="sm"
       >
         <AddReservationModal onAddSuccess={handleAddSuccess} />
       </Modal>
@@ -505,12 +510,14 @@ export default function ReservationsTable() {
         onOpenChange={onUpdateModalOpenChange}
         placement="top-center"
         size="xs"
+        radius="sm"
         className="p-2"
       >
         <UpdateReservationModal
           onUpdateSuccess={handleUpdateSuccess}
           reservationId={reservationId}
           roomId={roomId}
+          reservationStatus={reservationStatus}
         />
       </Modal>
     </>

@@ -15,7 +15,12 @@ import ReservationCollection from "../../../utils/Collections/ReservationCollect
 import { getCurrentDateTime } from "../../../utils/CurrentDayTime";
 import AddReports from "../../../utils/AddFunctions/AddReports";
 
-const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
+const UpdateReservationModal = ({
+  reservationId,
+  onUpdateSuccess,
+  roomId,
+  reservationStatus,
+}) => {
   const [status, setStatus] = useState("");
   const [data, setData] = useState([]);
 
@@ -32,7 +37,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
     fetchData();
   }, []);
 
-  const reservationData = data.filter((item) => item.id === reservationId);
+  const reservationData = data.filter((item) => item?.id === reservationId);
 
   const guestId = reservationData[0]?.guestId;
   const totalDays = reservationData[0]?.totalDays;
@@ -84,8 +89,7 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
           guestId,
           reservationId
         );
-        console.log( totalDays, roomType, totalAmount, currentDate);
-        AddReports( totalDays, roomType, totalAmount, currentDate);
+        AddReports(totalDays, roomType, totalAmount, currentDate);
       }
       if (status === "check-in") {
         const message = "Check-in.";
@@ -111,59 +115,88 @@ const UpdateReservationModal = ({ reservationId, onUpdateSuccess, roomId }) => {
       }
       onUpdateSuccess();
       onUpdateSuccess();
-      console.log(status);
     } catch (error) {
-      console.log("Status:", status);
       toast.error(`Error updating reservation: ${error.message}`);
     }
   };
+  console.log(status, guestId);
+  console.log(reservationData);
+
   return (
     <ModalContent>
       {(onClose) => (
         <form onSubmit={handleSubmit}>
           <ModalHeader className="flex flex-col gap-1 text-blue-500">
-            Update Status
+            Update Status {reservationStatus}
           </ModalHeader>
           <ModalBody>
-            <Select
-              label="Update Status"
-              name="status"
-              size="sm"
-              variant="bordered"
-              className="w-full"
-              color="success"
-              value={status}
-              onChange={handleStatusChange}
-            >
-              <SelectItem
-                key="confirmed"
-                value="confirmed"
-                className="text-blue-500 hover:text-blue-500"
+            {reservationStatus === "pending" && (
+              <Select
+                label="Update Status"
+                name="status"
+                size="sm"
+                variant="bordered"
+                className="w-full"
+                color="success"
+                value={status}
+                onChange={handleStatusChange}
               >
-                Confirmed
-              </SelectItem>
-              <SelectItem
-                key="canceled"
-                value="canceled"
-                className="text-red-500"
+                <SelectItem
+                  key="confirmed"
+                  value="confirmed"
+                  className="text-blue-500 hover:text-blue-500"
+                >
+                  Confirmed
+                </SelectItem>
+                <SelectItem
+                  key="canceled"
+                  value="canceled"
+                  className="text-red-500"
+                >
+                  Cancel
+                </SelectItem>
+              </Select>
+            )}
+            {reservationStatus === "confirmed" && (
+              <Select
+                label="Update Status"
+                name="status"
+                size="sm"
+                variant="bordered"
+                className="w-full"
+                color="success"
+                value={status}
+                onChange={handleStatusChange}
               >
-                Cancel
-              </SelectItem>
-              <SelectItem
-                key="check-in"
-                value="check-in"
-                className="text-green-400"
+                <SelectItem
+                  key="check-in"
+                  value="check-in"
+                  className="text-green-400"
+                >
+                  Check-in
+                </SelectItem>
+              </Select>
+            )}
+            {reservationStatus === "check-in" && (
+              <Select
+                label="Update Status"
+                name="status"
+                size="sm"
+                variant="bordered"
+                className="w-full"
+                color="success"
+                value={status}
+                onChange={handleStatusChange}
               >
-                CHeck-in
-              </SelectItem>
-              <SelectItem
-                key="check-out"
-                value="check-out"
-                className="text-green-400"
-              >
-                Check-out
-              </SelectItem>
-            </Select>
+                <SelectItem
+                  key="check-out"
+                  value="check-out"
+                  className="text-green-400"
+                >
+                  Check-out
+                </SelectItem>
+              </Select>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button color="danger" variant="flat" size="sm" onPress={onClose}>

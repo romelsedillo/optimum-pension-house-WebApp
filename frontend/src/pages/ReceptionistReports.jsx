@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import ManagerSidebar from "../components/SideBar/ManagerSideBar";
-import ReceptionistSidebar from "../components/SideBar/ReceptionistSidebar";
+import { useState, useEffect } from "react";
+import ReceptionistSidebar from "../components/SideBar/ReceptionistSideBar";
 import EmployeesNavBar from "../components/NavBar/EmployeeNavBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import ReportsTable from "../components/Tables/ReportsTable/ReportsTable";
@@ -8,15 +7,15 @@ import PrintWordButton from "../components/PrintButton/PrintReportButton";
 import DatePicker from "../components/DatePicker/DatePicker";
 import DataTable from "../components/Tables/DataTable/DataTable";
 import { reportsCollection } from "../utils/Collections/ReportsCollection";
-import { useAuth } from "../utils/AuthContext";
+// import { useAuth } from "../utils/AuthContext";
 import { Button } from "@nextui-org/react";
 
 const ReceptionistReports = () => {
-  const { role, user } = useAuth();
+  // const { role, user } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState([]);
-  const [selectedDateRange, setSelectedDateRange] = useState(null); // State to hold the selected date range
+  const [selectedDateRange, setSelectedDateRange] = useState(null);
 
   const fetchData = async () => {
     try {
