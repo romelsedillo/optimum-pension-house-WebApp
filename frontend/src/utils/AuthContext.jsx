@@ -8,6 +8,7 @@ import CurrentDayTime from "./CurrentDayTime";
 
 import AddGuestCopy from "./AddFunctions/AddGuestCopy";
 import { addLogs } from "../utils/AddFunctions/AddLogs";
+import { reservationCollection } from "../utils/Collections/ReservationCollection";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -16,13 +17,27 @@ export const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null); // Add role state
+  const [role, setRole] = useState(null);
+  const [reservation, setReservation] = useState([]);
+
+  const reservationFetchData = async () => {
+    try {
+      const appWriteData = await reservationCollection();
+      setReservation(appWriteData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
     // setLoading(false);
     checkUserStatus();
+    reservationFetchData();
   }, []);
 
+  const totalPending = reservation.filter(
+    (item) => item.status === "pending"
+  ).length;
   const checkUserStatus = async () => {
     try {
       const accountDetails = await account.get();
@@ -360,6 +375,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     CurrentDayTime,
+    totalPending,
   };
 
   return (

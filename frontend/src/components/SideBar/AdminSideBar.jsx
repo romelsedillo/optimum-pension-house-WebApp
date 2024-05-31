@@ -9,9 +9,10 @@ import { adminSidebar } from "../../constants/accounts";
 import { useAuth } from "../../utils/AuthContext";
 import { useState } from "react";
 import EmployeeStatus from "../../utils/UpdateFunctions/EmployeeStatus";
+import { Badge } from "@nextui-org/react";
 
 const AdminSidebar = () => {
-  const { role, user, logout } = useAuth();
+  const { role, user, logout, totalPending } = useAuth();
   const [open, setOpen] = useState(true);
 
   const handleToggleSidebar = () => {
@@ -30,6 +31,7 @@ const AdminSidebar = () => {
     EmployeeStatus(userId, status);
     logout();
   };
+
   return (
     <div
       className={`${
@@ -78,8 +80,20 @@ const AdminSidebar = () => {
                       <p
                         className={`${
                           !open && "scale-0"
-                        } duration-300 origin-left`}
+                        } duration-300 origin-left flex flex-col gap-1`}
                       >
+                        {item.title === "Reservations" ? (
+                          <Badge
+                            placement="top-right"
+                            size="md"
+                            content={
+                              item.title === "Reservations" ? totalPending : ""
+                            }
+                            color="danger"
+                          ></Badge>
+                        ) : (
+                          ""
+                        )}
                         {open && item.title}
                       </p>
                     </NavLink>
