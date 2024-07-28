@@ -124,7 +124,7 @@ export default function NavbarComponent() {
       <Navbar
         shouldHideOnScroll
         onMenuOpenChange={setIsMenuOpen}
-        className=" bg-[#F6F5F2] h-[80px]"
+        className=" bg-[#F6F5F2] h-[80px] w-full"
       >
         <NavbarContent className="">
           <NavbarMenuToggle
@@ -134,7 +134,7 @@ export default function NavbarComponent() {
           <NavbarBrand className="">
             <Link href="/" className=" gap-2 text-orange-500">
               <Logo w="12" h="12" />
-              <p className="hidden sm:flex font-DMSerifDisplay font-light ml-4 text-[26px]">
+              <p className="hidden sm:flex font-DMSerifDisplay font-light text-[26px]">
                 Optimum Pension House
               </p>
             </Link>
@@ -143,7 +143,7 @@ export default function NavbarComponent() {
 
         {/* nav links */}
         <NavbarContent
-          className="hidden md:flex gap-10 ml-[300px] w-full "
+          className="hidden md:flex gap-10 w-full "
           justify="end"
         >
           <NavbarItem>

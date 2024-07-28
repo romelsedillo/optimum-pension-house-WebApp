@@ -1,15 +1,13 @@
 import Rooms from "../components/Rooms/rooms";
 import NavBar from "../components/NavBar/Navbar";
-import Footer from "../components/Footer/footer";
+import Footer from "../components/Footer/Footer";
 const RoomsAndSuits = () => {
   return (
-    <div className="">
+    <>
       <NavBar />
-      <div className=" w-full px-36 py-10">
-        <Rooms />
-      </div>
+      <Rooms />
       <Footer />
-    </div>
+    </>
   );
 };
 

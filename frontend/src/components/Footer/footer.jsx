@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import Logo from "../Logo/Logo";
 
-const footer = () => {
+const Footer = () => {
   return (
     <footer className="bg-[#F6F5F2] w-[100%] flex justify-center items-center">
       <div className="w-[85%] flex items-start justify-between text-[#333A73]">
@@ -78,4 +78,4 @@ const footer = () => {
   );
 };
 
-export default footer;
+export default Footer;

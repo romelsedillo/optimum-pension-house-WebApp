@@ -2,23 +2,23 @@ import frontdesk from "../../assets/images/frontdesk.jpg";
 
 const AboutUs = () => {
   return (
-    <div className="p-8 my-32 mx-24 flex gap-[50px] w-[100%] bg-[#F6F5F2] rounded-md text-[#333A73]">
-      <div className="w-[50%] border">
+    <div className="p-20 my-32 flex flex-col md:flex-row gap-[50px] w-full bg-[#F6F5F2] rounded-md text-[#333A73]">
+      <div className=" border">
         <img
           src={frontdesk}
-          alt="frontdesk image"
-          className="w-[100%] rounded-md"
+          alt="front desk image"
+          className=" rounded-md w-[600px]"
         />
       </div>
-      <div className="w-[50%] flex flex-col gap-2">
-        <div>
+      <div className="w-full lg:w-[50%] flex flex-col gap-2">
+        <div className="flex flex-col">
           <p className=" capitalize font-Manrope font-medium">
-            hotel frontdesk
+            hotel front desk
           </p>
-          <h1 className=" text-[35px] text-center font-DMSerifDisplay ">
+          <h1 className=" text-4xl text-center font-DMSerifDisplay ">
             About Us
           </h1>
-          <p className=" text-[12px] text-justify leading-5">
+          <p className=" text-sm text-justify leading-5">
             <span className="  text-[28px] font-DMSerifDisplay font-medium">
               Welcome{" "}
             </span>
@@ -32,10 +32,10 @@ const AboutUs = () => {
           </p>
         </div>
         <div>
-          <h1 className=" text-[35px] text-center font-DMSerifDisplay">
+          <h1 className=" text-4xl text-center font-DMSerifDisplay">
             Our Story
           </h1>
-          <p className=" text-[12px] text-justify leading-5">
+          <p className=" text-sm text-justify leading-5">
             <span className="text-[28px] font-DMSerifDisplay font-medium">
               At{" "}
             </span>
@@ -51,10 +51,10 @@ const AboutUs = () => {
           </p>
         </div>
         <div>
-          <h1 className=" text-[35px] text-center font-DMSerifDisplay">
+          <h1 className=" text-4xl text-center font-DMSerifDisplay">
             Our Mission
           </h1>
-          <p className=" text-[12px] text-justify leading-5">
+          <p className=" text-sm text-justify leading-5">
             <span className="text-[28px] font-DMSerifDisplay font-medium border-b-1 border-orange-500">
               Driven
             </span>{" "}
@@ -66,7 +66,7 @@ const AboutUs = () => {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h1 className=" text-[35px] text-center font-DMSerifDisplay">
+          <h1 className=" text-4xl text-center font-DMSerifDisplay">
             Our Values
           </h1>
 

@@ -65,13 +65,13 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center bg-slate-200">
+      <div className=" flex justify-center bg-slate-200">
         <AboutUs />
       </div>
-      <div className="w-full p-32 bg-white">
-        <div className="flex flex-col md:flex-row bg-[#F6F5F2] rounded-lg">
-          <div className="w-1/3 flex flex-col justify-start gap-4 p-8">
-            <h1 className="text-2xl mt-14 text-left">Location & Map</h1>
+      <div className="w-full p-8 sm:p-32 bg-white">
+        <div className="flex flex-col sm:flex-row bg-[#F6F5F2] rounded-lg">
+          <div className="w-full sm:w-1/3 flex flex-col justify-start gap-4 p-8">
+            <h1 className="text-2xl mt-14 sm:text-left">Location & Map</h1>
             <p className="text-[12px]">
               <span>
                 <FontAwesomeIcon icon={faLocationDot} />
@@ -89,7 +89,7 @@ const Home = () => {
               </Button>
             </NavLink>
           </div>
-          <div className="w-2/3">
+          <div className="w-full sm:w-2/3">
             <MapComponent />
           </div>
         </div>
